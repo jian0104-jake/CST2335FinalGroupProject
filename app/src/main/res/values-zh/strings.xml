@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CST2335FinalGroupProject</string>
+    <string name="geo_data_source">查找城市</string>
+    <string name="song_lyrics_search">歌词搜索</string>
+    <string name="deezer_song_search">Deezer歌曲搜索</string>
+    <string name="soccer_match_highlights">足球比赛精华</string>
+</resources>

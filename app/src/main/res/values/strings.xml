@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">CST2335FinalGroupProject</string>
+    <string name="geo_data_source">Geo Data Source</string>
+    <string name="soccer_match_highlights">Soccer Match Highlights</string>
+    <string name="song_lyrics_search">Song Lyrics Search</string>
+    <string name="deezer_song_search">Deezer song search</string>
+
+    <!-- String used in Song Lyrics Search -->
     <string name="artistText">Artist of the Song</string>
     <string name="artistHint">Enter artist here. ex.: police</string>
     <string name="titleText">Title of the Song</string>
