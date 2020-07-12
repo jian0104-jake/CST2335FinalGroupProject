@@ -6,4 +6,7 @@
     <string name="titleHint">Enter title here, ex.: roxanne</string>
     <string name="search_history">Search History</string>
     <string name="search_button">Search Lyrics</string>
+    <string name="goto_fav_button">Go to Fav List</string>
+    <string name="add_fav_button">Add to Fav</string>
+    <string name="google_button">Google the Song</string>
 </resources>

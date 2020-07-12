@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn = findViewById(R.id.go_to_lyric);
         btn.setOnClickListener(click -> {
-            Intent goToLyricSearch = new Intent(MainActivity.this, SongLyricsSearchActivity.class);
+            Intent goToLyricSearch = new Intent(MainActivity.this, LyricsSearchActivity.class);
             startActivity(goToLyricSearch);
         });
     }
