@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -70,12 +72,21 @@ public class LyricsSearchActivity extends AppCompatActivity {
      */
     private final static String SEARCH_HISTORY = "lyric_history";
 
+    /**
+     * A process bar
+     */
+    private ProgressBar progressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_search);
+
+        progressBar = findViewById(R.id.process_bar_search);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(33);
+
 
         // Listview to display search history
         listView = findViewById(R.id.search_history_list);
@@ -85,6 +96,7 @@ public class LyricsSearchActivity extends AppCompatActivity {
         if (elements.size() > 0) {
             myAdapter.notifyDataSetChanged();
         }
+        progressBar.setProgress(66);
 
         Button btn = findViewById(R.id.search_button);
         btn.setOnClickListener(click -> {
@@ -129,30 +141,34 @@ public class LyricsSearchActivity extends AppCompatActivity {
             }
         });
 
-        listView.setSelection(elements.size());
-        listView.setOnItemLongClickListener((parent, view, pos, id) -> {
-
-            // build up a AlertDialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Search History");
-            builder.setMessage("The selected row is: " + pos);
-
-            // set up two buttons
-            builder.setPositiveButton("OK", null);
-            builder.setNegativeButton("Cancel", null);
-
-            // create and show the dialog
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-            return true;
-        });
-
-        Button toFavList = findViewById(R.id.go_to_fav_button);
+        Button toFavList = findViewById(R.id.button_go_to_fav);
         toFavList.setOnClickListener(click ->{
             Intent goToFav = new Intent(LyricsSearchActivity.this, FavSongActivity.class);
             startActivity(goToFav);
         });
+
+        listView.setSelection(elements.size());
+        listView.setOnItemLongClickListener((parent, view, pos, id) -> {
+
+            Toast.makeText(this,"The selected row is: " + pos, Toast.LENGTH_SHORT).show();
+            // build up a AlertDialog
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle("Search History");
+//            builder.setMessage("The selected row is: " + pos);
+//
+//            // set up two buttons
+//            builder.setPositiveButton("OK", null);
+//            builder.setNegativeButton("Cancel", null);
+//
+//            // create and show the dialog
+//            AlertDialog alertDialog = builder.create();
+//            alertDialog.show();
+
+            return true;
+        });
+
+        progressBar.setProgress(100);
+        progressBar.setVisibility(View.GONE);
     }
 
     /**

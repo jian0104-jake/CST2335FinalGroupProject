@@ -3,6 +3,7 @@ package com.example.cst2335finalgroupproject.SongLyricsSearch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
@@ -47,10 +51,26 @@ public class FavSongActivity extends AppCompatActivity {
      */
     private SQLiteDatabase sqLiteDatabase;
 
+    /**
+     * A process bar
+     */
+    private ProgressBar progressBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_song_list);
+
+        progressBar = findViewById(R.id.process_bar_fav);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(33);
+
+        Button button = findViewById(R.id.button_back_to_front);
+        button.setOnClickListener(click ->{
+            Intent backToSearch = new Intent(FavSongActivity.this, LyricsSearchActivity.class);
+            startActivity(backToSearch);
+        });
 
         listView = findViewById(R.id.fav_song_list);
         listView.setAdapter(myAdapter = new MyListAdapter());
@@ -66,7 +86,7 @@ public class FavSongActivity extends AppCompatActivity {
                     cursor.getLong(cursor.getColumnIndex(FavSongDB.COL_ID))));
         }
 
-
+        progressBar.setProgress(66);
 
         listView.setSelection(elements.size());
 
@@ -82,6 +102,7 @@ public class FavSongActivity extends AppCompatActivity {
                 sqLiteDatabase.delete(FavSongDB.TABLE_NAME, FavSongDB.COL_ID + " = ? ",
                         new String[]{ String.valueOf(id)});
                 myAdapter.notifyDataSetChanged();
+                Toast.makeText(this, "Delete Successfully", Toast.LENGTH_LONG).show();
             });
             builder.setNegativeButton("Cancel", null);
 
@@ -91,6 +112,9 @@ public class FavSongActivity extends AppCompatActivity {
 
             return true;
         });
+
+        progressBar.setProgress(100);
+        progressBar.setVisibility(View.GONE);
 
     }
 

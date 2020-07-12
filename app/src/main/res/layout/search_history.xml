@@ -12,6 +12,6 @@
         android:id="@+id/search_history_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16pt"/>
+        android:textSize="12pt"/>
 
 </LinearLayout>

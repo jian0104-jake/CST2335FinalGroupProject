@@ -15,4 +15,5 @@
     <string name="goto_fav_button">Go to Fav List</string>
     <string name="add_fav_button">Add to Fav</string>
     <string name="google_button">Google the Song</string>
+    <string name="back_to_front_button">Go back to Search</string>
 </resources>
