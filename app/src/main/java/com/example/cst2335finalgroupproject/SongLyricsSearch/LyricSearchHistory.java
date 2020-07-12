@@ -1,9 +1,9 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 /**
  * The class record the lyrics search history
  */
-public class FavLyricsEntity {
+public class LyricSearchHistory {
 
     /**
      * artist: the singer's name
@@ -11,30 +11,22 @@ public class FavLyricsEntity {
      */
     private String artist, title;
 
-
-    /**
-     * Auto generated ID in database.
-     */
-    private long dbId;
-
     /**
      * Default non-argue constructor
      * Chain to full-argue constructor using blank string as default value
      */
-    public FavLyricsEntity() {
-        this("","", 0);
+    public LyricSearchHistory() {
+        this("","");
     }
 
     /**
      * Full-argue constructor
      * @param artist the singer's name
      * @param title the song's name
-     * @param dbId the song's database id.
      */
-    public FavLyricsEntity(String artist, String title, long dbId) {
+    public LyricSearchHistory(String artist, String title) {
         this.artist = artist;
         this.title = title;
-        this.dbId = dbId;
     }
 
     /**
@@ -67,22 +59,6 @@ public class FavLyricsEntity {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * Provide database ID of the song
-     * @return the song's database ID
-     */
-    public long getDbId() {
-        return dbId;
-    }
-
-    /**
-     * Update the song's ID
-     * @param dbId the new database ID for the song
-     */
-    public void setDbId(long dbId) {
-        this.dbId = dbId;
     }
 
     /**

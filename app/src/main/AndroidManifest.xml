@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cst2335finalgroupproject">
 
+    <!-- Permission for access to Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,8 +21,10 @@
         </activity>
         <activity android:name=".DeezerSongSearchActivity"></activity>
 
-        <activity android:name=".LyricsSearchActivity" />
-        <activity android:name=".ShowLyricsActivity" />
+        <!-- Activity for Song Lyrics Search -->
+        <activity android:name=".SongLyricsSearch.LyricsSearchActivity" />
+        <activity android:name=".SongLyricsSearch.ShowLyricsActivity" />
+        <activity android:name=".SongLyricsSearch.FavSongActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cst2335finalgroupproject.R;
 
 import org.json.JSONObject;
 

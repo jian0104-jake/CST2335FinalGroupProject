@@ -1,4 +1,4 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.cst2335finalgroupproject.R;
 
 import java.util.ArrayList;
 

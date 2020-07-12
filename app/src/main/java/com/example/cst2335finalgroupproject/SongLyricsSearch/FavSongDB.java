@@ -1,4 +1,4 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

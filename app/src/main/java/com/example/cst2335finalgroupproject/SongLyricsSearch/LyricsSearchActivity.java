@@ -1,4 +1,4 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 
 
@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cst2335finalgroupproject.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
