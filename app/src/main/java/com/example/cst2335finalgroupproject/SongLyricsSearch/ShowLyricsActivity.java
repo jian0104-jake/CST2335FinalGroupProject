@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
 
 import org.json.JSONObject;
 

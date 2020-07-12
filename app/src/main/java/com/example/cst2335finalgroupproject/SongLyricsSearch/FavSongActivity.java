@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.Entity.FavLyricsEntity;
 
 import java.util.ArrayList;
 
