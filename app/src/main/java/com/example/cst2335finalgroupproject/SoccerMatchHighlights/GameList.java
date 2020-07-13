@@ -47,12 +47,11 @@ public class GameList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         Button btn = findViewById(R.id.showBtn);
-       // detailTV = newView.findViewById(R.id.detailTV);
         pb = findViewById(R.id.pb1);
         pb.setVisibility(View.VISIBLE);
         String url = "https://www.scorebat.com/video-api/v1/";
-      //  GameListHttpRequest myRequest = new GameListHttpRequest();
-     //   myRequest.execute(url);
+        GameListHttpRequest myRequest = new GameListHttpRequest();
+        myRequest.execute(url);
         btn.setOnClickListener(b ->{
             Intent goToDe = new Intent(GameList.this,Game_Detail_Activity.class);
             startActivity(goToDe);
@@ -61,7 +60,7 @@ public class GameList extends AppCompatActivity {
         myList.setAdapter( myAdapter = new MyListAdapter());
         myList.setOnItemClickListener((parent, view, position, id) -> {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("You selected game "+ position).setMessage("Do you want to go to game details?"
+            alertDialog.setTitle("You selected game "+ gameTitle).setMessage("Do you want to go to game details?"
                     ).setPositiveButton("Yes",(click,arg)->{
                 Intent goToProfile = new Intent(GameList.this,Game_Detail_Activity.class);
                 //goToProfile.putExtra("Email",EmailField.getText().toString());
@@ -82,12 +81,6 @@ public class GameList extends AppCompatActivity {
           this.title = title;
           this.vedioUrl = vedioUrl;
       }
-
-
-        //TODO
-        //SETATT(ATTNAME, ATTVALUE)
-        //DISPLAY
-
 
     }
 
@@ -148,19 +141,20 @@ public class GameList extends AppCompatActivity {
         }
         @Override
         public void onPostExecute(String fromDoInBackground)
-        {   //myList
+        {
             pb.setVisibility(View.INVISIBLE);
+            myAdapter.notifyDataSetChanged();
 
         }
     }
     private class MyListAdapter extends BaseAdapter {
 
-     //   public int getCount() { return soccerDetailsList.size();}
-     public int getCount() { return elements.size();}
+       public int getCount() { return soccerDetailsList.size();}
 
-       public Object getItem(int position) { return "This is game " + position; }
 
-       // public SoccerDetails getItem(int position) { return  soccerDetailsList.get(position); }
+
+
+       public SoccerDetails getItem(int position) { return  soccerDetailsList.get(position); }
 
         public long getItemId(int position) { return position ; }
 
@@ -174,7 +168,7 @@ public class GameList extends AppCompatActivity {
 
             //set what the text should be for this row:
             detailTV = newView.findViewById(R.id.detailTV);
-            detailTV.setText( getItem(position).toString() );
+            detailTV.setText( getItem(position).title );
 
             //return it to be put in the table
             return newView;
