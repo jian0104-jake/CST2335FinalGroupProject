@@ -5,10 +5,10 @@ public class City {
     private String Country;
     private String Region;
     private String currency;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
-    public City(String name, String country, String region, String currency, String latitude, String longitude) {
+    public City(String name,String region, String country,  String currency, double latitude, double longitude) {
         this.name = name;
         Country = country;
         Region = region;
@@ -52,19 +52,19 @@ public class City {
         this.currency = currency;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }

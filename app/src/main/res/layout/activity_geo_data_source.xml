@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/latitudeHint"
-        android:inputType="text" />
+        android:inputType="numberSigned" />
 
     <TextView
         android:id="@+id/longitudeText"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/longitudeHint"
-        android:inputType="text" />
+        android:inputType="numberSigned" />
 
     <LinearLayout
         android:layout_width="match_parent"
