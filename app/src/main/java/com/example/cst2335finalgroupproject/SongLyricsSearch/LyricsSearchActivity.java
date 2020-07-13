@@ -98,12 +98,13 @@ public class LyricsSearchActivity extends AppCompatActivity {
         }
         progressBar.setProgress(66);
 
+        EditText artistText = findViewById(R.id.artist_input);
+        EditText titleText = findViewById(R.id.title_input);
+
         Button btn = findViewById(R.id.search_button);
         btn.setOnClickListener(click -> {
 
-            EditText artistText = findViewById(R.id.artist_input);
             String artist = artistText.getText().toString();
-            EditText titleText = findViewById(R.id.title_input);
             String title = titleText.getText().toString();
 
             String message = "The artist is: " + artist + "\nThe title is: " + title;
@@ -148,22 +149,14 @@ public class LyricsSearchActivity extends AppCompatActivity {
         });
 
         listView.setSelection(elements.size());
+        listView.setOnItemClickListener((parent, view, pos, id) -> {
+            String[] strArr = myAdapter.getItem(pos).split(" - ");
+            artistText.setText(strArr[0]);
+            titleText.setText(strArr[1]);
+        });
+
         listView.setOnItemLongClickListener((parent, view, pos, id) -> {
-
             Toast.makeText(this,"The selected row is: " + pos, Toast.LENGTH_SHORT).show();
-            // build up a AlertDialog
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("Search History");
-//            builder.setMessage("The selected row is: " + pos);
-//
-//            // set up two buttons
-//            builder.setPositiveButton("OK", null);
-//            builder.setNegativeButton("Cancel", null);
-//
-//            // create and show the dialog
-//            AlertDialog alertDialog = builder.create();
-//            alertDialog.show();
-
             return true;
         });
 
