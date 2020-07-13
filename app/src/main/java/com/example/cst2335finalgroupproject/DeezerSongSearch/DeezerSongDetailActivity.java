@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.example.cst2335finalgroupproject.R;
 
+/**
+ * show details of a specific song
+ */
 public class DeezerSongDetailActivity extends AppCompatActivity {
     public static final String KEY_SONG_NAME = "SONG_NAME";
 

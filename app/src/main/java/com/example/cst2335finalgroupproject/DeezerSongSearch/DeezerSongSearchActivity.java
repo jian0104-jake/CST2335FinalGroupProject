@@ -24,10 +24,29 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entrance activity to use Deezer song search api to search songs of artists.
+ */
 public class DeezerSongSearchActivity extends AppCompatActivity {
+
+    /**
+     * the progress bar to show that the app is busy fetching data from server
+     */
     private ProgressBar progressBar;
+
+    /**
+     * the ListView to show the songs
+     */
     private ListView lvSong;
+
+    /**
+     * the adapter used for the ListView to show songs
+     */
     private SongsAdapter songsAdapter;
+
+    /**
+     * the data holder of songs
+     */
     private List<String> songs;
 
     @Override
@@ -36,26 +55,27 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deezer_song_search);
         setTitle("Search a song(Deezer)");
 
+        /**
+         * init components
+         */
         EditText edtArtistName = findViewById(R.id.etArtistName);
         Button btnSearch = findViewById(R.id.btnSearch);
         progressBar = findViewById(R.id.process_bar);
         lvSong = findViewById(R.id.lvSong);
 
+        /**
+         * init data holder and adapter
+         */
         songs = new ArrayList<>();
         songsAdapter = new SongsAdapter();
         lvSong.setAdapter(songsAdapter);
 
-
-
         lvSong.setOnItemClickListener((parent, view, position, id) -> {
-//        lvSong.setOnItemLongClickListener((parent, view, position, id) -> {
             String song = songs.get(position);
 
             Intent intent = new Intent(DeezerSongSearchActivity.this, DeezerSongDetailActivity.class);
             intent.putExtra(DeezerSongDetailActivity.KEY_SONG_NAME, song);
             startActivity(intent);
-
-//            return true;
         });
 
         btnSearch.setOnClickListener((v -> {
@@ -63,6 +83,10 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         }));
     }
 
+    /**
+     * search artist first
+     * @param artistName the artist name user enteered
+     */
     private void searchArtist(String artistName) {
         if (artistName.isEmpty()) {
             // TODO show alert to tell user input something
@@ -90,7 +114,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         queryArtist.execute(String.format("https://api.deezer.com/search/artist/?q=%s&output=xml", artistName));
     }
 
-
+    /**
+     * an subclass of AsyncTask to be used for artist query
+     */
     class QueryArtist extends AsyncTask<String, Integer, String> {
         private List<String> lstArtistName = new ArrayList<>();
 
@@ -129,6 +155,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * a subclass of AsyncTask to be used to query songs
+     */
     class QuerySong extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -147,6 +176,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * song adapter used by list view for songs display
+     */
     class SongsAdapter extends BaseAdapter {
 
         @Override
