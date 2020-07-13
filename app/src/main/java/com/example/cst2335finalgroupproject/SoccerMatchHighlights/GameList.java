@@ -1,4 +1,4 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;

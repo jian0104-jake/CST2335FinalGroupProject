@@ -1,4 +1,4 @@
-package com.example.cst2335finalgroupproject;
+package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
+import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 
