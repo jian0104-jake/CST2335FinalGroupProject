@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".SongLyricsSearch.LyricsSearchActivity"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".SongLyricsSearch.LyricsSearchActivity">
 
     <TextView
         android:id="@+id/artistText"
@@ -36,25 +36,34 @@
         android:inputType="text" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/search_button"
-        android:text="@string/search_button"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search_button" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/button_go_to_fav"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/go_to_fav_button"
-        android:text="@string/goto_fav_button"/>
+        android:text="@string/goto_fav_button" />
 
     <TextView
         android:id="@+id/search_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/search_history" />
+        android:text="@string/search_history"
+        android:textSize="14pt" />
+
     <ListView
+        android:id="@+id/search_history_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/process_bar_search"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_history_list" />
+        android:visibility="gone"/>
 
 </LinearLayout>

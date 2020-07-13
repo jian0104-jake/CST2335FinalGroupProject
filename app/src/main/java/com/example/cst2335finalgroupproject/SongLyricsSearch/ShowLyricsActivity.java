@@ -59,16 +59,13 @@ public class ShowLyricsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_show);
 
-        progressBar = findViewById(R.id.process_bar);
+        progressBar = findViewById(R.id.process_bar_show);
         progressBar.setVisibility(View.VISIBLE);
 
         Intent fromSearch = getIntent();
         String artist = fromSearch.getStringExtra("song_artist");
         String title = fromSearch.getStringExtra("song_title");
         String link = URL + artist + "/" + title;
-
-        LyricSearch lyricSearch = new LyricSearch();
-        lyricSearch.execute(link);
 
         Button favButton = findViewById(R.id.button_fav);
         favButton.setOnClickListener(click -> {
@@ -97,6 +94,9 @@ public class ShowLyricsActivity extends AppCompatActivity {
             startActivity(launchBrower);
         });
 
+        LyricSearch lyricSearch = new LyricSearch();
+        lyricSearch.execute(link);
+
     }
 
     class LyricSearch extends AsyncTask<String, Integer, String> {
@@ -115,6 +115,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
                 //open the connection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
+                Thread.sleep(50);
                 publishProgress(20);
 
                 //wait for data:
@@ -125,6 +126,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
                 //Build the entire string response:
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
                 StringBuilder sb = new StringBuilder();
+                Thread.sleep(50);
                 publishProgress(40);
 
                 String line;
@@ -138,6 +140,8 @@ public class ShowLyricsActivity extends AppCompatActivity {
 
                 //get the double associated with "value" and convert to string
                 lyric = lyricReport.getString("lyrics");
+
+                Thread.sleep(50);
                 publishProgress(80);
 
             } catch (Exception e) {
@@ -157,7 +161,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
             TextView textView = findViewById(R.id.lyric);
             textView.setText(lyric);
 
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
     }
 }
