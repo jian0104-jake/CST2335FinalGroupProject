@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity"></activity>
+        <activity android:name=".geodata.GeoDataSource"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeezerSongSearch.DeezerSongSearchActivity" /> <!-- Activity for Song Lyrics Search -->
+        <activity android:name=".DeezerSongSearchActivity" /> <!-- Activity for Song Lyrics Search -->
         <activity android:name=".SongLyricsSearch.LyricsSearchActivity" />
         <activity android:name=".SongLyricsSearch.ShowLyricsActivity" />
         <activity android:name=".SongLyricsSearch.FavSongActivity" />

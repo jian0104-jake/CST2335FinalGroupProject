@@ -15,4 +15,21 @@
     <string name="goto_fav_button">Go to Fav List</string>
     <string name="add_fav_button">Add to Fav</string>
     <string name="google_button">Google the Song</string>
+
+
+
+
+
+
+    <!-- String used in GeoData-->
+    <string name="latitudeText">Latitude</string>
+    <string name="latitudeHint">Enter the latitude value like 45.4215</string>
+    <string name="longitudeText">Longitude</string>
+    <string name="longitudeHint">Enter the longitude value like 75.6972</string>
+    <string name="searchGeo">Search nearby cities</string>
+    <string name="favoriteGeo">Saved cities</string>
+    <string name="geo_toast_message">City is saved!</string>
+
+
+
 </resources>
