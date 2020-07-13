@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnGeoDataSource = findViewById(R.id.btnGeoDataSource);
         btnGeoDataSource.setOnClickListener((view -> {
-
+            Intent goToGeoData = new Intent(MainActivity.this, GeoDataSource.class);
+            startActivity(goToGeoData);
         }));
 
         Button btnSoccer = findViewById(R.id.btnSoccer);

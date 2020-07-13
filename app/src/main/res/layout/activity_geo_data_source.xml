@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".geodata.GeoDataSource"
+    >
+
+    <TextView
+        android:id="@+id/latitudeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/latitudeText" />
+
+    <EditText
+        android:id="@+id/latitudeEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/latitudeHint"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/longitudeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/longitudeText" />
+
+    <EditText
+        android:id="@+id/longitudeEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/longitudeHint"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="0.0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="@string/searchGeo"
+            android:id="@+id/searchGeoBtn"
+            />
+        <Button
+            android:layout_width="0.0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="@string/favoriteGeo"
+            android:id="@+id/favoriteGeoBtn" />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchCitiesListView" />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/geoProcessBar"
+        android:visibility="invisible"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
+
+</LinearLayout>
