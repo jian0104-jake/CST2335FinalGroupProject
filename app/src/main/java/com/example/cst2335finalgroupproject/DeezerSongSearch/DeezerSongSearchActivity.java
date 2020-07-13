@@ -13,11 +13,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cst2335finalgroupproject.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
             return;
         }
 
+        Snackbar snackbar = Snackbar.make(lvSong, "Search songs of artist " + artistName, Snackbar.LENGTH_LONG);
+        snackbar.show();
+
         // TODO search Artist first
         progressBar.setVisibility(View.VISIBLE);
 
@@ -109,12 +114,16 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            songs.clear();
 
             // TODO hard coded. Move to proper method
             songs.add("Hello");
             songs.add("World");
 
-        songsAdapter.notifyDataSetChanged();
+            songsAdapter.notifyDataSetChanged();
+
+            Toast.makeText(DeezerSongSearchActivity.this, "Retrieved 2 songs",Toast.LENGTH_LONG).show();
+
 
             progressBar.setVisibility(View.GONE);
         }
