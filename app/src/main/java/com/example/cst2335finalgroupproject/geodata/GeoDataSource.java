@@ -218,6 +218,7 @@ public class GeoDataSource extends AppCompatActivity {
                 cities.add(new City(city,region,country,currency,latitude,longitude));
 
             } catch (Exception e) {
+                return "Wrong";
             }
             return "done";
         }
