@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CST2335FinalGroupProject</string>
+    <string name="geo_data_source">查找城市</string>
+    <string name="song_lyrics_search">歌词搜索</string>
+    <string name="deezer_song_search">Deezer歌曲搜索</string>
+    <string name="soccer_match_highlights">足球比赛精华</string>
+    <string name="artistText">演唱者</string>
+    <string name="artistHint">输入演唱者，如：police</string>
+    <string name="titleText">歌曲名</string>
+    <string name="titleHint">输入歌曲名，如：roxanne</string>
+    <string name="search_history">历史查询</string>
+    <string name="search_button">查询歌词</string>
+    <string name="goto_fav_button">查看喜爱的歌曲</string>
+    <string name="add_fav_button">添加到喜爱</string>
+    <string name="google_button">在谷歌搜索本歌</string>
+    <string name="back_to_front_button">返回搜索页面</string>
+
+    <string name="latitudeText">纬度</string>
+    <string name="latitudeHint">请输入纬度值，如45.4215</string>
+    <string name="longitudeText">经度</string>
+    <string name="longitudeHint">请输入经度值，如75.6972</string>
+    <string name="searchGeo">查找附近城市</string>
+    <string name="favoriteGeo">已收藏城市</string>
+    <string name="geo_toast_message">城市已收藏</string>
+    <string name="show">显示我最喜欢的游戏</string>
+    <string name="start">开始</string>
+    <string name="pause">暂停</string>
+    <string name="stop">停止</string>
+    <string name="save">保存</string>
+
+
+</resources>

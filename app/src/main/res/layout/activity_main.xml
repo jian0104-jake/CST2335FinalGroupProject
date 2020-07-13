@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnGeoDataSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        style="@style/main_activity_button_style"
+        android:text="@string/geo_data_source"
+        />
+    <Button
+        android:id="@+id/btnSoccer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/main_activity_button_style"
+        android:text="@string/soccer_match_highlights"
+        />
+    <Button
+        android:id="@+id/btnSongLyrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/main_activity_button_style"
+        android:text="@string/song_lyrics_search"
+        />
+    <Button
+        android:id="@+id/btnDeezer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/main_activity_button_style"
+        android:text="@string/deezer_song_search"
+        />
+
+</LinearLayout>

@@ -5,4 +5,31 @@
     <string name="pause">pause</string>
     <string name="stop">stop</string>
     <string name="save">save</string>
+
+    <string name="geo_data_source">Geo Data Source</string>
+    <string name="soccer_match_highlights">Soccer Match Highlights</string>
+    <string name="song_lyrics_search">Song Lyrics Search</string>
+    <string name="deezer_song_search">Deezer song search</string>
+
+    <!-- String used in Song Lyrics Search -->
+    <string name="artistText">Artist of the Song</string>
+    <string name="artistHint">Enter artist here. ex.: police</string>
+    <string name="titleText">Title of the Song</string>
+    <string name="titleHint">Enter title here, ex.: roxanne</string>
+    <string name="search_history">Search History</string>
+    <string name="search_button">Search Lyrics</string>
+    <string name="goto_fav_button">Go to Fav List</string>
+    <string name="add_fav_button">Add to Fav</string>
+    <string name="google_button">Google the Song</string>
+    <string name="back_to_front_button">Go back to Search</string>
+
+    <!-- String used in GeoData-->
+    <string name="latitudeText">Latitude</string>
+    <string name="latitudeHint">Enter the latitude value like 45.4215</string>
+    <string name="longitudeText">Longitude</string>
+    <string name="longitudeHint">Enter the longitude value like 75.6972</string>
+    <string name="searchGeo">Search nearby cities</string>
+    <string name="favoriteGeo">Saved cities</string>
+    <string name="geo_toast_message">City is saved!</string>
+
 </resources>
