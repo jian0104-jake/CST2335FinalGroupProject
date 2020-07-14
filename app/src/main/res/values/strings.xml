@@ -31,5 +31,11 @@
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
+    <string name="soccer_alert_title">You selected game </string>
+    <string name="soccer_alert_msg">Do you want to go to game details?</string>
+    <string name="soccer_postive">Yes</string>
+    <string name="soccer_toast_txt">you are going to detail page</string>
+    <string name="soccer_negative">No</string>
+    <string name="soccer_snackbar_msg">you are going to stay on this page</string>
 
 </resources>
