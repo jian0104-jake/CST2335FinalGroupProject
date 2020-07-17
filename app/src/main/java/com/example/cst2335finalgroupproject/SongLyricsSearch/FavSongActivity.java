@@ -60,7 +60,7 @@ public class FavSongActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fav_song_list);
+        setContentView(R.layout.activity_lyric_fav_song_list);
 
         progressBar = findViewById(R.id.process_bar_fav);
         progressBar.setVisibility(View.VISIBLE);
@@ -145,7 +145,7 @@ public class FavSongActivity extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
 
             if (old == null) {
-                newView = inflater.inflate(R.layout.search_history, parent, false);
+                newView = inflater.inflate(R.layout.lyric_search_history, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.search_history_layout = newView.findViewById(R.id.search_history_layout);
                 viewHolder.search_history_text = newView.findViewById(R.id.search_history_text);

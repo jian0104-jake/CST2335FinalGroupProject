@@ -18,14 +18,14 @@
             android:layout_row="0"
             android:layout_column="0"
             android:layout_columnWeight="1"
-            android:text="@string/add_fav_button" />
+            android:text="@string/lyric_add_fav_button" />
 
         <Button
             android:id="@+id/button_search_with_google"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_columnWeight="1"
-            android:text="@string/google_button" />
+            android:text="@string/lyric_google_button" />
 
     </GridLayout>
 

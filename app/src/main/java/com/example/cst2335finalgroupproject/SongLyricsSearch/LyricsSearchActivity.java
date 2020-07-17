@@ -251,7 +251,7 @@ public class LyricsSearchActivity extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
 
             if (old == null) {
-                newView = inflater.inflate(R.layout.search_history, parent, false);
+                newView = inflater.inflate(R.layout.lyric_search_history, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.search_history_layout = newView.findViewById(R.id.search_history_layout);
                 viewHolder.search_history_text = newView.findViewById(R.id.search_history_text);

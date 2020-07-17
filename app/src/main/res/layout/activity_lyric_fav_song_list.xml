@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_back_to_front"
-        android:text="@string/back_to_front_button"/>
+        android:text="@string/lyric_back_to_front_button"/>
 
     <ListView
         android:layout_width="match_parent"
