@@ -59,7 +59,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_show);
 
-        progressBar = findViewById(R.id.process_bar_show);
+        progressBar = findViewById(R.id.lyric_process_bar_show);
         progressBar.setVisibility(View.VISIBLE);
 
         Intent fromSearch = getIntent();
@@ -67,7 +67,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
         String title = fromSearch.getStringExtra("song_title");
         String link = URL + artist + "/" + title;
 
-        Button favButton = findViewById(R.id.button_fav);
+        Button favButton = findViewById(R.id.lyric_button_fav);
         favButton.setOnClickListener(click -> {
             // Check if a song already exists
             favSongDB = new FavSongDB(this);
@@ -87,7 +87,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
             }
         });
 
-        Button googleButton = findViewById(R.id.button_search_with_google);
+        Button googleButton = findViewById(R.id.lyric_button_search_with_google);
         googleButton.setOnClickListener(click -> {
             String searchLink = "https://www.google.com/search?q=" + artist + "+" + title;
             Intent launchBrower = new Intent(Intent.ACTION_VIEW, Uri.parse(searchLink));
@@ -158,7 +158,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
 
         public void onPostExecute(String fromDoInBackground) {
             publishProgress(100);
-            TextView textView = findViewById(R.id.lyric);
+            TextView textView = findViewById(R.id.lyric_content);
             textView.setText(lyric);
 
             progressBar.setVisibility(View.GONE);

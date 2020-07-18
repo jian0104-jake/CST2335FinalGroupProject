@@ -62,17 +62,17 @@ public class FavSongActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_fav_song_list);
 
-        progressBar = findViewById(R.id.process_bar_fav);
+        progressBar = findViewById(R.id.lyric_process_bar_fav);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(33);
 
-        Button button = findViewById(R.id.button_back_to_front);
+        Button button = findViewById(R.id.lyric_button_back_to_front);
         button.setOnClickListener(click ->{
             Intent backToSearch = new Intent(FavSongActivity.this, LyricsSearchActivity.class);
             startActivity(backToSearch);
         });
 
-        listView = findViewById(R.id.fav_song_list);
+        listView = findViewById(R.id.lyric_fav_song_list);
         listView.setAdapter(myAdapter = new MyListAdapter());
 
         favSongDB = new FavSongDB(this);
@@ -147,8 +147,8 @@ public class FavSongActivity extends AppCompatActivity {
             if (old == null) {
                 newView = inflater.inflate(R.layout.lyric_search_history, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.search_history_layout = newView.findViewById(R.id.search_history_layout);
-                viewHolder.search_history_text = newView.findViewById(R.id.search_history_text);
+                viewHolder.search_history_layout = newView.findViewById(R.id.lyric_search_history_layout);
+                viewHolder.search_history_text = newView.findViewById(R.id.lyric_search_history_text);
                 newView.setTag(viewHolder);
             } else {
                 newView = old;

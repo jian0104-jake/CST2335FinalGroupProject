@@ -83,13 +83,13 @@ public class LyricsSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_search);
 
-        progressBar = findViewById(R.id.process_bar_search);
+        progressBar = findViewById(R.id.lyric_process_bar_search);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(33);
 
 
         // Listview to display search history
-        listView = findViewById(R.id.search_history_list);
+        listView = findViewById(R.id.lyric_search_history_list);
         listView.setAdapter(myAdapter = new MyListAdapter());
         // get the history from SharedPreferences, and display in the listview
         elements = (ArrayList<String>) getSearchHistory();
@@ -98,10 +98,10 @@ public class LyricsSearchActivity extends AppCompatActivity {
         }
         progressBar.setProgress(66);
 
-        EditText artistText = findViewById(R.id.artist_input);
-        EditText titleText = findViewById(R.id.title_input);
+        EditText artistText = findViewById(R.id.lyric_artist_input);
+        EditText titleText = findViewById(R.id.lyric_title_input);
 
-        Button btn = findViewById(R.id.search_button);
+        Button btn = findViewById(R.id.lyric_search_button);
         btn.setOnClickListener(click -> {
 
             String artist = artistText.getText().toString();
@@ -142,7 +142,7 @@ public class LyricsSearchActivity extends AppCompatActivity {
             }
         });
 
-        Button toFavList = findViewById(R.id.button_go_to_fav);
+        Button toFavList = findViewById(R.id.lyric_button_go_to_fav);
         toFavList.setOnClickListener(click ->{
             Intent goToFav = new Intent(LyricsSearchActivity.this, FavSongActivity.class);
             startActivity(goToFav);
@@ -253,8 +253,8 @@ public class LyricsSearchActivity extends AppCompatActivity {
             if (old == null) {
                 newView = inflater.inflate(R.layout.lyric_search_history, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.search_history_layout = newView.findViewById(R.id.search_history_layout);
-                viewHolder.search_history_text = newView.findViewById(R.id.search_history_text);
+                viewHolder.search_history_layout = newView.findViewById(R.id.lyric_search_history_layout);
+                viewHolder.search_history_text = newView.findViewById(R.id.lyric_search_history_text);
                 newView.setTag(viewHolder);
             } else {
                 newView = old;
