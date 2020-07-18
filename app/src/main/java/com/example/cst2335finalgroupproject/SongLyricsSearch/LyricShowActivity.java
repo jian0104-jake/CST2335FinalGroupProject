@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * A new page to display lyrics
  */
-public class ShowLyricsActivity extends AppCompatActivity {
+public class LyricShowActivity extends AppCompatActivity {
 
     /**
      * A process bar
@@ -73,7 +73,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
             favSongDB = new FavSongDB(this);
             sqLiteDatabase = favSongDB.getWritableDatabase();
             Cursor cursor = sqLiteDatabase.query(FavSongDB.TABLE_NAME,
-                    new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE},
+                    new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
                     null, null, null, null, FavSongDB.COL_ID);
             if (cursor.moveToNext()) {
                 Toast.makeText(this,"This song already in the Favorite List", Toast.LENGTH_LONG).show();
@@ -82,6 +82,8 @@ public class ShowLyricsActivity extends AppCompatActivity {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(FavSongDB.COL_ARTIST, artist);
                 contentValues.put(FavSongDB.COL_TITLE, title);
+                TextView textView = findViewById(R.id.lyric_content);
+                contentValues.put(FavSongDB.COL_CONTENT, textView.getText().toString());
                 sqLiteDatabase.insert(FavSongDB.TABLE_NAME, "NullColumnName", contentValues);
                 Toast.makeText(this,"Successfully Add to Favorite List", Toast.LENGTH_LONG).show();
             }

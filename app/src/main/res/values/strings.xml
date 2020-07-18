@@ -31,5 +31,6 @@
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
+    <string name="lyric_fav_hide_button">HIDE</string>
 
 </resources>

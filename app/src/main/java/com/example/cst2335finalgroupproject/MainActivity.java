@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
-import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnSongLyrics = findViewById(R.id.btnSongLyrics);
         btnSongLyrics.setOnClickListener((view -> {
-            Intent goToLyricSearch = new Intent(MainActivity.this, LyricsSearchActivity.class);
+            Intent goToLyricSearch = new Intent(MainActivity.this, LyricSearchActivity.class);
             startActivity(goToLyricSearch);
         }));
 

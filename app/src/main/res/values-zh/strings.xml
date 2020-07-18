@@ -17,6 +17,7 @@
     <string name="lyric_add_fav_button">添加到喜爱</string>
     <string name="lyric_google_button">在谷歌搜索本歌</string>
     <string name="lyric_back_to_front_button">返回搜索页面</string>
+    <string name="lyric_fav_hide_button">隐藏</string>
 
     <string name="latitudeText">纬度</string>
     <string name="latitudeHint">请输入纬度值，如45.4215</string>

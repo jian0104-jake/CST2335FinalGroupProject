@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cst2335finalgroupproject">
-
     <!-- Permission for access to Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,11 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SoccerMatchHighlights.Favorite_Game_Detail"/>
+
+        <activity android:name=".SoccerMatchHighlights.Favorite_Game_Detail" />
         <activity android:name=".SoccerMatchHighlights.Game_Detail_Activity" />
-        <activity android:name=".SoccerMatchHighlights.GameList"/>
-        <activity android:name=".geodata.GeoDataSource"/>
-        <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity"/>
+        <activity android:name=".SoccerMatchHighlights.GameList" />
+        <activity android:name=".geodata.GeoDataSource" />
+        <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeezerSongSearch.DeezerSongSearchActivity" /> <!-- Activity for Song Lyrics Search -->
-        <activity android:name=".SongLyricsSearch.LyricsSearchActivity" />
-        <activity android:name=".SongLyricsSearch.ShowLyricsActivity" />
-        <activity android:name=".SongLyricsSearch.FavSongActivity" />
+        <activity android:name=".DeezerSongSearch.DeezerSongSearchActivity" />
+
+        <!-- Activity for Song Lyrics Search -->
+        <activity android:name=".SongLyricsSearch.LyricSearchActivity" />
+        <activity android:name=".SongLyricsSearch.LyricShowActivity" />
+        <activity android:name=".SongLyricsSearch.LyricFavSongActivity" />
+        <activity android:name=".SongLyricsSearch.LyricEmptyActivity" />
     </application>
 
 </manifest>

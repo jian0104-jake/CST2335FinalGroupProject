@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SongLyricsSearch.LyricDetailsFragment">
+
+    <TextView
+        android:id="@+id/lyric_fav_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textAlignment="center"
+        android:textSize="16pt" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lyric_fragment_hide_button"
+        android:layout_below="@+id/lyric_fav_information">
+
+        <TextView
+            android:id="@+id/lyric_fav_content_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/lyric_fragment_hide_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/lyric_fav_hide_button" />
+
+</RelativeLayout>
