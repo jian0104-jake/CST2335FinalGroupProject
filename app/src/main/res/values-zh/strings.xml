@@ -26,6 +26,10 @@
     <string name="searchGeo">查找附近城市</string>
     <string name="favoriteGeo">已收藏城市</string>
     <string name="geo_toast_message">城市已收藏</string>
+    <string name="invalid_geo_search">经纬度信息有误！ </string>
+
+
+
     <string name="show">显示我最喜欢的游戏</string>
     <string name="start">开始</string>
     <string name="pause">暂停</string>
