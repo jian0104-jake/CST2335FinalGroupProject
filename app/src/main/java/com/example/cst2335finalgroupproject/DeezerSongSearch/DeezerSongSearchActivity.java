@@ -1,6 +1,7 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.util.List;
  */
 public class DeezerSongSearchActivity extends AppCompatActivity {
 
+    private static final String SEARCH_TEXT = "SEARCH_TEXT";
     /**
      * the progress bar to show that the app is busy fetching data from server
      */
@@ -49,16 +51,25 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
      */
     private List<String> songs;
 
+    /**
+     * sue shared preferences to store the search text user typed
+     */
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_search);
         setTitle("Search a song(Deezer)");
 
+        sharedPreferences = getSharedPreferences("DeezerSong", MODE_PRIVATE);
+        String searchText = sharedPreferences.getString(SEARCH_TEXT, "");
+
         /**
          * init components
          */
         EditText edtArtistName = findViewById(R.id.etArtistName);
+        edtArtistName.setText(searchText);
         Button btnSearch = findViewById(R.id.btnSearch);
         progressBar = findViewById(R.id.process_bar);
         lvSong = findViewById(R.id.lvSong);
@@ -89,7 +100,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
      */
     private void searchArtist(String artistName) {
         if (artistName.isEmpty()) {
-            // TODO show alert to tell user input something
+            // show alert to tell user input something
             String alertMsg = "Please enter the artist name.";
             String title = "Alert";
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -103,6 +114,10 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
 
             return;
         }
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SEARCH_TEXT, artistName);
+        editor.apply();
 
         Snackbar snackbar = Snackbar.make(lvSong, "Search songs of artist " + artistName, Snackbar.LENGTH_LONG);
         snackbar.show();
