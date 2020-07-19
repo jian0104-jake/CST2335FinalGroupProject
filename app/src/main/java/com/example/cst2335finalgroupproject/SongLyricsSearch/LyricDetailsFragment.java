@@ -15,7 +15,14 @@ import com.example.cst2335finalgroupproject.R;
 
 public class LyricDetailsFragment extends Fragment {
 
+    /**
+     * Store information passed from previous activity
+     */
     private Bundle dataFromActivity;
+
+    /**
+     * The activity that build up fragment.
+     */
     private AppCompatActivity parentActivity;
 
     public LyricDetailsFragment() {
