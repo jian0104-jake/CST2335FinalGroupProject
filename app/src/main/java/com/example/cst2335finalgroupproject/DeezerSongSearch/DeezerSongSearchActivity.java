@@ -1,5 +1,6 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +21,20 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.entity.Song;
 import com.example.cst2335finalgroupproject.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +62,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
     /**
      * the data holder of songs
      */
-    private List<String> songs;
+    private List<Song> songs;
 
     /**
      * sue shared preferences to store the search text user typed
@@ -82,10 +95,13 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         lvSong.setAdapter(songsAdapter);
 
         lvSong.setOnItemClickListener((parent, view, position, id) -> {
-            String song = songs.get(position);
+            Song song = songs.get(position);
 
             Intent intent = new Intent(DeezerSongSearchActivity.this, DeezerSongDetailActivity.class);
-            intent.putExtra(DeezerSongDetailActivity.KEY_SONG_NAME, song);
+            intent.putExtra(DeezerSongDetailActivity.KEY_SONG_NAME, song.getTitle());
+            intent.putExtra(DeezerSongDetailActivity.KEY_SONG_DURATION, song.getDurationInMMSS());
+            intent.putExtra(DeezerSongDetailActivity.KEY_ALBUM_NAME, song.getAlbumName());
+            intent.putExtra(DeezerSongDetailActivity.KEY_ALBUM_COVER, song.getAlbumCover());
             startActivity(intent);
         });
 
@@ -101,19 +117,15 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
     private void searchArtist(String artistName) {
         if (artistName.isEmpty()) {
             // show alert to tell user input something
-            String alertMsg = "Please enter the artist name.";
-            String title = "Alert";
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(title);
-            alertDialogBuilder.setMessage(alertMsg);
-            alertDialogBuilder.setPositiveButton("Ok", (v, arg) -> {
-
-            });
-
-            alertDialogBuilder.create().show();
+            showAlertMessageWithTitle("Alert", "Please enter the artist name.");
 
             return;
         }
+
+        // hide keyboard when start searching.
+        // reference to: https://stackoverflow.com/questions/1109022/how-do-you-close-hide-the-android-soft-keyboard-using-java
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SEARCH_TEXT, artistName);
@@ -122,29 +134,61 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         Snackbar snackbar = Snackbar.make(lvSong, "Search songs of artist " + artistName, Snackbar.LENGTH_LONG);
         snackbar.show();
 
-        // TODO search Artist first
+        // search Artist first
         progressBar.setVisibility(View.VISIBLE);
 
         QueryArtist queryArtist = new QueryArtist();
-        queryArtist.execute(String.format("https://api.deezer.com/search/artist/?q=%s&output=xml", artistName));
+        queryArtist.execute(String.format("https://api.deezer.com/search/artist/?q=%s", artistName));
+    }
+
+    private void showAlertMessageWithTitle(String title, String message) {
+        String alertMsg = message;
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(alertMsg);
+        alertDialogBuilder.setPositiveButton("Ok", (v, arg) -> {
+        });
+
+        alertDialogBuilder.create().show();
     }
 
     /**
      * an subclass of AsyncTask to be used for artist query
      */
     class QueryArtist extends AsyncTask<String, Integer, String> {
-        private List<String> lstArtistName = new ArrayList<>();
 
         @Override
         protected String doInBackground(String... strings) {
-            lstArtistName.clear();
+            String trackListUrl = null;
             try {
-                Thread.sleep(500);
-            } catch(InterruptedException e) {
+                URL url;
+                HttpURLConnection urlConnection;
+                InputStream response;
+                url = new URL(strings[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                response = urlConnection.getInputStream();
+                // parse artist
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                String result = sb.toString();
+
+                // extract track list url of the first item
+                JSONObject jsonObject = new JSONObject(result);
+                if (jsonObject.getInt("total") > 0) {
+                    JSONObject artist = (JSONObject)jsonObject.getJSONArray("data").get(0);
+                    trackListUrl = artist.getString("tracklist");
+                }
+            } catch(IOException | JSONException e) {
                 Log.e("DSS", e.getMessage());
             }
 
-            return null;
+            return trackListUrl;
         }
 
         @Override
@@ -153,31 +197,70 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            songs.clear();
+        protected void onPostExecute(String trackListUrl) {
+            super.onPostExecute(trackListUrl);
+            if (trackListUrl == null || trackListUrl.isEmpty()) {
+                showAlertMessageWithTitle("Alert", "No artist found.\nPlease check your search text and try again.");
 
-            // TODO hard coded. Move to proper method
-            songs.add("Hello");
-            songs.add("World");
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
+            // query songs of the artist by track list url
 
-            songsAdapter.notifyDataSetChanged();
-
-            Toast.makeText(DeezerSongSearchActivity.this, "Retrieved 2 songs",Toast.LENGTH_LONG).show();
-
-
-            progressBar.setVisibility(View.GONE);
+            QuerySong querySong = new QuerySong();
+            querySong.execute(trackListUrl);
         }
     }
 
     /**
      * a subclass of AsyncTask to be used to query songs
      */
-    class QuerySong extends AsyncTask<String, Integer, String> {
+    class QuerySong extends AsyncTask<String, Integer, List<Song>> {
 
         @Override
-        protected String doInBackground(String... strings) {
-            return null;
+        protected List<Song> doInBackground(String... strings) {
+            List<Song> songList = new ArrayList<>();
+            try {
+                URL url;
+                HttpURLConnection urlConnection;
+                InputStream response;
+                url = new URL(strings[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                response = urlConnection.getInputStream();
+                // parse artist
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                String result = sb.toString();
+
+                // get song info and store it in songList
+                JSONObject jsonObject = new JSONObject(result);
+                if (jsonObject.getInt("total") > 0) {
+                    JSONArray songArray = (JSONArray)jsonObject.getJSONArray("data");
+                    for(int i = 0; i < songArray.length(); i++) {
+                        JSONObject songObj = (JSONObject)songArray.get(i);
+
+                        Song song = new Song();
+                        song.setTitle(songObj.getString("title"));
+                        song.setDuration(songObj.getInt("duration"));
+
+                        JSONObject albumObj = songObj.getJSONObject("album");
+                        song.setAlbumName(albumObj.getString("title"));
+                        song.setAlbumCover(albumObj.getString("cover"));
+
+                        songList.add(song);
+                    }
+                }
+            } catch(IOException | JSONException e) {
+                Log.e("DSS", e.getMessage());
+            }
+
+            return songList;
         }
 
         @Override
@@ -186,8 +269,19 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(List<Song> songList) {
+            super.onPostExecute(songList);
+
+            songs.clear();
+            songs.addAll(songList);
+
+            songsAdapter.notifyDataSetChanged();
+
+            progressBar.setVisibility(View.GONE);
+
+            Toast.makeText(DeezerSongSearchActivity.this,
+                    String.format("Retrieved %d songs", songList.size()),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -202,7 +296,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         }
 
         @Override
-        public Object getItem(int position) {
+        public Song getItem(int position) {
             return songs.get(position);
         }
 
@@ -218,8 +312,11 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
                 convertView = layoutInflater.inflate(R.layout.item_song, null);
             }
             TextView tvSongName = convertView.findViewById(R.id.tvSongName);
-            String songName = (String)getItem(position);
-            tvSongName.setText(songName);
+            TextView tvSongDuration = convertView.findViewById(R.id.tvSongDuration);
+
+            Song song = getItem(position);
+            tvSongName.setText(song.getTitle());
+            tvSongDuration.setText(song.getDurationInMMSS());
 
             return convertView;
         }
