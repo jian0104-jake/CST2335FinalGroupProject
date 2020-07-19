@@ -3,6 +3,8 @@ package com.example.cst2335finalgroupproject.geodata;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,8 +30,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-//https://api.geodatasource.com/city?key=QHSHZ2TNSAKTUGFC73CUTV1ZNJUESDXK&lat=45.4215&lng=-75.6972&format=JSON
-//{"country":"CA","region":"Ontario","city":"Centretown","latitude":"45.4153","longitude":"-75.6964","currency_code":"CAD","currency_name":"Canadian Dollar","currency_symbol":"$","sunrise":"05:27","sunset":"20:49","time_zone":"-05:00","distance_km":"0.6924"}
 
 /**
  * the main activity for geo data source
@@ -55,9 +55,20 @@ public class GeoDataSource extends AppCompatActivity {
      */
     private ProgressBar progressBar;
 
-
+    /**
+     * latitude edit text
+     */
     private EditText latitudeEdit;
+
+    /**
+     * longitude edit text
+     */
     private EditText longitudeEdit;
+
+    /**
+     * stores the latitude and longitude data last time user inputs
+     */
+    private SharedPreferences prefs = null;
 
 
     /**
@@ -80,19 +91,34 @@ public class GeoDataSource extends AppCompatActivity {
         searchCityListView = findViewById(R.id.searchCitiesListView);
         searchCityListView.setAdapter(myListAdapter = new MyListAdapter());
 
+        prefs = getSharedPreferences("searchInfo", Context.MODE_PRIVATE);
+        String latitudeSaved = prefs.getString("latitude","");
+        String longitudeSaved = prefs.getString("longitude","");
+        latitudeEdit.setText(latitudeSaved);
+        longitudeEdit.setText(longitudeSaved);
+
         searchBtn.setOnClickListener(e->{
+            cities.clear();
             progressBar.setVisibility(View.VISIBLE);
             String url = "https://api.geodatasource.com/city?key=QHSHZ2TNSAKTUGFC73CUTV1ZNJUESDXK&lat="+latitudeEdit.getText()+"&lng="+longitudeEdit.getText()+"&format=JSON";
             GeoCityQuery forecastQuery = new GeoCityQuery();
             forecastQuery.execute(url);
+            saveSharedPrefs(latitudeEdit.getText().toString(),longitudeEdit.getText().toString());
         });
 
-        favoriteGeoBtn.setOnClickListener(e-> Toast.makeText(this, R.string.geo_toast_message,Toast.LENGTH_LONG).show());
+        favoriteGeoBtn.setOnClickListener(e-> {
+
+
+
+
+
+
+        });
 
         searchCityListView.setOnItemClickListener((p,b,pos,id)->{
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             City city = cities.get(pos);
-            alertDialogBuilder.setTitle((pos+1) +":  "+ city.getName() +", "+ city.getRegion() + ", "+city.getCountry() + ", " + city.getCurrency() + "in " + city.getLatitude() +", "+city.getLongitude()  )
+            alertDialogBuilder.setTitle((pos+1) +":  "+ city.getName() +", "+ city.getRegion() + ", "+city.getCountry() + ", " + city.getCurrency() + " in " + city.getLatitude() +", "+city.getLongitude()  )
 
                     .setPositiveButton("Show in Map",(click,arg)->{
                         Snackbar snackbar = Snackbar.make(searchCityListView,"Show in google map", Snackbar.LENGTH_LONG);
@@ -107,8 +133,26 @@ public class GeoDataSource extends AppCompatActivity {
         });
     }
 
+
     /**
+     * Save last searched latitude and longitude as sharedpreference in the phone
      *
+     * @param latitude the latitude users inputs in their last use
+     * @param longitude the longitude users inputs in their last use
+     */
+    private void saveSharedPrefs(String latitude, String longitude) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("latitude", latitude);
+        editor.putString("longitude", longitude);
+        editor.commit();
+    }
+
+
+
+
+
+    /**
+     *  MyListAdapter for the searched cities
      */
     private class MyListAdapter extends BaseAdapter{
 
@@ -237,4 +281,6 @@ public class GeoDataSource extends AppCompatActivity {
 
             }
         }
+
+
 }
