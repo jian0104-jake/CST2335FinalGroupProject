@@ -18,10 +18,9 @@ public class Song {
     private String albumName;
 
     /**
-     * the album comver image url;
+     * the album cover image url;
      */
     private String albumCover;
-
 
     public String getAlbumName() {
         return albumName;
