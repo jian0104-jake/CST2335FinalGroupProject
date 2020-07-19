@@ -30,6 +30,19 @@
     <string name="pause">暂停</string>
     <string name="stop">停止</string>
     <string name="save">保存</string>
+    <string name="album_cover">专辑封面</string>
+    <string name="activity_title_song_detail">歌曲详情</string>
+    <string name="song_name_template">歌曲名称：%s</string>
+    <string name="duration_template">时长: %s</string>
+    <string name="album_name_template">专辑名称：%s</string>
+    <string name="activity_title_deezer_song_search">搜索歌曲（Deezer）</string>
+    <string name="dialog_title_alert">警告</string>
+    <string name="dialog_msg_enter_artist_name">请输入艺术家名字。</string>
+    <string name="search_song_of_artist_template">搜索艺术家%s的歌曲</string>
+    <string name="retrieved_songs_template">获取到%d首歌曲</string>
+    <string name="search">搜索</string>
+    <string name="enter_artist_name">输入艺术家名字</string>
+    <string name="dialog_msg_no_artist_found">没有找到艺术家。\\n请检查你的搜索条件再试。</string>
 
 
 </resources>

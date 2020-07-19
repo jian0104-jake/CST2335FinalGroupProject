@@ -37,7 +37,7 @@
         android:layout_marginTop="16dp"
         android:layout_below="@+id/tvAlbumName"
         android:scaleType="centerInside"
-        android:contentDescription="Album Cover"/>
+        android:contentDescription="@string/album_cover"/>
 
     <ProgressBar
         android:id="@+id/process_bar"

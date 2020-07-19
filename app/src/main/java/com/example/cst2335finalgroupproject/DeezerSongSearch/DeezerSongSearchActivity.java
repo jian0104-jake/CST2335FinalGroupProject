@@ -73,7 +73,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_search);
-        setTitle("Search a song(Deezer)");
+        setTitle(getString(R.string.activity_title_deezer_song_search));
 
         sharedPreferences = getSharedPreferences("DeezerSong", MODE_PRIVATE);
         String searchText = sharedPreferences.getString(SEARCH_TEXT, "");
@@ -117,7 +117,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
     private void searchArtist(String artistName) {
         if (artistName.isEmpty()) {
             // show alert to tell user input something
-            showAlertMessageWithTitle("Alert", "Please enter the artist name.");
+            showAlertMessageWithTitle(getString(R.string.dialog_title_alert), getString(R.string.dialog_msg_enter_artist_name));
 
             return;
         }
@@ -131,7 +131,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         editor.putString(SEARCH_TEXT, artistName);
         editor.apply();
 
-        Snackbar snackbar = Snackbar.make(lvSong, "Search songs of artist " + artistName, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(lvSong,
+                String.format(getString(R.string.search_song_of_artist_template), artistName),
+                Snackbar.LENGTH_LONG);
         snackbar.show();
 
         // search Artist first
@@ -200,7 +202,8 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         protected void onPostExecute(String trackListUrl) {
             super.onPostExecute(trackListUrl);
             if (trackListUrl == null || trackListUrl.isEmpty()) {
-                showAlertMessageWithTitle("Alert", "No artist found.\nPlease check your search text and try again.");
+                showAlertMessageWithTitle(getString(R.string.dialog_title_alert),
+                        getString(R.string.dialog_msg_no_artist_found));
 
                 progressBar.setVisibility(View.GONE);
                 return;
@@ -280,7 +283,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
 
             Toast.makeText(DeezerSongSearchActivity.this,
-                    String.format("Retrieved %d songs", songList.size()),
+                    String.format(getString(R.string.retrieved_songs_template), songList.size()),
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -315,7 +318,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
             TextView tvSongDuration = convertView.findViewById(R.id.tvSongDuration);
 
             Song song = getItem(position);
-            tvSongName.setText(song.getTitle());
+            tvSongName.setText(String.format("%d. %s", position, song.getTitle()));
             tvSongDuration.setText(song.getDurationInMMSS());
 
             return convertView;

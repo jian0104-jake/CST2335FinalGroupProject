@@ -1,20 +1,18 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.sax.TextElementListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cst2335finalgroupproject.R;
 
@@ -24,8 +22,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -51,7 +47,7 @@ public class DeezerSongDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_detail);
-        setTitle("Song Detail");
+        setTitle(getString(R.string.activity_title_song_detail));
 
         Intent fromMain = getIntent();
         String songName = fromMain.getStringExtra(KEY_SONG_NAME);
@@ -63,13 +59,13 @@ public class DeezerSongDetailActivity extends AppCompatActivity {
         imgAlbumCover = findViewById(R.id.imgAlbumCover);
 
         TextView tvSongName = findViewById(R.id.tvSongName);
-        tvSongName.setText(songName);
+        tvSongName.setText(String.format(getString(R.string.song_name_template), songName));
 
         TextView tvSongDuration = findViewById(R.id.tvSongDuration);
-        tvSongDuration.setText(songDuration);
+        tvSongDuration.setText(String.format(getString(R.string.duration_template), songDuration));
 
         TextView tvAlbumName = findViewById(R.id.tvAlbumName);
-        tvAlbumName.setText(albumName);
+        tvAlbumName.setText(String.format(getString(R.string.album_name_template), albumName));
 
 
         progressBar.setVisibility(View.VISIBLE);

@@ -15,14 +15,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="Search"
+            android:text="@string/search"
             />
         <EditText
             android:id="@+id/etArtistName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/btnSearch"
-            android:hint="Enter artist name"
+            android:hint="@string/enter_artist_name"
             android:inputType="textPersonName"
             />
         <ListView
