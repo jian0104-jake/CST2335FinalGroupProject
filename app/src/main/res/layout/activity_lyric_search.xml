@@ -7,63 +7,57 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".SongLyricsSearch.LyricsSearchActivity">
+    tools:context=".SongLyricsSearch.LyricSearchActivity">
 
     <TextView
-        android:id="@+id/artistText"
+        android:id="@+id/lyric_artistText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lyric_artistText" />
 
     <EditText
-        android:id="@+id/artist_input"
+        android:id="@+id/lyric_artist_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/lyric_artistHint"
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/lyric_titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lyric_titleText" />
 
     <EditText
-        android:id="@+id/title_input"
+        android:id="@+id/lyric_title_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/lyric_titleHint"
         android:inputType="text" />
 
     <Button
-        android:id="@+id/search_button"
+        android:id="@+id/lyric_search_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lyric_search_button" />
 
     <Button
-        android:id="@+id/button_go_to_fav"
+        android:id="@+id/lyric_button_go_to_fav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lyric_goto_fav_button" />
 
     <TextView
-        android:id="@+id/search_history"
+        android:id="@+id/lyric_search_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lyric_search_history"
         android:textSize="14pt" />
 
     <ListView
-        android:id="@+id/search_history_list"
+        android:id="@+id/lyric_search_history_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ProgressBar
-        android:id="@+id/process_bar_search"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
 
 </LinearLayout>

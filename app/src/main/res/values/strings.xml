@@ -22,6 +22,7 @@
     <string name="lyric_add_fav_button">Add to Fav</string>
     <string name="lyric_google_button">Google the Song</string>
     <string name="lyric_back_to_front_button">Go back to Search</string>
+    <string name="lyric_fav_hide_button">HIDE</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>
@@ -31,6 +32,8 @@
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
+
+    <!-- strings used by deezer song search -->
     <string name="album_cover">Album Cover</string>
     <string name="activity_title_song_detail">Song Detail</string>
     <string name="song_name_template">Song Name: %s</string>

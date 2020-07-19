@@ -14,7 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +23,7 @@ import com.example.cst2335finalgroupproject.SongLyricsSearch.Entity.FavLyricsEnt
 
 import java.util.ArrayList;
 
-public class FavSongActivity extends AppCompatActivity {
+public class LyricFavSongActivity extends AppCompatActivity {
 
     /**
      *  The implemented adapter for list view
@@ -52,43 +51,62 @@ public class FavSongActivity extends AppCompatActivity {
     private SQLiteDatabase sqLiteDatabase;
 
     /**
-     * A process bar
+     * variables used for fragment
      */
-    private ProgressBar progressBar;
-
+    public static final String ITEM_SELECTED = "SONG";
+    public static final String ITEM_CONTENT = "CONTENT";
+    public static final String ITEM_ID = "ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_fav_song_list);
 
-        progressBar = findViewById(R.id.process_bar_fav);
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.setProgress(33);
-
-        Button button = findViewById(R.id.button_back_to_front);
+        Button button = findViewById(R.id.lyric_button_back_to_front);
         button.setOnClickListener(click ->{
-            Intent backToSearch = new Intent(FavSongActivity.this, LyricsSearchActivity.class);
+            Intent backToSearch = new Intent(LyricFavSongActivity.this, LyricSearchActivity.class);
             startActivity(backToSearch);
         });
 
-        listView = findViewById(R.id.fav_song_list);
+        listView = findViewById(R.id.lyric_fav_song_list);
         listView.setAdapter(myAdapter = new MyListAdapter());
 
         favSongDB = new FavSongDB(this);
         sqLiteDatabase = favSongDB.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.query(FavSongDB.TABLE_NAME,
-                new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE},
+                new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
                 null, null, null, null, FavSongDB.COL_ID);
         if (cursor.moveToNext()) {
             elements.add(new FavLyricsEntity(cursor.getString(cursor.getColumnIndex(FavSongDB.COL_ARTIST)),
                     cursor.getString(cursor.getColumnIndex(FavSongDB.COL_TITLE)),
-                    cursor.getLong(cursor.getColumnIndex(FavSongDB.COL_ID))));
+                    cursor.getLong(cursor.getColumnIndex(FavSongDB.COL_ID)),
+                    cursor.getString(cursor.getColumnIndex(FavSongDB.COL_CONTENT))));
         }
 
-        progressBar.setProgress(66);
+        boolean isTablet = findViewById(R.id.lyric_fav_song_content_frame_layout) != null;
 
         listView.setSelection(elements.size());
+
+        listView.setOnItemClickListener((list, item, position, id) -> {
+
+            LyricDetailsFragment dFragment = new LyricDetailsFragment();
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_SELECTED, elements.get(position).toString());
+            dataToPass.putString(ITEM_CONTENT, elements.get(position).getContent());
+            dataToPass.putString(ITEM_ID, "Database ID: " + id);
+
+            if (isTablet) {
+                dFragment.setArguments(dataToPass);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.lyric_fav_song_content_frame_layout, dFragment)
+                        .commit();
+            } else {
+                Intent nextActivity = new Intent(LyricFavSongActivity.this, LyricEmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
+        });
 
         listView.setOnItemLongClickListener((parent, view, pos, id) -> {
 
@@ -103,6 +121,15 @@ public class FavSongActivity extends AppCompatActivity {
                         new String[]{ String.valueOf(id)});
                 myAdapter.notifyDataSetChanged();
                 Toast.makeText(this, "Delete Successfully", Toast.LENGTH_LONG).show();
+
+                if (isTablet) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .remove(
+                                    getSupportFragmentManager()
+                                            .findFragmentById(R.id.lyric_fav_song_content_frame_layout))
+                            .commit();
+                }
             });
             builder.setNegativeButton("Cancel", null);
 
@@ -112,9 +139,6 @@ public class FavSongActivity extends AppCompatActivity {
 
             return true;
         });
-
-        progressBar.setProgress(100);
-        progressBar.setVisibility(View.GONE);
 
     }
 
@@ -147,8 +171,8 @@ public class FavSongActivity extends AppCompatActivity {
             if (old == null) {
                 newView = inflater.inflate(R.layout.lyric_search_history, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.search_history_layout = newView.findViewById(R.id.search_history_layout);
-                viewHolder.search_history_text = newView.findViewById(R.id.search_history_text);
+                viewHolder.search_history_layout = newView.findViewById(R.id.lyric_search_history_layout);
+                viewHolder.search_history_text = newView.findViewById(R.id.lyric_search_history_text);
                 newView.setTag(viewHolder);
             } else {
                 newView = old;

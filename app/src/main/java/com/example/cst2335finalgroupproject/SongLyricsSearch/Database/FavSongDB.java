@@ -41,6 +41,11 @@ public class FavSongDB extends SQLiteOpenHelper {
      */
     public final static String COL_ARTIST = "Artist";
 
+    /**
+     * The name of the singer
+     */
+    public final static String COL_CONTENT = "Content";
+
 
 //    public final static String COL_LYRIC = "Lyric";
 
@@ -55,7 +60,7 @@ public class FavSongDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + " (" + COL_ID + " integer primary key autoincrement, "
-                + COL_ARTIST + " text, " + COL_TITLE + " text);");
+                + COL_ARTIST + " text, " + COL_TITLE + " text, " + COL_CONTENT + " text);");
     }
 
     @Override

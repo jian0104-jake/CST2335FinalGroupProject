@@ -9,7 +9,7 @@ public class FavLyricsEntity {
      * artist: the singer's name
      * title: the song's name
      */
-    private String artist, title;
+    private String artist, title, content;
 
 
     /**
@@ -22,7 +22,7 @@ public class FavLyricsEntity {
      * Chain to full-argue constructor using blank string as default value
      */
     public FavLyricsEntity() {
-        this("","", 0);
+        this("","", 0, "");
     }
 
     /**
@@ -31,10 +31,11 @@ public class FavLyricsEntity {
      * @param title the song's name
      * @param dbId the song's database id.
      */
-    public FavLyricsEntity(String artist, String title, long dbId) {
+    public FavLyricsEntity(String artist, String title, long dbId, String content) {
         this.artist = artist;
         this.title = title;
         this.dbId = dbId;
+        this.content = content;
     }
 
     /**
@@ -83,6 +84,14 @@ public class FavLyricsEntity {
      */
     public void setDbId(long dbId) {
         this.dbId = dbId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     /**
