@@ -254,7 +254,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
 
                         JSONObject albumObj = songObj.getJSONObject("album");
                         song.setAlbumName(albumObj.getString("title"));
-                        song.setAlbumCover(albumObj.getString("cover"));
+                        song.setAlbumCover(albumObj.getString("cover_big"));
 
                         songList.add(song);
                     }

@@ -21,8 +21,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * show details of a specific song
@@ -73,13 +76,35 @@ public class DeezerSongDetailActivity extends AppCompatActivity {
         getImage.execute(albumCover);
     }
 
+
+    /**
+     * get MD5 of a string
+     * reference to: https://stackoverflow.com/questions/13152736/how-to-generate-an-md5-checksum-for-a-file-in-android
+     */
+    public static String getMD5EncryptedString(String encTarget){
+        MessageDigest mdEnc = null;
+        try {
+            mdEnc = MessageDigest.getInstance("MD5");
+
+            mdEnc.update(encTarget.getBytes(), 0, encTarget.length());
+            String md5 = new BigInteger(1, mdEnc.digest()).toString(16);
+            while ( md5.length() < 32 ) {
+                md5 = "0"+md5;
+            }
+            return md5;
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception while encrypting to md5");
+        } // Encryption algorithm
+        return "";
+    }
+
     class GetImage extends AsyncTask<String, Integer, Bitmap> {
 
         @Override
         protected Bitmap doInBackground(String... strings) {
             String url = strings[0];
-            String[] parts = url.split("/");
-            String localFile = parts[parts.length - 1];
+            String localFile = getMD5EncryptedString(url) + ".jpg";
+
             try {
                 if (fileExistance(localFile)) {
                     return loadFromLocalStorage(localFile);
