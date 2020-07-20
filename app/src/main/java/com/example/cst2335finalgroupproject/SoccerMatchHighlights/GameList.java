@@ -60,14 +60,14 @@ public class GameList extends AppCompatActivity {
         myList.setAdapter( myAdapter = new MyListAdapter());
         myList.setOnItemClickListener((parent, view, position, id) -> {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("You selected game "+ gameTitle).setMessage("Do you want to go to game details?"
-                    ).setPositiveButton("Yes",(click,arg)->{
+            alertDialog.setTitle(R.string.soccer_alert_title + gameTitle).setMessage(R.string.soccer_alert_msg
+                    ).setPositiveButton(R.string.soccer_postive,(click, arg)->{
                 Intent goToProfile = new Intent(GameList.this,Game_Detail_Activity.class);
                 //goToProfile.putExtra("Email",EmailField.getText().toString());
                 startActivity(goToProfile);
-                Toast.makeText(this, "you are going to detail page", Toast.LENGTH_SHORT).show();
-            }).setNegativeButton("No",(click,arg)->{
-                Snackbar.make(btn, "you are going to stay on this page", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
+            }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
+                Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
             }).create().show();
         });
     }
