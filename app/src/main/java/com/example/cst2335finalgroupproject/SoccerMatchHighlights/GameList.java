@@ -31,7 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class GameList extends AppCompatActivity {
 
     private ArrayList<String> elements = new ArrayList<>( Arrays.asList( "One game", "Two game" ) );
@@ -40,10 +41,14 @@ public class GameList extends AppCompatActivity {
     private String gameDate;
     private String videoUrl;
     private TextView detailTV;
+    private String imageUrl;
     List<SoccerDetails> soccerDetailsList = new ArrayList<>();
     private ProgressBar pb;
+    List<String> videoList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         Button btn = findViewById(R.id.showBtn);
@@ -53,18 +58,25 @@ public class GameList extends AppCompatActivity {
         GameListHttpRequest myRequest = new GameListHttpRequest();
         myRequest.execute(url);
         btn.setOnClickListener(b ->{
-            Intent goToDe = new Intent(GameList.this,Game_Detail_Activity.class);
+            Intent goToDe = new Intent(GameList.this,Favorite_Game_List.class);
             startActivity(goToDe);
         });
         ListView myList = findViewById(R.id.gameList);
         myList.setAdapter( myAdapter = new MyListAdapter());
         myList.setOnItemClickListener((parent, view, position, id) -> {
+            String gtitle = soccerDetailsList.get(position).title;
+            String gdate = soccerDetailsList.get(position).date;
+            String gurl = soccerDetailsList.get(position).vedioUrl;
+            String iurl = soccerDetailsList.get(position).imgUrl;
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.soccer_alert_title + gameTitle).setMessage(R.string.soccer_alert_msg
+            alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
                     ).setPositiveButton(R.string.soccer_postive,(click, arg)->{
-                Intent goToProfile = new Intent(GameList.this,Game_Detail_Activity.class);
-                //goToProfile.putExtra("Email",EmailField.getText().toString());
-                startActivity(goToProfile);
+                Intent goToDetail = new Intent(GameList.this,Game_Detail_Activity.class);
+                goToDetail.putExtra("gametitle",gtitle);
+                goToDetail.putExtra("date",gdate);
+                goToDetail.putExtra("gamevedio",gurl);
+                goToDetail.putExtra("imageUrl",iurl);
+                startActivity(goToDetail);
                 Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
             }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
                 Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
@@ -76,10 +88,12 @@ public class GameList extends AppCompatActivity {
         String title;
         String date;
         String vedioUrl;
-      public SoccerDetails(String title, String date, String vedioUrl){
+        String imgUrl;
+      public SoccerDetails(String title, String date, String vedioUrl,String imgUrl){
           this.date = date;
           this.title = title;
           this.vedioUrl = vedioUrl;
+          this.imgUrl = imgUrl;
       }
 
     }
@@ -112,13 +126,23 @@ public class GameList extends AppCompatActivity {
                 publishProgress(50);
                 String result = sb.toString(); //result is the whole string
                 JSONArray gameDtails = new JSONArray(result);
+                String gurl;
+
+
                 try {
                     for (int i = 0; i < gameDtails.length(); i++) {
                         JSONObject soccerItems = gameDtails.getJSONObject(i);
+                        JSONArray vediolist  = soccerItems.getJSONArray("videos");
+                        for(int k =0 ; k < vediolist.length();k++){
+                            JSONObject embedObject = vediolist.getJSONObject(k);
+                            String e = embedObject.getString("embed");
+                            String[] x = e.split("frame");
+                            videoUrl = x[1].substring(6,x[1].length()-2);
+                        }
                         gameTitle = soccerItems.getString("title");
-                        videoUrl = soccerItems.getString("url");
                         gameDate = soccerItems.getString("date");
-                        soccerDetailsList.add(new SoccerDetails(gameTitle,gameDate,videoUrl));
+                        imageUrl = soccerItems.getString("thumbnail");
+                        soccerDetailsList.add(new SoccerDetails(gameTitle,gameDate,videoUrl,imageUrl));
                     }
 
                 }catch(JSONException e){

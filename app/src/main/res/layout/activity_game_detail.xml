@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,11 +7,15 @@
     tools:context=".SoccerMatchHighlights.GameList"
     android:orientation="vertical"
     android:padding="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-   <VideoView
-       android:layout_width="match_parent"
-       android:layout_height="300dp"
-       android:id="@+id/video"/>
+        <VideoView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/soccer_video"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,40 +42,46 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/saveBtn"
+            android:id="@+id/soc_saveBtn"
             android:text="@string/save"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="1"
-        android:id="@+id/date"/>
+        android:id="@+id/teamName"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="side1"
-        android:id="@+id/side1"/>
+        android:id="@+id/soc_game_date"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="side2"
-        android:id="@+id/side2"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="competiton name"
-        android:id="@+id/competion"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTxt1"
-        android:hint="Edit text">
+        android:id="@+id/videoUrl"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="competiton name"-->
+<!--        android:id="@+id/competion"/>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/soccer_img_view" />
+        <Button
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/soc_goFav"
+          android:text="@string/soc_goFav"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/soc_goWacthLive"
+            android:text="@string/soc_gowatchLive"/>
 
-    </EditText>
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:id="@+id/pb2"/>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
