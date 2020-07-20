@@ -32,7 +32,6 @@
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
-<<<<<<< HEAD
     <string name="invalid_geo_search">The latitude and longitude information provided is invalid! </string>
 
 
@@ -51,10 +50,9 @@
     <string name="search">Search</string>
     <string name="enter_artist_name">Enter artist name</string>
     <string name="dialog_msg_no_artist_found">No artist found.\\nPlease check the search text and try again.</string>
-    <string name="soccer_alert_title">You selected game </string>
-=======
+
     <string name="soccer_alert_title">You selected game:  </string>
->>>>>>> 312dd6e... week2 commit1
+
     <string name="soccer_alert_msg">Do you want to go to game details?</string>
     <string name="soccer_postive">Yes</string>
     <string name="soccer_toast_txt">you are going to detail page</string>
