@@ -34,6 +34,12 @@
     <string name="soccer_toast_txt">你将前往详细页面</string>
     <string name="soccer_negative">否</string>
     <string name="soccer_snackbar_msg">你将留在本页面</string>
+    <string name="soccer_dateTXT">比赛日期：</string>
+    <string name="soc_gohome">去往比赛列单</string>
+    <string name="soc_goFav">去往收藏比赛列单</string>
+    <string name="soccer_neu">从收藏表中清除</string>
+    <string name="soc_delete_msg">删除成功</string>
+    <string name="soc_gowatchLive">观看比赛视频</string>
 
 
 </resources>

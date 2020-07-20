@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cst2335finalgroupproject">
-
+    package="com.example.cst2335finalgroupproject" >
     <!-- Permission for access to Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -11,13 +11,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".SoccerMatchHighlights.Favorite_Game_Detail"/>
+        android:theme="@style/AppTheme" >
+        <activity android:name=".SoccerMatchHighlights.Favorite_Game_List" />
         <activity android:name=".SoccerMatchHighlights.Game_Detail_Activity" />
-        <activity android:name=".SoccerMatchHighlights.GameList"/>
-        <activity android:name=".geodata.GeoDataSource"/>
-        <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".SoccerMatchHighlights.GameList" />
+        <activity android:name=".geodata.GeoDataSource" />
+        <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity" />
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
