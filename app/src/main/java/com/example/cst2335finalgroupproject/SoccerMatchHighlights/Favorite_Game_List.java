@@ -28,6 +28,11 @@ public class Favorite_Game_List extends AppCompatActivity {
     private TextView favTV;
     private  MyListAdapter myAdapter;
     private Button goToListbtn;
+
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,10 @@ public class Favorite_Game_List extends AppCompatActivity {
         });
 
     }
+
+    /**
+     *
+     */
     class FavSoccerDetails{
         String title;
         String date;
@@ -84,6 +93,9 @@ public class Favorite_Game_List extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     */
 
     private void loadfromDB(){
         SoccerDB dbOpener = new SoccerDB(this);
