@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">CST2335FinalGroupProject</string>
     <string name="show">Show my favourite game list</string>
-    <string name="start">play</string>
-    <string name="pause">pause</string>
-    <string name="stop">stop</string>
-    <string name="save">save</string>
+    <string name="soc_saveAsFav">save as favorite</string>
 
     <string name="geo_data_source">Geo Data Source</string>
     <string name="soccer_match_highlights">Soccer Match Highlights</string>
@@ -46,5 +43,6 @@
     <string name="soccer_neu">Remove from favorite list</string>
     <string name="soc_delete_msg">Delete successfully</string>
     <string name="soc_gowatchLive">watch video</string>
+    <string name="soc_click_to_watch">Click image to watch the game</string>
 
 </resources>

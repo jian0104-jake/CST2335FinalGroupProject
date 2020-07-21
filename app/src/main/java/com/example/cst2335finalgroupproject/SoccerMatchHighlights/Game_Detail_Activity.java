@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,29 +35,25 @@ public class Game_Detail_Activity extends AppCompatActivity {
     private TextView teamName;
     private TextView gameDate;
     private TextView gameVedioUrl;
-    private ImageView imageView;
-    private String gameUrl,imageUrl;
-    private VideoView videoView;
-    private MediaController mc;
-    private Button playBtn,go_wacth_btn;
+    private ImageButton imageButton;
+    private String imageUrl;
+    private Button goWacthBtn;
     private SQLiteDatabase db ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
-        setText();
+        setText();//set text for each textfield
         GameImageHttpRequest req = new GameImageHttpRequest();
         req.execute(imageUrl);
         SoccerDB soccerDB = new SoccerDB(this);
         db = soccerDB.getWritableDatabase();
-        playBtn = findViewById(R.id.start);
-        playBtn.setOnClickListener(b->{
-            playVedio();
-        });
+
         String twoTeam = teamName.getText().toString();
         String date = gameDate.getText().toString();
         String gameUrl = gameVedioUrl.getText().toString();
         saveBtn = findViewById(R.id.soc_saveBtn);
+        //if save button is clicked,  data is going to be saved in database
         saveBtn.setOnClickListener(b->{
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("Save as favorite? ").setMessage("would you like save this game to your favorite list?"
@@ -68,7 +64,7 @@ public class Game_Detail_Activity extends AppCompatActivity {
                 newRowValue.put(SoccerDB.URL_COL,gameUrl);
                 newRowValue.put(SoccerDB.IMG_COL,imageUrl);
                  long id = db.insert(SoccerDB.TABLE_NAME,null,newRowValue);
-                 if(id>0)
+                 if(id>0)//if database insertion fails, id = -1
                 Toast.makeText(this, "saved successfully", Toast.LENGTH_SHORT).show();
             }).setNegativeButton("No",(click,arg)->{
                 Snackbar.make(saveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
@@ -79,28 +75,22 @@ public class Game_Detail_Activity extends AppCompatActivity {
             Intent goToFav = new Intent(this,Favorite_Game_List.class);
             startActivity(goToFav);
         });
-        go_wacth_btn = findViewById(R.id.soc_goWacthLive);
-        go_wacth_btn.setOnClickListener(click->{
+        goWacthBtn = findViewById(R.id.soc_goWacthLive);
+        goWacthBtn.setOnClickListener(click->{
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData( Uri.parse(gameUrl) );startActivity(i);
+        });
+        imageButton.setOnClickListener(click->{
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData( Uri.parse(gameUrl) );startActivity(i);
         });
 
-
         pb2 = findViewById(R.id.pb2);
         pb2.setVisibility(View.VISIBLE);
     }
-    private void playVedio(){
-        videoView = findViewById(R.id.soccer_video);
-        gameUrl = gameVedioUrl.getText().toString();
-        Uri uri = Uri.parse("https://www.scorebat.com/embed/v/5f0dfb0f9ec5b/?s=2");
-        videoView.setMediaController(new MediaController(this));
-        videoView.setVideoURI(uri);
-        videoView.requestFocus();
-        videoView.start();
 
-    }
     private void setText(){
-        imageView = findViewById(R.id.soccer_img_view);
+        imageButton = findViewById(R.id.soccer_img_btn);
         teamName = findViewById(R.id.teamName);
         gameDate = findViewById(R.id.soc_game_date);
         gameVedioUrl = findViewById(R.id.videoUrl);
@@ -114,8 +104,6 @@ public class Game_Detail_Activity extends AppCompatActivity {
 
     private class GameImageHttpRequest extends AsyncTask< String, Integer, String> {
         private Bitmap image = null;
-
-
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -123,16 +111,12 @@ public class Game_Detail_Activity extends AppCompatActivity {
                 URL imgUrl = new URL(strings[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) imgUrl.openConnection();
                 urlConnection.connect();
+                publishProgress(25);
                 int responseCode = urlConnection.getResponseCode();
                 if (responseCode == 200) {
                     image = BitmapFactory.decodeStream(urlConnection.getInputStream());
-                    publishProgress(100);
-                   // FileOutputStream outputStream = openFileOutput(iconName + ".jpg", Context.MODE_PRIVATE);
-                   // image.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
-                   // outputStream.flush();
-                    //outputStream.close();
+                    publishProgress(50);
                 }
-
                 publishProgress(100);
                 return "Done";
             } catch (FileNotFoundException e) {
@@ -154,7 +138,7 @@ public class Game_Detail_Activity extends AppCompatActivity {
         @Override
         public void onPostExecute(String fromDoInBackground)
         {   //myList
-            imageView.setImageBitmap(image);
+            imageButton.setImageBitmap(image);
             pb2.setVisibility(View.INVISIBLE);
 
         }

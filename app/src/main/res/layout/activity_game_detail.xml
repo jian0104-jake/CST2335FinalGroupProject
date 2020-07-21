@@ -12,39 +12,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <VideoView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/soccer_video"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/start"
-        android:text="@string/start">
-
-    </Button>
-        <Button
-            android:id="@+id/btn_pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pause" />
-
-        <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/stop" />
-        <Button
+        <ImageButton
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:id="@+id/soccer_img_btn" />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/soc_saveBtn"
-            android:text="@string/save"/>
-    </LinearLayout>
+            android:text="@string/soc_click_to_watch"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="#ff5e9cff"
+            />
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,15 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/videoUrl"/>
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="competiton name"-->
-<!--        android:id="@+id/competion"/>-->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/soccer_img_view" />
+
+
         <Button
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -77,6 +53,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/soc_goWacthLive"
             android:text="@string/soc_gowatchLive"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/soc_saveBtn"
+            android:text="@string/soc_saveAsFav"/>
 
     <ProgressBar
         android:layout_width="match_parent"

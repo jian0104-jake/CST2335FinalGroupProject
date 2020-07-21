@@ -113,7 +113,7 @@ public class GameList extends AppCompatActivity {
                 //wait for data:
                 InputStream response = urlConnection.getInputStream();
 
-                //JSON reading:   Look at slide 26
+                //JSON reading
                 //Build the entire string response:
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
@@ -144,6 +144,7 @@ public class GameList extends AppCompatActivity {
                         imageUrl = soccerItems.getString("thumbnail");
                         soccerDetailsList.add(new SoccerDetails(gameTitle,gameDate,videoUrl,imageUrl));
                     }
+                    publishProgress(70);
 
                 }catch(JSONException e){
 

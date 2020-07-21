@@ -24,10 +24,7 @@
     <string name="favoriteGeo">已收藏城市</string>
     <string name="geo_toast_message">城市已收藏</string>
     <string name="show">显示我最喜欢的比赛</string>
-    <string name="start">开始</string>
-    <string name="pause">暂停</string>
-    <string name="stop">停止</string>
-    <string name="save">保存</string>
+    <string name="soc_saveAsFav">添加至收藏列表</string>
     <string name="soccer_alert_title">你选择了比赛</string>
     <string name="soccer_alert_msg">去往比赛详细页面？</string>
     <string name="soccer_postive">是</string>
@@ -36,10 +33,11 @@
     <string name="soccer_snackbar_msg">你将留在本页面</string>
     <string name="soccer_dateTXT">比赛日期：</string>
     <string name="soc_gohome">去往比赛列单</string>
-    <string name="soc_goFav">去往收藏比赛列单</string>
-    <string name="soccer_neu">从收藏表中清除</string>
+    <string name="soc_goFav">去往收藏比赛列表</string>
+    <string name="soccer_neu">从收藏列表中删除</string>
     <string name="soc_delete_msg">删除成功</string>
     <string name="soc_gowatchLive">观看比赛视频</string>
+    <string name="soc_click_to_watch">Clikck image to watch the game</string>
 
 
 </resources>
