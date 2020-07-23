@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".SoccerMatchHighlights.Favorite_Game_List" />
-        <activity android:name=".SoccerMatchHighlights.Game_Detail_Activity" />
+        <activity android:name=".SoccerMatchHighlights.GameDetailActivity" />
         <activity android:name=".SoccerMatchHighlights.GameList" />
         <activity android:name=".geodata.GeoDataSource" />
         <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity" />

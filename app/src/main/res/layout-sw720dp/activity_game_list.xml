@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SoccerMatchHighlights.GameList"
+    android:orientation="vertical">
+
+    <ListView
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:id="@+id/gameList"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/showBtn"
+            android:text="@string/show"
+            />
+    <FrameLayout
+        android:id="@+id/soc_fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_toRightOf="@id/gameList"
+        android:background="@color/colorAccent" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pb1"
+        android:visibility="invisible"
+        android:max="100"
+       />
+<!--    </LinearLayout>-->
+
+</RelativeLayout>

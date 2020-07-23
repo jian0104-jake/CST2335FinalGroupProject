@@ -31,8 +31,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 public class GameList extends AppCompatActivity {
 
     private ArrayList<String> elements = new ArrayList<>( Arrays.asList( "One game", "Two game" ) );
@@ -61,27 +60,71 @@ public class GameList extends AppCompatActivity {
             Intent goToDe = new Intent(GameList.this,Favorite_Game_List.class);
             startActivity(goToDe);
         });
+        boolean isTablet = findViewById(R.id.soc_fragmentLocation) != null;
         ListView myList = findViewById(R.id.gameList);
         myList.setAdapter( myAdapter = new MyListAdapter());
-        myList.setOnItemClickListener((parent, view, position, id) -> {
+//        myList.setOnItemClickListener((parent, view, position, id) -> {
+//            String gtitle = soccerDetailsList.get(position).title;
+//            String gdate = soccerDetailsList.get(position).date;
+//            String gurl = soccerDetailsList.get(position).vedioUrl;
+//            String iurl = soccerDetailsList.get(position).imgUrl;
+//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+//            alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
+//                    ).setPositiveButton(R.string.soccer_postive,(click, arg)->{
+//                Intent goToDetail = new Intent(GameList.this,Game_Detail_Activity.class);
+//                goToDetail.putExtra("gametitle",gtitle);
+//                goToDetail.putExtra("date",gdate);
+//                goToDetail.putExtra("gamevedio",gurl);
+//                goToDetail.putExtra("imageUrl",iurl);
+//                startActivity(goToDetail);
+//                Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
+//            }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
+//                Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
+//            }).create().show();
+//        });
+
+        myList.setOnItemClickListener(((parent, view, position, id) -> {
+            Bundle dataToPass = new Bundle();
             String gtitle = soccerDetailsList.get(position).title;
             String gdate = soccerDetailsList.get(position).date;
             String gurl = soccerDetailsList.get(position).vedioUrl;
             String iurl = soccerDetailsList.get(position).imgUrl;
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
-                    ).setPositiveButton(R.string.soccer_postive,(click, arg)->{
-                Intent goToDetail = new Intent(GameList.this,Game_Detail_Activity.class);
-                goToDetail.putExtra("gametitle",gtitle);
-                goToDetail.putExtra("date",gdate);
-                goToDetail.putExtra("gamevedio",gurl);
-                goToDetail.putExtra("imageUrl",iurl);
-                startActivity(goToDetail);
-                Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
-            }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
-                Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
-            }).create().show();
-        });
+            dataToPass.putString("gametitle", gtitle);
+            dataToPass.putString("date", gdate);
+            dataToPass.putString("gamevedio", gurl);
+            dataToPass.putString("imageUrl", iurl);
+            if (isTablet) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
+                ).setPositiveButton(R.string.soccer_postive, (click, arg) -> {
+                    SoccerDetailsFragment dFragment = new SoccerDetailsFragment(); //add a DetailFragment
+                    dFragment.setArguments(dataToPass); //pass it a bundle for information
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.soc_fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                            .commit();
+                    Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
+                }).setNegativeButton(R.string.soccer_negative, (click, arg) -> {
+                    Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
+                }).create().show();
+
+            } else {
+                Intent goToDetail = new Intent(GameList.this, GameDetailActivity.class);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
+                ).setPositiveButton(R.string.soccer_postive, (click, arg) -> {
+
+                    goToDetail.putExtra("gametitle", gtitle);
+                    goToDetail.putExtra("date", gdate);
+                    goToDetail.putExtra("gamevedio", gurl);
+                    goToDetail.putExtra("imageUrl", iurl);
+                    startActivity(goToDetail);
+                    Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
+                }).setNegativeButton(R.string.soccer_negative, (click, arg) -> {
+                    Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
+                }).create().show();
+            }
+        }));
     }
 
     private class SoccerDetails {

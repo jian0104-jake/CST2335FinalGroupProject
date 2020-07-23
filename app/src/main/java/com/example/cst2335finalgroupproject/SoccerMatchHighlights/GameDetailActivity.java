@@ -29,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Game_Detail_Activity extends AppCompatActivity {
+public class GameDetailActivity extends AppCompatActivity {
     private Button saveBtn,goToFavBtn;
     private ProgressBar pb2;
     private TextView teamName;
@@ -43,6 +43,15 @@ public class Game_Detail_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
+//        Bundle dataToPass = getIntent().getExtras();
+//
+//        SoccerDetailsFragment dFragment = new SoccerDetailsFragment();
+//        dFragment.setArguments( dataToPass ); //pass data to the the fragment
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.soc_fav_fragmentLocation, dFragment)
+//                .commit();
+
         setText();//set text for each textfield
         GameImageHttpRequest req = new GameImageHttpRequest();
         req.execute(imageUrl);

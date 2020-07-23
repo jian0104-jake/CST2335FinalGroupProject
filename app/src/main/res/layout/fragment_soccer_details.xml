@@ -13,8 +13,8 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:layout_width="200dp"
-            android:layout_height="100dp"
+            android:layout_width="500dp"
+            android:layout_height="300dp"
             android:layout_gravity="center"
             android:padding="2dp"
             android:id="@+id/soccer_img_btn" />
@@ -24,40 +24,44 @@
             android:text="@string/soc_click_to_watch"
             android:layout_gravity="center"
             android:textSize="20dp"
-            android:textColor="#ff5e9cff" />
+            android:textColor="#ff5e9cff"
+            />
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="1"
+            android:textSize="20dp"
             android:id="@+id/teamName"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:id="@+id/soc_game_date"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:id="@+id/videoUrl"/>
+
+
         <Button
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/soc_goFav"
-          android:text="@string/soc_goFav"
-            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/soc_goFav"
+            android:text="@string/soc_goFav"
             android:gravity="bottom"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/soc_goWacthLive"
             android:text="@string/soc_gowatchLive"
-            android:layout_gravity="bottom"
             android:gravity="bottom"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/soc_saveBtn"
             android:text="@string/soc_saveAsFav"
-            android:layout_gravity="bottom"
             android:gravity="bottom"/>
 
         <ProgressBar

@@ -37,12 +37,13 @@
     <string name="soccer_dateTXT">Game date:</string>
 
 
-
     <string name="soc_gohome">Go to the game list</string>
     <string name="soc_goFav">Go to my favorite game list</string>
     <string name="soccer_neu">Remove from favorite list</string>
     <string name="soc_delete_msg">Delete successfully</string>
     <string name="soc_gowatchLive">watch video</string>
     <string name="soc_click_to_watch">Click image to watch the game</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
