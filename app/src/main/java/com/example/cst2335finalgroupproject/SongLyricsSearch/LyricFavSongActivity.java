@@ -1,6 +1,7 @@
 package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -57,6 +58,11 @@ public class LyricFavSongActivity extends AppCompatActivity {
     public static final String ITEM_CONTENT = "CONTENT";
     public static final String ITEM_ID = "ID";
 
+    /**
+     * store fragment instance after click item in list view.
+     */
+    private Fragment lastFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +112,9 @@ public class LyricFavSongActivity extends AppCompatActivity {
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
             }
+
+            // store the fragment instance
+            lastFragment = dFragment;
         });
 
         listView.setOnItemLongClickListener((parent, view, pos, id) -> {
@@ -122,16 +131,20 @@ public class LyricFavSongActivity extends AppCompatActivity {
                 myAdapter.notifyDataSetChanged();
                 Toast.makeText(this, "Delete Successfully", Toast.LENGTH_LONG).show();
 
-                if (isTablet) {
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .remove(
-                                    getSupportFragmentManager()
-                                            .findFragmentById(R.id.lyric_fav_song_content_frame_layout))
-                            .commit();
+                // Only when fragment is displayed, long click will delete the fragment
+                // avoid the crush when directly delete from list view without click to show the fragment.
+                if (lastFragment != null) {
+                    if (isTablet) {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .remove(
+                                        getSupportFragmentManager()
+                                                .findFragmentById(R.id.lyric_fav_song_content_frame_layout))
+                                .commit();
+                    }
                 }
             });
-            builder.setNegativeButton("Cancel", null);
+                    builder.setNegativeButton("Cancel", null);
 
             // create and show the dialog
             AlertDialog alertDialog = builder.create();
