@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SoccerMatchHighlights.Favorite_Game_List">
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/soc_favlist_toolbar"-->
+<!--        android:layout_alignParentTop="true"/>-->
 
     <ListView
         android:layout_width="300dp"

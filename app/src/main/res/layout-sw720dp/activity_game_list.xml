@@ -6,11 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".SoccerMatchHighlights.GameList"
     android:orientation="vertical">
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/soc_list_toolbar"-->
+<!--        android:layout_alignParentTop="true"/>-->
 
     <ListView
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
+        android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         android:id="@+id/gameList"/>
         <Button

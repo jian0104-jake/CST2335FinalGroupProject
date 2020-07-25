@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,10 +18,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +52,10 @@ public class GameList extends AppCompatActivity {
     List<String> videoList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
+        Toolbar tBar = findViewById(R.id.soc_list_toolbar);
+        setSupportActionBar(tBar);
         Button btn = findViewById(R.id.showBtn);
         pb = findViewById(R.id.pb1);
         pb.setVisibility(View.VISIBLE);
@@ -109,22 +115,49 @@ public class GameList extends AppCompatActivity {
                 }).create().show();
 
             } else {
-                Intent goToDetail = new Intent(GameList.this, GameDetailActivity.class);
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
                 ).setPositiveButton(R.string.soccer_postive, (click, arg) -> {
-
-                    goToDetail.putExtra("gametitle", gtitle);
-                    goToDetail.putExtra("date", gdate);
-                    goToDetail.putExtra("gamevedio", gurl);
-                    goToDetail.putExtra("imageUrl", iurl);
-                    startActivity(goToDetail);
+                    Intent nextActivity = new Intent(this, GameDetailActivity.class);
+                    nextActivity.putExtras(dataToPass); //send data to next activity
+                    startActivity(nextActivity); //make the transition
                     Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
                 }).setNegativeButton(R.string.soccer_negative, (click, arg) -> {
                     Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
                 }).create().show();
             }
         }));
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.geo_toolbar:
+                Intent goToGeo = new Intent(this, GeoDataSource.class);
+                startActivity(goToGeo);
+                break;
+            case R.id.songLyrics_toolbar:
+                Intent goToLyrics = new Intent(this, LyricsSearchActivity.class);
+                startActivity(goToLyrics);
+                break;
+            case R.id.deezer_toolbar:
+                Intent goToDeezer = new Intent(this, DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.help_item:
+                Toast.makeText(this, R.string.soc_tbar_msg, Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        return true;
     }
 
     private class SoccerDetails {
@@ -242,6 +275,7 @@ public class GameList extends AppCompatActivity {
             return newView;
         }
     }
+
     }
 
 

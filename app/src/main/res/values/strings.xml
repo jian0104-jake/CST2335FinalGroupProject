@@ -45,5 +45,12 @@
     <string name="soc_click_to_watch">Click image to watch the game</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menuTxt">About this project</string>
+    <string name="geo_toolbar">geotoolbar</string>
+    <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
+    <string name="deezer_toolbar_str">\"\"</string>
+    <string name="soc_tbar_msg">This is the SoccerMatchHight activity, written byZiyue Wang</string>
+    <string name="soc_version_nav">Version 1.0</string>
+    <string name="soc_author_nav">Author: Ziyue Wang</string>
 
 </resources>

@@ -2,12 +2,16 @@ package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,7 +20,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -37,6 +44,8 @@ public class Favorite_Game_List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_game_list);
+        Toolbar tBar = findViewById(R.id.soc_favlist_toolbar);
+        setSupportActionBar(tBar);
         loadfromDB();
         boolean isTablet = findViewById(R.id.soc_fav_fragmentLocation) != null;
         ListView myList = findViewById(R.id.soc_fav_list);
@@ -135,6 +144,36 @@ public class Favorite_Game_List extends AppCompatActivity {
             }
         }));
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.geo_toolbar:
+                Intent goToGeo = new Intent(this, GeoDataSource.class);
+                startActivity(goToGeo);
+                break;
+            case R.id.songLyrics_toolbar:
+                Intent goToLyrics = new Intent(this, LyricsSearchActivity.class);
+                startActivity(goToLyrics);
+                break;
+            case R.id.deezer_toolbar:
+                Intent goToDeezer = new Intent(this, DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.help_item:
+                Toast.makeText(this, R.string.soc_tbar_msg, Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        return true;
     }
 
     /**

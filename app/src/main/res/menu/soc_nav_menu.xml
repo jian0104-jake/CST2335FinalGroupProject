@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/in"
+        android:title="@string/geo_toolbar"
+        android:icon="@drawable/earth"
+        />  <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+    <item android:id="@+id/songLyrics_toolbar"
+        android:title="@string/songLyrics_toolbar_str"
+        android:icon="@drawable/rockstar"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/deezer_toolbar"
+        android:title="@string/deezer_toolbar_str"
+        android:icon="@drawable/record"
+        android:orderInCategory="150"
+        app:showAsAction="always"/>

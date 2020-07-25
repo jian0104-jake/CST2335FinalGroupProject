@@ -9,12 +9,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,7 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
@@ -48,31 +55,13 @@ public class SoccerDetailsFragment extends Fragment {
     private AppCompatActivity parentActivity;
 
     public SoccerDetailsFragment() {}
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment SoccerDetailsFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static SoccerDetailsFragment newInstance(String param1, String param2) {
-//        SoccerDetailsFragment fragment = new SoccerDetailsFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dataFromActivity = getArguments();
         View result = inflater.inflate(R.layout.fragment_soccer_details, container, false);
+        Toolbar tbar = result.findViewById(R.id.soc_fragdetail_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(tbar);
         imageButton = result.findViewById(R.id.soccer_img_btn);
         teamName = result.findViewById(R.id.teamName);
         gameDate = result.findViewById(R.id.soc_game_date);
@@ -112,17 +101,47 @@ public class SoccerDetailsFragment extends Fragment {
             Intent goToFav = new Intent(this.getContext(),Favorite_Game_List.class);
             startActivity(goToFav);
         });
-        goWacthBtn = result.findViewById(R.id.soc_goWacthLive);
-        goWacthBtn.setOnClickListener(click->{
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData( Uri.parse(gameUrl) );startActivity(i);
-        });
+//        goWacthBtn = result.findViewById(R.id.soc_goWacthLive);
+//        goWacthBtn.setOnClickListener(click->{
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData( Uri.parse(gameUrl) );startActivity(i);
+//        });
         imageButton.setOnClickListener(click->{
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData( Uri.parse(gameUrl) );startActivity(i);
         });
-
+        setHasOptionsMenu(true);
         return result;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu items for use in the action bar
+        menu.clear();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.geo_toolbar:
+                Intent goToGeo = new Intent(this.getContext(), GeoDataSource.class);
+                startActivity(goToGeo);
+                break;
+            case R.id.songLyrics_toolbar:
+                Intent goToLyrics = new Intent(this.getContext(), LyricsSearchActivity.class);
+                startActivity(goToLyrics);
+                break;
+            case R.id.deezer_toolbar:
+                Intent goToDeezer = new Intent(this.getContext(), DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.help_item:
+                Toast.makeText(this.getContext(), R.string.soc_tbar_msg, Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        return true;
     }
     @Override
     public void onAttach(Context context) {
@@ -170,4 +189,5 @@ public class SoccerDetailsFragment extends Fragment {
 
         }
     }
+
 }

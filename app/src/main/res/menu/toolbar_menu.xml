@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/geo_toolbar"
+        android:title="@string/geo_toolbar"
+        android:icon="@drawable/earth"
+        android:orderInCategory="45"
+        app:showAsAction="always"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+    <item android:id="@+id/songLyrics_toolbar"
+        android:title="@string/songLyrics_toolbar_str"
+        android:icon="@drawable/rockstar"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/deezer_toolbar"
+        android:title="@string/deezer_toolbar_str"
+        android:icon="@drawable/record"
+        android:orderInCategory="150"
+        app:showAsAction="always"/>
+
+
+
+
+    <!--    <item android:id="@+id/search_item"-->
+<!--        android:orderInCategory="50"-->
+<!--        app:actionViewClass="android.widget.SearchView"-->
+<!--        android:icon="@android:drawable/ic_search_category_default"-->
+<!--        app:showAsAction="always|collapseActionView"-->
+<!--        android:title="@string/search"/>    &lt;!&ndash; This uses showAsAction=always, so look at icon= parameter &ndash;&gt;-->
+
+
+    <item android:id="@+id/help_item"
+        android:title="@string/menuTxt"
+        app:showAsAction="never"
+        android:orderInCategory="400"/> <!-- This uses showAsAction=never, so look at title= parameter -->
+
+</menu>
