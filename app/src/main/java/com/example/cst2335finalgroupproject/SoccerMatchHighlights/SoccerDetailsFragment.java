@@ -3,6 +3,7 @@ package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,7 +49,7 @@ import java.net.URL;
 
 public class SoccerDetailsFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button saveBtn,goToFavBtn;
+    private Button saveOrRemoveBtn,goToFavBtn;
     private ProgressBar pb2;
     private TextView teamName;
     private TextView gameDate;
@@ -58,7 +59,8 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
     private Button goWacthBtn;
     private SQLiteDatabase db ;
     private Bundle dataFromActivity;
-    private AppCompatActivity parentActivity;
+    public SharedPreferences prefs;
+
 
 
     public SoccerDetailsFragment() {}
@@ -96,10 +98,10 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
         String date = gameDate.getText().toString();
         String gameUrl = gameVedioUrl.getText().toString();
         String source = dataFromActivity.getString("sourcePage");
-        saveBtn = result.findViewById(R.id.soc_saveBtn);
+        saveOrRemoveBtn = result.findViewById(R.id.soc_saveBtn);
         if(source.equals("listPage")){
-            saveBtn.setText("Save to favorite list");
-            saveBtn.setOnClickListener(b->{
+            saveOrRemoveBtn.setText("Save to favorite list");
+            saveOrRemoveBtn.setOnClickListener(b->{
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setTitle("Save as favorite? ").setMessage("would you like save this game to your favorite list?"
                 ).setPositiveButton("Yes",(click,arg)->{
@@ -112,12 +114,12 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
                     if(id>0)//if database insertion fails, id = -1
                         Toast.makeText(this.getContext(), "saved successfully", Toast.LENGTH_SHORT).show();
                 }).setNegativeButton("No",(click,arg)->{
-                    Snackbar.make(saveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(saveOrRemoveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
                 }).create().show();
             });
         }else if(source.equals("favList")){
-            saveBtn.setText("Remove From the favorite list");
-            saveBtn.setOnClickListener(click->{
+            saveOrRemoveBtn.setText("Remove From the favorite list");
+            saveOrRemoveBtn.setOnClickListener(click->{
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
                 alertDialog.setTitle((R.string.soc_removeQue)).setMessage(R.string.soc_removeMsg
                 ).setPositiveButton("Yes",(c,arg)->{
@@ -126,7 +128,7 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
 
 
                 }).setNegativeButton("No",(c,arg)->{
-                    Snackbar.make(saveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(saveOrRemoveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
                 }).create().show();
             });
 
@@ -143,11 +145,19 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
 //            Intent i = new Intent(Intent.ACTION_VIEW);
 //            i.setData( Uri.parse(gameUrl) );startActivity(i);
 //        });
+           prefs = this.getActivity().getSharedPreferences("data",Context.MODE_PRIVATE);
+
         imageButton.setOnClickListener(click->{
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("gameUrl",gameUrl);
+            editor.commit();
             Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData( Uri.parse(gameUrl) );startActivity(i);
+            i.setData( Uri.parse(gameUrl) );
+            startActivity(i);
         });
+
         setHasOptionsMenu(true);
+
         return result;
     }
     @Override
@@ -183,7 +193,7 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        parentActivity = (AppCompatActivity)context;
+        AppCompatActivity parentActivity = (AppCompatActivity) context;
     }
 
     @Override
