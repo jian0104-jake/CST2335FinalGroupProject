@@ -23,6 +23,10 @@
     <string name="lyric_google_button">Google the Song</string>
     <string name="lyric_back_to_front_button">Go back to Search</string>
     <string name="lyric_fav_hide_button">HIDE</string>
+    <string name="lyric_toolbar_goto_cityfinder">City Finder</string>
+    <string name="lyric_toolbar_goto_soccer">Soccer Highlight</string>
+    <string name="lyric_toolbar_goto_deezer">Deezer</string>
+    <string name="lyric_toolbar_overflow">About this project</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>
@@ -67,5 +71,6 @@
     <string name="soccer_neu">Remove from favorite list</string>
     <string name="soc_delete_msg">Delete successfully</string>
     <string name="soc_gowatchLive">watch video</string>
+    >
 
 </resources>

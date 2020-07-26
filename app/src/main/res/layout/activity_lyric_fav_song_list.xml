@@ -7,18 +7,21 @@
     android:orientation="vertical"
     tools:context=".SongLyricsSearch.LyricFavSongActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lyric_toolbar"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lyric_button_back_to_front"
         android:text="@string/lyric_back_to_front_button"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lyric_fav_song_list">
-    </ListView>
-
-
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lyric_fav_song_list">
+        </ListView>
 
 </LinearLayout>

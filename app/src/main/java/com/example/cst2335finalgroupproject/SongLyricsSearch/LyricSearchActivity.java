@@ -1,13 +1,15 @@
 package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,9 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
+import com.example.cst2335finalgroupproject.MainActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.LyricSearchHistory;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -35,7 +42,7 @@ import java.util.List;
 public class LyricSearchActivity extends AppCompatActivity {
 
     /**
-     *  The implemented adapter for list view
+     * The implemented adapter for list view
      */
     private MyListAdapter myAdapter;
 
@@ -50,8 +57,8 @@ public class LyricSearchActivity extends AppCompatActivity {
     private ArrayList<String> elements = new ArrayList<>();
 
     /**
-     *  The instance of SearchHistory class, which is used to record
-     *  the search history
+     * The instance of SearchHistory class, which is used to record
+     * the search history
      */
     private LyricSearchHistory lyricSearchHistory;
 
@@ -75,6 +82,10 @@ public class LyricSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_search);
+
+        // tool bar
+        Toolbar toolBar = findViewById(R.id.lyric_toolbar);
+        setSupportActionBar(toolBar);
 
         // Listview to display search history
         listView = findViewById(R.id.lyric_search_history_list);
@@ -130,7 +141,7 @@ public class LyricSearchActivity extends AppCompatActivity {
         });
 
         Button toFavList = findViewById(R.id.lyric_button_go_to_fav);
-        toFavList.setOnClickListener(click ->{
+        toFavList.setOnClickListener(click -> {
             Intent goToFav = new Intent(LyricSearchActivity.this, LyricFavSongActivity.class);
             startActivity(goToFav);
         });
@@ -143,13 +154,14 @@ public class LyricSearchActivity extends AppCompatActivity {
         });
 
         listView.setOnItemLongClickListener((parent, view, pos, id) -> {
-            Toast.makeText(this,"The selected row is: " + pos, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "The selected row is: " + pos, Toast.LENGTH_SHORT).show();
             return true;
         });
     }
 
     /**
      * Save search history using SharedPreferences
+     *
      * @param lyricSearchHistory a search history which want to save and used later
      */
     private void saveSearchHistory(LyricSearchHistory lyricSearchHistory) {
@@ -192,6 +204,7 @@ public class LyricSearchActivity extends AppCompatActivity {
 
     /**
      * Getter for search history, provide a String contains history record
+     *
      * @return a list of search history which have 5 elements.
      */
     private List<String> getSearchHistory() {
@@ -258,5 +271,42 @@ public class LyricSearchActivity extends AppCompatActivity {
             LinearLayout search_history_layout;
             TextView search_history_text;
         }
+    }
+
+    /**
+     * Used to display tool bar items
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.lyric_toolbar_items, menu);
+        return true;
+    }
+
+    /**
+     * Used to capture and react with tool bar
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //what to do when the menu item is selected:
+            case R.id.lyric_toolbar_goto_findcity:
+                Intent goToGeoData = new Intent(LyricSearchActivity.this, GeoDataSource.class);
+                startActivity(goToGeoData);
+                break;
+            case R.id.lyric_toolbar_goto_soccerhighlight:
+                Intent goToSoccer = new Intent(LyricSearchActivity.this, GameList.class);
+                startActivity(goToSoccer);
+                break;
+            case R.id.lyric_toolbar_goto_deezer:
+                Intent goToDeezer = new Intent(LyricSearchActivity.this, DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.lyric_toolbar_overflow:
+                Toast.makeText(this, "This is the Lyrics Search activity, written by Eric Wu", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
     }
 }

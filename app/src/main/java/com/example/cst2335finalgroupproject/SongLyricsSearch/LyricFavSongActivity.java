@@ -1,6 +1,7 @@
 package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
@@ -8,7 +9,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,9 +23,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Entity.FavLyricsEntity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 
 import java.util.ArrayList;
 
@@ -68,6 +76,10 @@ public class LyricFavSongActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_fav_song_list);
 
+        // tool bar
+        Toolbar toolBar = findViewById(R.id.lyric_toolbar);
+        setSupportActionBar(toolBar);
+
         Button button = findViewById(R.id.lyric_button_back_to_front);
         button.setOnClickListener(click ->{
             Intent backToSearch = new Intent(LyricFavSongActivity.this, LyricSearchActivity.class);
@@ -82,7 +94,8 @@ public class LyricFavSongActivity extends AppCompatActivity {
         Cursor cursor = sqLiteDatabase.query(FavSongDB.TABLE_NAME,
                 new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
                 null, null, null, null, FavSongDB.COL_ID);
-        if (cursor.moveToNext()) {
+        int i = 0;
+        while (cursor.moveToNext()) {
             elements.add(new FavLyricsEntity(cursor.getString(cursor.getColumnIndex(FavSongDB.COL_ARTIST)),
                     cursor.getString(cursor.getColumnIndex(FavSongDB.COL_TITLE)),
                     cursor.getLong(cursor.getColumnIndex(FavSongDB.COL_ID)),
@@ -205,5 +218,42 @@ public class LyricFavSongActivity extends AppCompatActivity {
             LinearLayout search_history_layout;
             TextView search_history_text;
         }
+    }
+
+    /**
+     * Used to display tool bar items
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.lyric_toolbar_items, menu);
+        return true;
+    }
+
+    /**
+     * Used to capture and react with tool bar
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //what to do when the menu item is selected:
+            case R.id.lyric_toolbar_goto_findcity:
+                Intent goToGeoData = new Intent(LyricFavSongActivity.this, GeoDataSource.class);
+                startActivity(goToGeoData);
+                break;
+            case R.id.lyric_toolbar_goto_soccerhighlight:
+                Intent goToSoccer = new Intent(LyricFavSongActivity.this, GameList.class);
+                startActivity(goToSoccer);
+                break;
+            case R.id.lyric_toolbar_goto_deezer:
+                Intent goToDeezer = new Intent(LyricFavSongActivity.this, DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.lyric_toolbar_overflow:
+                Toast.makeText(this, "This is the Lyrics Search activity, written by Eric Wu", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
     }
 }

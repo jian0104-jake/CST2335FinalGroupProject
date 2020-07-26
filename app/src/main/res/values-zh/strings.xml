@@ -59,6 +59,10 @@
     <string name="search">搜索</string>
     <string name="enter_artist_name">输入艺术家名字</string>
     <string name="dialog_msg_no_artist_found">没有找到艺术家。\\n请检查你的搜索条件再试。</string>
+    <string name="lyric_toolbar_goto_cityfinder">城市查询器</string>
+    <string name="lyric_toolbar_goto_soccer">足球集锦</string>
+    <string name="lyric_toolbar_goto_deezer">搜索歌曲</string>
+    <string name="lyric_toolbar_overflow">关于本项目</string>
 
 
 </resources>

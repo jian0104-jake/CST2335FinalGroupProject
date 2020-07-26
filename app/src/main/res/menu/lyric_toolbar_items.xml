@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/lyric_toolbar_goto_findcity"
+        android:icon="@drawable/freeicon"
+        android:orderInCategory="100"
+        android:title="@string/lyric_toolbar_goto_cityfinder"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/lyric_toolbar_goto_soccerhighlight"
+        android:icon="@drawable/freeicon"
+        android:orderInCategory="100"
+        android:title="@string/lyric_toolbar_goto_soccer"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/lyric_toolbar_goto_deezer"
+        android:icon="@drawable/freeicon"
+        android:orderInCategory="100"
+        android:title="@string/lyric_toolbar_goto_deezer"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/lyric_toolbar_overflow"
+        android:icon="@drawable/freeicon"
+        android:orderInCategory="200"
+        android:title="@string/lyric_toolbar_overflow"
+        app:showAsAction="ifRoom" />
+</menu>

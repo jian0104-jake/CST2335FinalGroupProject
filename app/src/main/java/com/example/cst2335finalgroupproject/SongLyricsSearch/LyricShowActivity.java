@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -15,9 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 
 import org.json.JSONObject;
 
@@ -65,6 +72,10 @@ public class LyricShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_show);
 
+        // tool bar
+        Toolbar toolBar = findViewById(R.id.lyric_toolbar);
+        setSupportActionBar(toolBar);
+
         progressBar = findViewById(R.id.lyric_process_bar_show);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -89,12 +100,9 @@ public class LyricShowActivity extends AppCompatActivity {
             // Check if a song already exists
             favSongDB = new FavSongDB(this);
             sqLiteDatabase = favSongDB.getWritableDatabase();
-            Cursor cursor = sqLiteDatabase.query(FavSongDB.TABLE_NAME,
-                    new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
-                    null, null, null, null, FavSongDB.COL_ID);
-            if (cursor.moveToNext()) {
-                Toast.makeText(this, "This song already in the Favorite List", Toast.LENGTH_LONG).show();
-            } else {
+            String query = "SELECT * FROM " + FavSongDB.TABLE_NAME + " WHERE " + FavSongDB.COL_ARTIST + " like ? AND " + FavSongDB.COL_TITLE + " like ?";
+            Cursor cursor = sqLiteDatabase.rawQuery(query, new String[]{artist, title});
+            if (cursor.getCount() <= 0) {
                 // add song into database
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(FavSongDB.COL_ARTIST, artist);
@@ -103,6 +111,8 @@ public class LyricShowActivity extends AppCompatActivity {
                 contentValues.put(FavSongDB.COL_CONTENT, textView.getText().toString());
                 sqLiteDatabase.insert(FavSongDB.TABLE_NAME, "NullColumnName", contentValues);
                 Toast.makeText(this, "Successfully Add to Favorite List", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "This song already in the Favorite List", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -198,5 +208,42 @@ public class LyricShowActivity extends AppCompatActivity {
                 textView.setText(lyric);
             }
         }
+    }
+
+    /**
+     * Used to display tool bar items
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.lyric_toolbar_items, menu);
+        return true;
+    }
+
+    /**
+     * Used to capture and react with tool bar
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //what to do when the menu item is selected:
+            case R.id.lyric_toolbar_goto_findcity:
+                Intent goToGeoData = new Intent(LyricShowActivity.this, GeoDataSource.class);
+                startActivity(goToGeoData);
+                break;
+            case R.id.lyric_toolbar_goto_soccerhighlight:
+                Intent goToSoccer = new Intent(LyricShowActivity.this, GameList.class);
+                startActivity(goToSoccer);
+                break;
+            case R.id.lyric_toolbar_goto_deezer:
+                Intent goToDeezer = new Intent(LyricShowActivity.this, DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.lyric_toolbar_overflow:
+                Toast.makeText(this, "This is the Lyrics Search activity, written by Eric Wu", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
     }
 }
