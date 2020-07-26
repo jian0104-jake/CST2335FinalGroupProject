@@ -22,6 +22,7 @@ import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -54,6 +55,11 @@ public class LyricShowActivity extends AppCompatActivity {
      */
     private final String URL = "https://api.lyrics.ovh/v1/";
 
+    /**
+     * Display the information of the requested song
+     */
+    private TextView searchTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +68,21 @@ public class LyricShowActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.lyric_process_bar_show);
         progressBar.setVisibility(View.VISIBLE);
 
+
         Intent fromSearch = getIntent();
         String artist = fromSearch.getStringExtra("song_artist");
         String title = fromSearch.getStringExtra("song_title");
-        String link = URL + artist + "/" + title;
+
+        searchTitle = findViewById(R.id.lyric_search_info);
+        searchTitle.setText(artist + "\n" + title);
+
+        String artistURL = "";
+        String titleURL = "";
+        // deal with special character in url, like space.
+        artistURL = Uri.encode(artist, "UTF-8");
+        titleURL = Uri.encode(title, "UTF-8");
+        String link = URL + artistURL + "/" + titleURL;
+        Log.i("URL", link);
 
         Button favButton = findViewById(R.id.lyric_button_fav);
         favButton.setOnClickListener(click -> {
@@ -76,7 +93,7 @@ public class LyricShowActivity extends AppCompatActivity {
                     new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
                     null, null, null, null, FavSongDB.COL_ID);
             if (cursor.moveToNext()) {
-                Toast.makeText(this,"This song already in the Favorite List", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "This song already in the Favorite List", Toast.LENGTH_LONG).show();
             } else {
                 // add song into database
                 ContentValues contentValues = new ContentValues();
@@ -85,7 +102,7 @@ public class LyricShowActivity extends AppCompatActivity {
                 TextView textView = findViewById(R.id.lyric_content);
                 contentValues.put(FavSongDB.COL_CONTENT, textView.getText().toString());
                 sqLiteDatabase.insert(FavSongDB.TABLE_NAME, "NullColumnName", contentValues);
-                Toast.makeText(this,"Successfully Add to Favorite List", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Successfully Add to Favorite List", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -99,12 +116,14 @@ public class LyricShowActivity extends AppCompatActivity {
         LyricSearch lyricSearch = new LyricSearch();
         lyricSearch.execute(link);
 
+        progressBar.setVisibility(View.GONE);
+
     }
 
     class LyricSearch extends AsyncTask<String, Integer, String> {
 
         /**
-         *
+         * Store the search result
          */
         private String lyric;
 
@@ -123,8 +142,7 @@ public class LyricShowActivity extends AppCompatActivity {
                 //wait for data:
                 InputStream response = urlConnection.getInputStream();
 
-                //JSON reader
-
+                // When can not find result, then display a message
                 //Build the entire string response:
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
                 StringBuilder sb = new StringBuilder();
@@ -146,8 +164,12 @@ public class LyricShowActivity extends AppCompatActivity {
                 Thread.sleep(50);
                 publishProgress(80);
 
+            }
+            // inputStream will throw an FileNotFoundException if url is wrong
+            catch (FileNotFoundException e) {
+                return "File not found";
             } catch (Exception e) {
-                e.printStackTrace();
+                return e.getMessage();
             }
             return "Done";
 
@@ -160,10 +182,21 @@ public class LyricShowActivity extends AppCompatActivity {
 
         public void onPostExecute(String fromDoInBackground) {
             publishProgress(100);
-            TextView textView = findViewById(R.id.lyric_content);
-            textView.setText(lyric);
-
             progressBar.setVisibility(View.GONE);
+
+            TextView textView = findViewById(R.id.lyric_content);
+
+            if (!fromDoInBackground.equals("Done")) {
+                if (fromDoInBackground.equals("File not found")) {
+                    Toast.makeText(getApplicationContext(), "Can not find the song", Toast.LENGTH_SHORT).show();
+                    textView.setText("Can not find the song");
+                } else {
+                    Toast.makeText(getApplicationContext(), fromDoInBackground, Toast.LENGTH_SHORT).show();
+                    textView.setText(fromDoInBackground);
+                }
+            } else {
+                textView.setText(lyric);
+            }
         }
     }
 }
