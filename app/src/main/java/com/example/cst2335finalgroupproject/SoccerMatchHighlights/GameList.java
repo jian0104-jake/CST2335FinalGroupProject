@@ -1,9 +1,11 @@
 package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,16 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameList extends AppCompatActivity {
+public class GameList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ArrayList<String> elements = new ArrayList<>( Arrays.asList( "One game", "Two game" ) );
     private MyListAdapter myAdapter;
@@ -54,8 +60,18 @@ public class GameList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
+        boolean isTablet = findViewById(R.id.soc_fragmentLocation) != null;
+        if(!isTablet){
         Toolbar tBar = findViewById(R.id.soc_list_toolbar);
         setSupportActionBar(tBar);
+        DrawerLayout drawer = findViewById(R.id.list_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, tBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.soc_list_nav);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);}
         Button btn = findViewById(R.id.showBtn);
         pb = findViewById(R.id.pb1);
         pb.setVisibility(View.VISIBLE);
@@ -66,7 +82,7 @@ public class GameList extends AppCompatActivity {
             Intent goToDe = new Intent(GameList.this,Favorite_Game_List.class);
             startActivity(goToDe);
         });
-        boolean isTablet = findViewById(R.id.soc_fragmentLocation) != null;
+
         ListView myList = findViewById(R.id.gameList);
         myList.setAdapter( myAdapter = new MyListAdapter());
 //        myList.setOnItemClickListener((parent, view, position, id) -> {
@@ -95,10 +111,12 @@ public class GameList extends AppCompatActivity {
             String gdate = soccerDetailsList.get(position).date;
             String gurl = soccerDetailsList.get(position).vedioUrl;
             String iurl = soccerDetailsList.get(position).imgUrl;
+            String source = "listPage";
             dataToPass.putString("gametitle", gtitle);
             dataToPass.putString("date", gdate);
             dataToPass.putString("gamevedio", gurl);
             dataToPass.putString("imageUrl", iurl);
+            dataToPass.putString("sourcePage",source);
             if (isTablet) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
@@ -158,6 +176,41 @@ public class GameList extends AppCompatActivity {
         }
 
         return true;
+    }
+    @Override
+    public boolean onNavigationItemSelected( MenuItem item) {
+
+
+        switch(item.getItemId())
+        {
+            case R.id.api:
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData( Uri.parse("https://www.scorebat.com/video-api/") );
+                startActivity(i);
+                break;
+            case R.id.instruction:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(R.string.soc_instruction_title).setMessage(R.string.soc_intro_msg
+                ).setPositiveButton(R.string.soc_intro_positive, (click, arg) -> {})
+                   .create().show();
+            case R.id.donate:
+                final EditText et = new EditText(this);
+                et.setHint("$$$");
+
+                new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
+                        .setView(et)
+                        .setPositiveButton("Thank you", (click,arg) ->{
+
+                        })
+                        .setNegativeButton("cancel", null)
+                        .show();
+
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.list_drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
     }
 
     private class SoccerDetails {

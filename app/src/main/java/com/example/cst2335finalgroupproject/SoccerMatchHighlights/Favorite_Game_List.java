@@ -1,12 +1,17 @@
 package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +30,13 @@ import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchAct
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Favorite_Game_List extends AppCompatActivity {
+public class Favorite_Game_List extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private List<FavSoccerDetails>  favSoccerList = new ArrayList();
     private SQLiteDatabase db;
     private TextView favTV;
@@ -46,6 +53,14 @@ public class Favorite_Game_List extends AppCompatActivity {
         setContentView(R.layout.activity_favorite_game_list);
         Toolbar tBar = findViewById(R.id.soc_favlist_toolbar);
         setSupportActionBar(tBar);
+        DrawerLayout drawer = findViewById(R.id.favlist_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, tBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.soc_favlist_nav);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
         loadfromDB();
         boolean isTablet = findViewById(R.id.soc_fav_fragmentLocation) != null;
         ListView myList = findViewById(R.id.soc_fav_list);
@@ -88,10 +103,12 @@ public class Favorite_Game_List extends AppCompatActivity {
             String gdate = favSoccerList.get(position).date;
             String gurl = favSoccerList.get(position).vedioUrl;
             String iurl = favSoccerList.get(position).imgUrl;
+            String source = "favList";
             dataToPass.putString("gametitle", gtitle);
             dataToPass.putString("date", gdate);
             dataToPass.putString("gamevedio", gurl);
             dataToPass.putString("imageUrl", iurl);
+            dataToPass.putString("sourcePage",source);
             if(isTablet){
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
@@ -106,7 +123,6 @@ public class Favorite_Game_List extends AppCompatActivity {
                 }).setNegativeButton(R.string.soccer_negative, (click, arg) -> {
                     Snackbar.make(myList, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
                 }).setNeutralButton(R.string.soccer_neu,(click, arg)->{
-
                     db.delete(SoccerDB.TABLE_NAME,SoccerDB.TEAM_COL + "=?",new String[]{favSoccerList.get(position).title});
                     favSoccerList.remove(position);
                     Snackbar.make(myList, R.string.soc_delete_msg, Snackbar.LENGTH_SHORT).show();
@@ -174,6 +190,38 @@ public class Favorite_Game_List extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.api:
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData( Uri.parse("https://www.scorebat.com/video-api/") );
+                startActivity(i);
+                break;
+            case R.id.instruction:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(R.string.soc_instruction_title).setMessage(R.string.soc_intro_msg
+                ).setPositiveButton(R.string.soc_intro_positive, (click, arg) -> {})
+                        .create().show();
+            case R.id.donate:
+                final EditText et = new EditText(this);
+                et.setHint("$$$");
+
+                new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
+                        .setView(et)
+                        .setPositiveButton("Thank you", (click,arg) ->{
+
+                        })
+                        .setNegativeButton("cancel", null)
+                        .show();
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.list_drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return false;
     }
 
     /**

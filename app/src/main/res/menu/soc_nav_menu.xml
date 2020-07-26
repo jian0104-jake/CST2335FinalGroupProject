@@ -3,19 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item android:id="@+id/in"
-        android:title="@string/geo_toolbar"
-        android:icon="@drawable/earth"
-        />  <!-- This uses showAsAction=always, so look at icon= parameter -->
+    <item android:id="@+id/instruction"
+        android:title="@string/Instructions_for_this_app"
+        android:icon="@drawable/info" />
 
-    <item android:id="@+id/songLyrics_toolbar"
-        android:title="@string/songLyrics_toolbar_str"
-        android:icon="@drawable/rockstar"
-        android:orderInCategory="100"
-        app:showAsAction="always"/>
+    <item android:id="@+id/api"
+        android:title="@string/about_API"
+        android:icon="@drawable/api_link" />
 
-    <item android:id="@+id/deezer_toolbar"
-        android:title="@string/deezer_toolbar_str"
-        android:icon="@drawable/record"
+    <item android:id="@+id/donate"
+        android:title="@string/donate"
+        android:icon="@drawable/coins"
         android:orderInCategory="150"
         app:showAsAction="always"/>
+</menu>

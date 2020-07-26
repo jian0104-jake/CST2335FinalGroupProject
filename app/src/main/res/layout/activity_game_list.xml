@@ -10,13 +10,16 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/soc_list_toolbar"></androidx.appcompat.widget.Toolbar>
+        android:id="@+id/soc_list_toolbar"/>
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+        android:id="@+id/list_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:openDrawer="start">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,14 +32,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/showBtn"
             android:text="@string/show"
-            android:layout_gravity="bottom"/>
+          android:layout_gravity="bottom" />
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pb1"
         android:visibility="invisible"
-        android:max="100"
-       />
+        android:max="100" />
+    </LinearLayout>
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

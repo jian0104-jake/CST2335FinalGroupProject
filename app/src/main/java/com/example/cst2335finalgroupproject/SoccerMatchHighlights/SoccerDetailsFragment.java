@@ -9,10 +9,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchAct
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
@@ -40,7 +46,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class SoccerDetailsFragment extends Fragment {
+public class SoccerDetailsFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
     private Button saveBtn,goToFavBtn;
     private ProgressBar pb2;
@@ -54,6 +60,7 @@ public class SoccerDetailsFragment extends Fragment {
     private Bundle dataFromActivity;
     private AppCompatActivity parentActivity;
 
+
     public SoccerDetailsFragment() {}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +69,16 @@ public class SoccerDetailsFragment extends Fragment {
         View result = inflater.inflate(R.layout.fragment_soccer_details, container, false);
         Toolbar tbar = result.findViewById(R.id.soc_fragdetail_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(tbar);
+
+
+            DrawerLayout drawer = result.findViewById(R.id.fragtail_drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this.getActivity(),
+                    drawer, tbar, R.string.open, R.string.close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+            NavigationView navigationView = result.findViewById(R.id.soc_fragdetail_nav);
+            navigationView.setItemIconTintList(null);
+            navigationView.setNavigationItemSelectedListener(this);
         imageButton = result.findViewById(R.id.soccer_img_btn);
         teamName = result.findViewById(R.id.teamName);
         gameDate = result.findViewById(R.id.soc_game_date);
@@ -78,24 +95,44 @@ public class SoccerDetailsFragment extends Fragment {
         String twoTeam = teamName.getText().toString();
         String date = gameDate.getText().toString();
         String gameUrl = gameVedioUrl.getText().toString();
+        String source = dataFromActivity.getString("sourcePage");
         saveBtn = result.findViewById(R.id.soc_saveBtn);
-        //if save button is clicked,  data is going to be saved in database
-        saveBtn.setOnClickListener(b->{
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
-            alertDialog.setTitle("Save as favorite? ").setMessage("would you like save this game to your favorite list?"
-            ).setPositiveButton("Yes",(click,arg)->{
-                ContentValues newRowValue = new ContentValues();
-                newRowValue.put(SoccerDB.TEAM_COL,twoTeam);
-                newRowValue.put(SoccerDB.DATE_COL,date);
-                newRowValue.put(SoccerDB.URL_COL,gameUrl);
-                newRowValue.put(SoccerDB.IMG_COL,imageUrl);
-                long id = db.insert(SoccerDB.TABLE_NAME,null,newRowValue);
-                if(id>0)//if database insertion fails, id = -1
-                    Toast.makeText(this.getContext(), "saved successfully", Toast.LENGTH_SHORT).show();
-            }).setNegativeButton("No",(click,arg)->{
-                Snackbar.make(saveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
-            }).create().show();
-        });
+        if(source.equals("listPage")){
+            saveBtn.setText("Save to favorite list");
+            saveBtn.setOnClickListener(b->{
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
+                alertDialog.setTitle("Save as favorite? ").setMessage("would you like save this game to your favorite list?"
+                ).setPositiveButton("Yes",(click,arg)->{
+                    ContentValues newRowValue = new ContentValues();
+                    newRowValue.put(SoccerDB.TEAM_COL,twoTeam);
+                    newRowValue.put(SoccerDB.DATE_COL,date);
+                    newRowValue.put(SoccerDB.URL_COL,gameUrl);
+                    newRowValue.put(SoccerDB.IMG_COL,imageUrl);
+                    long id = db.insert(SoccerDB.TABLE_NAME,null,newRowValue);
+                    if(id>0)//if database insertion fails, id = -1
+                        Toast.makeText(this.getContext(), "saved successfully", Toast.LENGTH_SHORT).show();
+                }).setNegativeButton("No",(click,arg)->{
+                    Snackbar.make(saveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
+                }).create().show();
+            });
+        }else if(source.equals("favList")){
+            saveBtn.setText("Remove From the favorite list");
+            saveBtn.setOnClickListener(click->{
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
+                alertDialog.setTitle((R.string.soc_removeQue)).setMessage(R.string.soc_removeMsg
+                ).setPositiveButton("Yes",(c,arg)->{
+                    db.delete(SoccerDB.TABLE_NAME,SoccerDB.TEAM_COL + "=?",new String[]{twoTeam});
+                    Toast.makeText(this.getContext(),R.string.soc_removeToast,Toast.LENGTH_SHORT).show();
+
+
+                }).setNegativeButton("No",(c,arg)->{
+                    Snackbar.make(saveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
+                }).create().show();
+            });
+
+        }
+
+
         goToFavBtn = result.findViewById(R.id.soc_goFav);
         goToFavBtn.setOnClickListener(b->{
             Intent goToFav = new Intent(this.getContext(),Favorite_Game_List.class);
@@ -148,6 +185,39 @@ public class SoccerDetailsFragment extends Fragment {
         super.onAttach(context);
         parentActivity = (AppCompatActivity)context;
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.api:
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData( Uri.parse("https://www.scorebat.com/video-api/") );
+                startActivity(i);
+                break;
+            case R.id.instruction:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
+                alertDialog.setTitle(R.string.soc_instruction_title).setMessage(R.string.soc_intro_msg
+                ).setPositiveButton(R.string.soc_intro_positive, (click, arg) -> {})
+                        .create().show();
+            case R.id.donate:
+                final EditText et = new EditText(this.getContext());
+                et.setHint("$$$");
+
+                new AlertDialog.Builder(this.getContext()).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
+                        .setView(et)
+                        .setPositiveButton("Thank you", (click,arg) ->{
+
+                        })
+                        .setNegativeButton("cancel", null)
+                        .show();
+
+        }
+        //DrawerLayout drawerLayout = result.findViewById(R.id.list_drawer_layout);
+       // drawerLayout.closeDrawer(GravityCompat.START);
+        return false;
+    }
+
     private class GameImageHttpRequest extends AsyncTask< String, Integer, String> {
         private Bitmap image = null;
         @Override

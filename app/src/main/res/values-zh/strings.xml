@@ -45,6 +45,19 @@
     <string name="soc_tbar_msg">This is the SoccerMatchHight activity, written byZiyue Wang</string>
     <string name="soc_version_nav">Version 1.0</string>
     <string name="soc_author_nav">Author: Ziyue Wang</string>
+    <string name="Instructions_for_this_app">Instructions for this app</string>
+    <string name="about_API">About the API</string>
+    <string name="donate">Donate to Project</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="soc_intro_msg">You can click on the title to watch the game details, if you are interested in the game, you can also watch the game link, click on the save button to bookmark the game.</string>
+    <string name="soc_intro_positive">got it</string>
+    <string name="donate_alert_msg">Please give generously</string>
+    <string name="donate_msg">How much money do you want to donate?</string>
+    <string name="soc_removeBtn">Remove from the favorite list</string>
+    <string name="soc_removeQue">Comfirm your deletion</string>
+    <string name="soc_removeMsg">Are you sure you want to remove this record?</string>
+    <string name="soc_removeToast">Delete successfully</string>
 
 
 </resources>

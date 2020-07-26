@@ -11,11 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/soc_fragdetail_toolbar"></androidx.appcompat.widget.Toolbar>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/fragtail_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <ImageButton
             android:layout_width="500dp"
             android:layout_height="300dp"
@@ -47,14 +52,19 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:id="@+id/videoUrl"/>
-
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/soc_goFav"
-            android:text="@string/soc_goFav"
+            android:id="@+id/soc_saveBtn"
             android:gravity="bottom"/>
+
+<!--        <Button-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/soc_removeBtn"-->
+<!--            android:text="@string/soc_removeBtn"-->
+<!--            android:layout_gravity="bottom"/>-->
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,13 +74,26 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/soc_saveBtn"
-            android:text="@string/soc_saveAsFav"
+            android:id="@+id/soc_goFav"
+            android:text="@string/soc_goFav"
             android:gravity="bottom"/>
+
 
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:id="@+id/pb2"/>
+    </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/soc_header_layout"
+            app:menu="@menu/soc_nav_menu"
+            android:id="@+id/soc_fragdetail_nav"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
     </LinearLayout>
