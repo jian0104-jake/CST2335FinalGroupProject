@@ -5,28 +5,28 @@
     <item
         android:id="@+id/lyric_toolbar_goto_findcity"
         android:icon="@drawable/freeicon"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="@string/lyric_toolbar_goto_cityfinder"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/lyric_toolbar_goto_soccerhighlight"
         android:icon="@drawable/freeicon"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="@string/lyric_toolbar_goto_soccer"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/lyric_toolbar_goto_deezer"
         android:icon="@drawable/freeicon"
-        android:orderInCategory="100"
+        android:orderInCategory="3"
         android:title="@string/lyric_toolbar_goto_deezer"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/lyric_toolbar_overflow"
         android:icon="@drawable/freeicon"
-        android:orderInCategory="200"
+        android:orderInCategory="10"
         android:title="@string/lyric_toolbar_overflow"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 </menu>

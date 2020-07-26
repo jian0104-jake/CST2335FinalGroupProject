@@ -1,6 +1,8 @@
 package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,19 +14,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONObject;
 
@@ -36,10 +44,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
 /**
  * A new page to display lyrics
  */
-public class LyricShowActivity extends AppCompatActivity {
+public class LyricShowActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
      * A process bar
@@ -75,6 +85,16 @@ public class LyricShowActivity extends AppCompatActivity {
         // tool bar
         Toolbar toolBar = findViewById(R.id.lyric_toolbar);
         setSupportActionBar(toolBar);
+
+        // navigation bar
+        DrawerLayout drawerLayout = findViewById(R.id.lyric_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolBar, R.string.lyric_navigation_open, R.string.lyric_navigation_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.lyric_navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         progressBar = findViewById(R.id.lyric_process_bar_show);
         progressBar.setVisibility(View.VISIBLE);
@@ -245,5 +265,52 @@ public class LyricShowActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    /**
+     * Implement interface method, to reactive with navigation items
+     */
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        int selection = 0;
+        switch (item.getItemId()) {
+            case R.id.lyric_navigation_help_item:
+                Toast.makeText(this, R.string.lyric_navagation_help_show, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.lyric_navigation_api_item:
+                String apiLink = "https://lyricsovh.docs.apiary.io/#";
+                Intent launchBrower = new Intent(Intent.ACTION_VIEW, Uri.parse(apiLink));
+                startActivity(launchBrower);
+                break;
+            case R.id.lyric_navigation_donate_item:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Do you want to search the song?");
+                builder.setMessage("How much money do you want to donate?");
+
+                EditText editText = new EditText(this);
+                editText.setHint(R.string.lyric_navigation_donate_number);
+                editText.setInputType(TYPE_CLASS_NUMBER);
+
+                // set up two buttons
+                builder.setPositiveButton("Thank You", null);
+                builder.setNegativeButton("Cancel", null);
+
+                // create and show the dialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setView(editText, 0, 0, 0, 0);
+
+                alertDialog.setOnShowListener(dialog -> {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                });
+                alertDialog.show();
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.lyric_drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
     }
 }

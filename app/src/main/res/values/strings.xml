@@ -27,6 +27,25 @@
     <string name="lyric_toolbar_goto_soccer">Soccer Highlight</string>
     <string name="lyric_toolbar_goto_deezer">Deezer</string>
     <string name="lyric_toolbar_overflow">About this project</string>
+    <string name="lyric_navigation_help">Instructions for this app</string>
+    <string name="lyric_navigation_api">About the API</string>
+    <string name="lyric_navigation_donate">Donate to Project</string>
+    <string name="lyric_navigation_open">Open</string>
+    <string name="lyric_navigation_close">Close</string>
+    <string name="lyric_navagation_help_search">
+        Type in the artist and title of song that you want to search, then click "Search Lyrics" button.
+        \nAccess the Favorite Song list by click "Go to Fav List" button.
+    </string>
+    <string name="lyric_navagation_help_show">
+        You can add a song to the Favorite List by clicking the "Add to Fav" button.
+        \nSearch the song by Google after clicking the "Google the Song" button.
+    </string>
+    <string name="lyric_navagation_help_fav">
+        click the song will display the lyric, long click will delete item from Favorite List
+        \nIf you want to go back to the Search page, click the "Go back to Search" button
+    </string>
+    <string name="lyric_navigation_donate_number">Donation amount:</string>
+    <string name="lyric_navigation_header">CST2335\nFinal Group Project\nSong Lyrics Search</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>
@@ -71,6 +90,6 @@
     <string name="soccer_neu">Remove from favorite list</string>
     <string name="soc_delete_msg">Delete successfully</string>
     <string name="soc_gowatchLive">watch video</string>
-    >
+
 
 </resources>
