@@ -9,55 +9,82 @@
     android:orientation="vertical"
     tools:context=".SongLyricsSearch.LyricSearchActivity">
 
-    <TextView
-        android:id="@+id/lyric_artistText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lyric_artistText" />
-
-    <EditText
-        android:id="@+id/lyric_artist_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lyric_artistHint"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/lyric_titleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lyric_titleText" />
-
-    <EditText
-        android:id="@+id/lyric_title_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lyric_titleHint"
-        android:inputType="text" />
-
-    <Button
-        android:id="@+id/lyric_search_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lyric_search_button" />
-
-    <Button
-        android:id="@+id/lyric_button_go_to_fav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lyric_goto_fav_button" />
-
-    <TextView
-        android:id="@+id/lyric_search_history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lyric_search_history"
-        android:textSize="14pt" />
-
-    <ListView
-        android:id="@+id/lyric_search_history_list"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/lyric_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/lyric_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lyric_artistText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lyric_artistText" />
+
+            <EditText
+                android:id="@+id/lyric_artist_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lyric_artistHint"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/lyric_titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lyric_titleText" />
+
+            <EditText
+                android:id="@+id/lyric_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lyric_titleHint"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/lyric_search_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lyric_search_button" />
+
+            <Button
+                android:id="@+id/lyric_button_go_to_fav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lyric_goto_fav_button" />
+
+            <TextView
+                android:id="@+id/lyric_search_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lyric_search_history"
+                android:textSize="14pt" />
+
+            <ListView
+                android:id="@+id/lyric_search_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/lyric_navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/lyric_navigation_header_layout"
+            app:menu="@menu/lyric_navigation_items" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>

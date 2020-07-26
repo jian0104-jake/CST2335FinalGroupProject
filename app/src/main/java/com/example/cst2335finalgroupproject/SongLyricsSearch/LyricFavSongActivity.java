@@ -1,32 +1,50 @@
 package com.example.cst2335finalgroupproject.SongLyricsSearch;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Database.FavSongDB;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.Entity.FavLyricsEntity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class LyricFavSongActivity extends AppCompatActivity {
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
+public class LyricFavSongActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
-     *  The implemented adapter for list view
+     * The implemented adapter for list view
      */
     private MyListAdapter myAdapter;
 
@@ -57,13 +75,32 @@ public class LyricFavSongActivity extends AppCompatActivity {
     public static final String ITEM_CONTENT = "CONTENT";
     public static final String ITEM_ID = "ID";
 
+    /**
+     * store fragment instance after click item in list view.
+     */
+    private Fragment lastFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_fav_song_list);
 
+        // tool bar
+        Toolbar toolBar = findViewById(R.id.lyric_toolbar);
+        setSupportActionBar(toolBar);
+
+        // navigation bar
+        DrawerLayout drawerLayout = findViewById(R.id.lyric_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolBar, R.string.lyric_navigation_open, R.string.lyric_navigation_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.lyric_navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         Button button = findViewById(R.id.lyric_button_back_to_front);
-        button.setOnClickListener(click ->{
+        button.setOnClickListener(click -> {
             Intent backToSearch = new Intent(LyricFavSongActivity.this, LyricSearchActivity.class);
             startActivity(backToSearch);
         });
@@ -76,7 +113,8 @@ public class LyricFavSongActivity extends AppCompatActivity {
         Cursor cursor = sqLiteDatabase.query(FavSongDB.TABLE_NAME,
                 new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
                 null, null, null, null, FavSongDB.COL_ID);
-        if (cursor.moveToNext()) {
+        int i = 0;
+        while (cursor.moveToNext()) {
             elements.add(new FavLyricsEntity(cursor.getString(cursor.getColumnIndex(FavSongDB.COL_ARTIST)),
                     cursor.getString(cursor.getColumnIndex(FavSongDB.COL_TITLE)),
                     cursor.getLong(cursor.getColumnIndex(FavSongDB.COL_ID)),
@@ -106,6 +144,9 @@ public class LyricFavSongActivity extends AppCompatActivity {
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
             }
+
+            // store the fragment instance
+            lastFragment = dFragment;
         });
 
         listView.setOnItemLongClickListener((parent, view, pos, id) -> {
@@ -118,17 +159,21 @@ public class LyricFavSongActivity extends AppCompatActivity {
             builder.setPositiveButton("Delete", (dialog, which) -> {
                 elements.remove(pos);
                 sqLiteDatabase.delete(FavSongDB.TABLE_NAME, FavSongDB.COL_ID + " = ? ",
-                        new String[]{ String.valueOf(id)});
+                        new String[]{String.valueOf(id)});
                 myAdapter.notifyDataSetChanged();
                 Toast.makeText(this, "Delete Successfully", Toast.LENGTH_LONG).show();
 
-                if (isTablet) {
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .remove(
-                                    getSupportFragmentManager()
-                                            .findFragmentById(R.id.lyric_fav_song_content_frame_layout))
-                            .commit();
+                // Only when fragment is displayed, long click will delete the fragment
+                // avoid the crush when directly delete from list view without click to show the fragment.
+                if (lastFragment != null) {
+                    if (isTablet) {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .remove(
+                                        getSupportFragmentManager()
+                                                .findFragmentById(R.id.lyric_fav_song_content_frame_layout))
+                                .commit();
+                    }
                 }
             });
             builder.setNegativeButton("Cancel", null);
@@ -192,5 +237,89 @@ public class LyricFavSongActivity extends AppCompatActivity {
             LinearLayout search_history_layout;
             TextView search_history_text;
         }
+    }
+
+    /**
+     * Used to display tool bar items
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.lyric_toolbar_items, menu);
+        return true;
+    }
+
+    /**
+     * Used to capture and react with tool bar
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //what to do when the menu item is selected:
+            case R.id.lyric_toolbar_goto_findcity:
+                Intent goToGeoData = new Intent(LyricFavSongActivity.this, GeoDataSource.class);
+                startActivity(goToGeoData);
+                break;
+            case R.id.lyric_toolbar_goto_soccerhighlight:
+                Intent goToSoccer = new Intent(LyricFavSongActivity.this, GameList.class);
+                startActivity(goToSoccer);
+                break;
+            case R.id.lyric_toolbar_goto_deezer:
+                Intent goToDeezer = new Intent(LyricFavSongActivity.this, DeezerSongSearchActivity.class);
+                startActivity(goToDeezer);
+                break;
+            case R.id.lyric_toolbar_overflow:
+                Toast.makeText(this, "This is the Lyrics Search activity, written by Eric Wu", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
+    /**
+     * Implement interface method, to reactive with navigation items
+     */
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        int selection = 0;
+        switch (item.getItemId()) {
+            case R.id.lyric_navigation_help_item:
+                Toast.makeText(this, R.string.lyric_navagation_help_fav, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.lyric_navigation_api_item:
+                String apiLink = "https://lyricsovh.docs.apiary.io/#";
+                Intent launchBrower = new Intent(Intent.ACTION_VIEW, Uri.parse(apiLink));
+                startActivity(launchBrower);
+                break;
+            case R.id.lyric_navigation_donate_item:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Do you want to search the song?");
+                builder.setMessage("How much money do you want to donate?");
+
+                EditText editText = new EditText(this);
+                editText.setHint(R.string.lyric_navigation_donate_number);
+                editText.setInputType(TYPE_CLASS_NUMBER);
+
+                // set up two buttons
+                builder.setPositiveButton("Thank You", null);
+                builder.setNegativeButton("Cancel", null);
+
+                // create and show the dialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setView(editText, 0, 0, 0, 0);
+
+                alertDialog.setOnShowListener(dialog -> {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                });
+                alertDialog.show();
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.lyric_drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
     }
 }
