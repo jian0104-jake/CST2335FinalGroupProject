@@ -23,8 +23,11 @@ public class FavSongDB extends SQLiteOpenHelper {
 
     /**
      * The version of database
+     * Change Note:
+     * v2: Add a column store the lyric content, used in fragment
+     * v1: Original
      */
-    public final static int VERSION_NUM = 1;
+    public final static int VERSION_NUM = 2;
 
     /**
      * The id of database, should be increment automatically

@@ -47,6 +47,12 @@ public class LyricDetailsFragment extends Fragment {
         button.setOnClickListener(click ->{
             parentActivity.getSupportFragmentManager().beginTransaction()
                     .remove(this).commit();
+
+            // the parent activity is empty activity
+            if(parentActivity instanceof LyricEmptyActivity){
+                // On phone, click hide would go back to char room
+                parentActivity.finish();
+            }
         });
         return  result;
     }

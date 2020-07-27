@@ -13,6 +13,11 @@
         android:layout_toEndOf="@+id/lyric_fav_song_list"
         android:id="@+id/lyric_fav_song_content_frame_layout" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lyric_toolbar"/>
+
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"

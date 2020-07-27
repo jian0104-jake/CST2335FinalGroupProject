@@ -21,6 +21,29 @@
     <string name="lyric_google_button">Google the Song</string>
     <string name="lyric_back_to_front_button">Go back to Search</string>
     <string name="lyric_fav_hide_button">HIDE</string>
+    <string name="lyric_toolbar_goto_cityfinder">City Finder</string>
+    <string name="lyric_toolbar_goto_soccer">Soccer Highlight</string>
+    <string name="lyric_toolbar_goto_deezer">Deezer</string>
+    <string name="lyric_toolbar_overflow">About this project</string>
+    <string name="lyric_navigation_help">Instructions for this app</string>
+    <string name="lyric_navigation_api">About the API</string>
+    <string name="lyric_navigation_donate">Donate to Project</string>
+    <string name="lyric_navigation_open">Open</string>
+    <string name="lyric_navigation_close">Close</string>
+    <string name="lyric_navagation_help_search">
+        Type in the artist and title of song that you want to search, then click "Search Lyrics" button.
+        \nAccess the Favorite Song list by click "Go to Fav List" button.
+    </string>
+    <string name="lyric_navagation_help_show">
+        You can add a song to the Favorite List by clicking the "Add to Fav" button.
+        \nSearch the song by Google after clicking the "Google the Song" button.
+    </string>
+    <string name="lyric_navagation_help_fav">
+        click the song will display the lyric, long click will delete item from Favorite List
+        \nIf you want to go back to the Search page, click the "Go back to Search" button
+    </string>
+    <string name="lyric_navigation_donate_number">Donation amount:</string>
+    <string name="lyric_navigation_header">CST2335\nFinal Group Project\nSong Lyrics Search</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>
@@ -87,6 +110,7 @@
     <string name="soc_removeQue">Comfirm your deletion</string>
     <string name="soc_removeMsg">Are you sure you want to remove this record?</string>
     <string name="soc_removeToast">Delete successfully</string>
+
 
 
 </resources>
