@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SoccerMatchHighlights.Favorite_Game_List">
+
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,8 +51,5 @@
             app:headerLayout="@layout/soc_header_layout"
             app:menu="@menu/soc_nav_menu"
             android:id="@+id/soc_favlist_nav"/>
-
-
     </androidx.drawerlayout.widget.DrawerLayout>
-
 </LinearLayout>

@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * A new page to display lyrics
  */
-public class ShowLyricsActivity extends AppCompatActivity {
+public class LyricShowActivity extends AppCompatActivity {
 
     /**
      * A process bar
@@ -59,7 +59,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lyric_show);
 
-        progressBar = findViewById(R.id.process_bar_show);
+        progressBar = findViewById(R.id.lyric_process_bar_show);
         progressBar.setVisibility(View.VISIBLE);
 
         Intent fromSearch = getIntent();
@@ -67,13 +67,13 @@ public class ShowLyricsActivity extends AppCompatActivity {
         String title = fromSearch.getStringExtra("song_title");
         String link = URL + artist + "/" + title;
 
-        Button favButton = findViewById(R.id.button_fav);
+        Button favButton = findViewById(R.id.lyric_button_fav);
         favButton.setOnClickListener(click -> {
             // Check if a song already exists
             favSongDB = new FavSongDB(this);
             sqLiteDatabase = favSongDB.getWritableDatabase();
             Cursor cursor = sqLiteDatabase.query(FavSongDB.TABLE_NAME,
-                    new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE},
+                    new String[]{FavSongDB.COL_ID, FavSongDB.COL_ARTIST, FavSongDB.COL_TITLE, FavSongDB.COL_CONTENT},
                     null, null, null, null, FavSongDB.COL_ID);
             if (cursor.moveToNext()) {
                 Toast.makeText(this,"This song already in the Favorite List", Toast.LENGTH_LONG).show();
@@ -82,12 +82,14 @@ public class ShowLyricsActivity extends AppCompatActivity {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(FavSongDB.COL_ARTIST, artist);
                 contentValues.put(FavSongDB.COL_TITLE, title);
+                TextView textView = findViewById(R.id.lyric_content);
+                contentValues.put(FavSongDB.COL_CONTENT, textView.getText().toString());
                 sqLiteDatabase.insert(FavSongDB.TABLE_NAME, "NullColumnName", contentValues);
                 Toast.makeText(this,"Successfully Add to Favorite List", Toast.LENGTH_LONG).show();
             }
         });
 
-        Button googleButton = findViewById(R.id.button_search_with_google);
+        Button googleButton = findViewById(R.id.lyric_button_search_with_google);
         googleButton.setOnClickListener(click -> {
             String searchLink = "https://www.google.com/search?q=" + artist + "+" + title;
             Intent launchBrower = new Intent(Intent.ACTION_VIEW, Uri.parse(searchLink));
@@ -158,7 +160,7 @@ public class ShowLyricsActivity extends AppCompatActivity {
 
         public void onPostExecute(String fromDoInBackground) {
             publishProgress(100);
-            TextView textView = findViewById(R.id.lyric);
+            TextView textView = findViewById(R.id.lyric_content);
             textView.setText(lyric);
 
             progressBar.setVisibility(View.GONE);

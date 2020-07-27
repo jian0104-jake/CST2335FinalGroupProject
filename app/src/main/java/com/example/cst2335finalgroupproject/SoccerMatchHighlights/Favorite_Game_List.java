@@ -1,5 +1,6 @@
 package com.example.cst2335finalgroupproject.SoccerMatchHighlights;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -7,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +21,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -25,18 +32,19 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
-import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.navigation.NavigationView;
+import com.example.cst2335finalgroupproject.R;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Favorite_Game_List extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+
     private List<FavSoccerDetails>  favSoccerList = new ArrayList();
     private SQLiteDatabase db;
     private TextView favTV;
@@ -51,6 +59,7 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_game_list);
+
         Toolbar tBar = findViewById(R.id.soc_favlist_toolbar);
         setSupportActionBar(tBar);
         DrawerLayout drawer = findViewById(R.id.favlist_drawer_layout);
@@ -103,6 +112,7 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
             String gdate = favSoccerList.get(position).date;
             String gurl = favSoccerList.get(position).vedioUrl;
             String iurl = favSoccerList.get(position).imgUrl;
+
             String source = "favList";
             dataToPass.putString("gametitle", gtitle);
             dataToPass.putString("date", gdate);
@@ -140,17 +150,10 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
                 Intent nextActivity = new Intent(Favorite_Game_List.this, GameDetailActivity.class);
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
-//                Intent goToDetail = new Intent(this, GameDetailActivity.class);
-//                goToDetail.putExtra("gametitle",gtitle);
-//                goToDetail.putExtra("date",gdate);
-//                goToDetail.putExtra("gamevedio",gurl);
-//                goToDetail.putExtra("imageUrl",iurl);
-//                startActivity(goToDetail);
                 Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
             }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
                 Snackbar.make(myList, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
             }) .setNeutralButton(R.string.soccer_neu,(click, arg)->{
-
                 db.delete(SoccerDB.TABLE_NAME,SoccerDB.TEAM_COL + "=?",new String[]{favSoccerList.get(position).title});
                  favSoccerList.remove(position);
                  Snackbar.make(myList, R.string.soc_delete_msg, Snackbar.LENGTH_SHORT).show();
@@ -159,6 +162,11 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
 
             }
         }));
+        goToListbtn = findViewById(R.id.soc_gohome_btn);
+        goToListbtn.setOnClickListener(b->{
+            Intent goToList = new Intent(this,GameList.class);
+            startActivity(goToList);
+        });
 
     }
     @Override
@@ -177,7 +185,7 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
                 startActivity(goToGeo);
                 break;
             case R.id.songLyrics_toolbar:
-                Intent goToLyrics = new Intent(this, LyricsSearchActivity.class);
+                Intent goToLyrics = new Intent(this, LyricSearchActivity.class);
                 startActivity(goToLyrics);
                 break;
             case R.id.deezer_toolbar:
@@ -222,11 +230,10 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
         DrawerLayout drawerLayout = findViewById(R.id.list_drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
-    }
 
-    /**
-     *
-     */
+        }
+
+
     class FavSoccerDetails{
         String title;
         String date;

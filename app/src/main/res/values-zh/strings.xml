@@ -5,16 +5,21 @@
     <string name="song_lyrics_search">歌词搜索</string>
     <string name="deezer_song_search">Deezer歌曲搜索</string>
     <string name="soccer_match_highlights">足球比赛精华</string>
-    <string name="artistText">演唱者</string>
-    <string name="artistHint">输入演唱者，如：police</string>
-    <string name="titleText">歌曲名</string>
-    <string name="titleHint">输入歌曲名，如：roxanne</string>
-    <string name="search_history">历史查询</string>
-    <string name="search_button">查询歌词</string>
-    <string name="goto_fav_button">查看喜爱的歌曲</string>
-    <string name="add_fav_button">添加到喜爱</string>
-    <string name="google_button">在谷歌搜索本歌</string>
-    <string name="back_to_front_button">返回搜索页面</string>
+
+    <!-- String used in Song Lyrics Search -->
+    <string name="lyric_artistText">演唱者</string>
+    <string name="lyric_artistHint">输入演唱者，如：police</string>
+    <string name="lyric_titleText">歌曲名</string>
+    <string name="lyric_titleHint">输入歌曲名，如：roxanne</string>
+    <string name="lyric_search_history">历史查询</string>
+    <string name="lyric_search_button">查询歌词</string>
+    <string name="lyric_goto_fav_button">查看喜爱的歌曲</string>
+    <string name="lyric_add_fav_button">添加到喜爱</string>
+    <string name="lyric_google_button">在谷歌搜索本歌</string>
+    <string name="lyric_back_to_front_button">返回搜索页面</string>
+    <string name="lyric_fav_hide_button">隐藏</string>
+    <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
+    <string name="geo_toolbar">geotoolbar</string>
 
     <string name="latitudeText">纬度</string>
     <string name="latitudeHint">请输入纬度值，如45.4215</string>
@@ -23,6 +28,7 @@
     <string name="searchGeo">查找附近城市</string>
     <string name="favoriteGeo">已收藏城市</string>
     <string name="geo_toast_message">城市已收藏</string>
+
     <string name="show">显示我最喜欢的比赛</string>
     <string name="soc_saveAsFav">添加至收藏列表</string>
     <string name="soccer_alert_title">你选择了比赛</string>
@@ -37,27 +43,41 @@
     <string name="soccer_neu">从收藏列表中删除</string>
     <string name="soc_delete_msg">删除成功</string>
     <string name="soc_gowatchLive">观看比赛视频</string>
-    <string name="soc_click_to_watch">Clikck image to watch the game</string>
-    <string name="menuTxt">About this project</string>
-    <string name="geo_toolbar">geotoolbar</string>
-    <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
+    <string name="soc_click_to_watch">点击观看比赛e</string>
+    <string name="menuTxt">关于此项目t</string>
+    <string name="soc_tbar_msg">这是比赛亮点, 作者是王紫玥</string>
+    <string name="soc_version_nav">版本 1.0</string>
+    <string name="soc_author_nav">作者：王紫玥</string>
+    <string name="Instructions_for_this_app">应用介绍</string>
+    <string name="about_API">关于 API</string>
+    <string name="donate">捐助项目</string>
+    <string name="open">开</string>
+    <string name="close">关</string>
+    <string name="soc_intro_msg"> 点击收藏按钮收藏比赛，可前往观看比赛视频</string>
+    <string name="soc_intro_positive">知道了</string>
+    <string name="donate_alert_msg">请慷慨解囊</string>
+    <string name="donate_msg">您愿意捐助多少钱？</string>
+    <string name="soc_removeBtn">从收藏列表移除</string>
+    <string name="soc_removeQue">确认删除</string>
+    <string name="soc_removeMsg">你确定要删除本收藏吗</string>
+    <string name="soc_removeToast">删除成功</string>
+    <string name="soc_instruction_title">"This is Soccer Match Hight activity. "</string>
+    <!-- stirngs used by deezer song search -->
     <string name="deezer_toolbar_str">\"\"</string>
-    <string name="soc_tbar_msg">This is the SoccerMatchHight activity, written byZiyue Wang</string>
-    <string name="soc_version_nav">Version 1.0</string>
-    <string name="soc_author_nav">Author: Ziyue Wang</string>
-    <string name="Instructions_for_this_app">Instructions for this app</string>
-    <string name="about_API">About the API</string>
-    <string name="donate">Donate to Project</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
-    <string name="soc_intro_msg">You can click on the title to watch the game details, if you are interested in the game, you can also watch the game link, click on the save button to bookmark the game.</string>
-    <string name="soc_intro_positive">got it</string>
-    <string name="donate_alert_msg">Please give generously</string>
-    <string name="donate_msg">How much money do you want to donate?</string>
-    <string name="soc_removeBtn">Remove from the favorite list</string>
-    <string name="soc_removeQue">Comfirm your deletion</string>
-    <string name="soc_removeMsg">Are you sure you want to remove this record?</string>
-    <string name="soc_removeToast">Delete successfully</string>
+    <string name="album_cover">专辑封面</string>
+    <string name="activity_title_song_detail">歌曲详情</string>
+    <string name="song_name_template">歌曲名称：%s</string>
+    <string name="duration_template">时长: %s</string>
+    <string name="album_name_template">专辑名称：%s</string>
+    <string name="activity_title_deezer_song_search">搜索歌曲（Deezer）</string>
+    <string name="dialog_title_alert">警告</string>
+    <string name="dialog_msg_enter_artist_name">请输入艺术家名字。</string>
+    <string name="search_song_of_artist_template">搜索艺术家%s的歌曲</string>
+    <string name="retrieved_songs_template">获取到%d首歌曲</string>
+    <string name="search">搜索</string>
+    <string name="enter_artist_name">输入艺术家名字</string>
+    <string name="dialog_msg_no_artist_found">没有找到艺术家。\\n请检查你的搜索条件再试。</string>
+
 
 
 </resources>

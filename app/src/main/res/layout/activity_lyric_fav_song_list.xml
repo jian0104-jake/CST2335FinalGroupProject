@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SongLyricsSearch.LyricsSearchActivity"
-    android:id="@+id/search_history_layout">
+    tools:context=".SongLyricsSearch.LyricFavSongActivity">
 
-    <TextView
-        android:id="@+id/search_history_text"
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12pt"/>
+        android:id="@+id/lyric_button_back_to_front"
+        android:text="@string/lyric_back_to_front_button"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lyric_fav_song_list">
+    </ListView>
+
+
 
 </LinearLayout>

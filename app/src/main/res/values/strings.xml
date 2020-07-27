@@ -3,22 +3,24 @@
     <string name="show">Show my favourite game list</string>
     <string name="soc_saveAsFav">save as favorite</string>
 
+
     <string name="geo_data_source">Geo Data Source</string>
     <string name="soccer_match_highlights">Soccer Match Highlights</string>
     <string name="song_lyrics_search">Song Lyrics Search</string>
     <string name="deezer_song_search">Deezer song search</string>
 
     <!-- String used in Song Lyrics Search -->
-    <string name="artistText">Artist of the Song</string>
-    <string name="artistHint">Enter artist here. ex.: police</string>
-    <string name="titleText">Title of the Song</string>
-    <string name="titleHint">Enter title here, ex.: roxanne</string>
-    <string name="search_history">Search History</string>
-    <string name="search_button">Search Lyrics</string>
-    <string name="goto_fav_button">Go to Fav List</string>
-    <string name="add_fav_button">Add to Fav</string>
-    <string name="google_button">Google the Song</string>
-    <string name="back_to_front_button">Go back to Search</string>
+    <string name="lyric_artistText">Artist of the Song</string>
+    <string name="lyric_artistHint">Enter artist here. ex.: police</string>
+    <string name="lyric_titleText">Title of the Song</string>
+    <string name="lyric_titleHint">Enter title here, ex.: roxanne</string>
+    <string name="lyric_search_history">Search History</string>
+    <string name="lyric_search_button">Search Lyrics</string>
+    <string name="lyric_goto_fav_button">Go to Fav List</string>
+    <string name="lyric_add_fav_button">Add to Fav</string>
+    <string name="lyric_google_button">Google the Song</string>
+    <string name="lyric_back_to_front_button">Go back to Search</string>
+    <string name="lyric_fav_hide_button">HIDE</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>
@@ -28,6 +30,27 @@
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
+
+
+    <string name="invalid_geo_search">The latitude and longitude information provided is invalid! </string>
+
+
+
+    <!-- strings used by deezer song search -->
+    <string name="album_cover">Album Cover</string>
+    <string name="activity_title_song_detail">Song Detail</string>
+    <string name="song_name_template">Song Name: %s</string>
+    <string name="duration_template">Duration: %s</string>
+    <string name="album_name_template">Album Name: %s</string>
+    <string name="activity_title_deezer_song_search">Search a song(Deezer)</string>
+    <string name="dialog_title_alert">Alert</string>
+    <string name="dialog_msg_enter_artist_name">Please enter the artist name.</string>
+    <string name="search_song_of_artist_template">Search songs of artist %s</string>
+    <string name="retrieved_songs_template">Retrieved %d songs</string>
+    <string name="search">Search</string>
+    <string name="enter_artist_name">Enter artist name</string>
+    <string name="dialog_msg_no_artist_found">No artist found.\\nPlease check the search text and try again.</string>
+
     <string name="soccer_alert_title">You selected game:  </string>
     <string name="soccer_alert_msg">Do you want to go to game details?</string>
     <string name="soccer_postive">Yes</string>
@@ -35,8 +58,6 @@
     <string name="soccer_negative">No</string>
     <string name="soccer_snackbar_msg">you are going to stay on this page</string>
     <string name="soccer_dateTXT">Game date:</string>
-
-
     <string name="soc_gohome">Go to the game list</string>
     <string name="soc_goFav">Go to my favorite game list</string>
     <string name="soccer_neu">Remove from favorite list</string>
@@ -44,7 +65,7 @@
     <string name="soc_gowatchLive">watch video</string>
     <string name="soc_click_to_watch">Click image to watch the game</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="menuTxt">About this project</string>
     <string name="geo_toolbar">geotoolbar</string>
     <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
@@ -66,5 +87,6 @@
     <string name="soc_removeQue">Comfirm your deletion</string>
     <string name="soc_removeMsg">Are you sure you want to remove this record?</string>
     <string name="soc_removeToast">Delete successfully</string>
+
 
 </resources>

@@ -27,7 +27,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
-import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,6 +43,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -58,6 +60,8 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
     List<String> videoList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         boolean isTablet = findViewById(R.id.soc_fragmentLocation) != null;
@@ -85,32 +89,15 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
 
         ListView myList = findViewById(R.id.gameList);
         myList.setAdapter( myAdapter = new MyListAdapter());
-//        myList.setOnItemClickListener((parent, view, position, id) -> {
-//            String gtitle = soccerDetailsList.get(position).title;
-//            String gdate = soccerDetailsList.get(position).date;
-//            String gurl = soccerDetailsList.get(position).vedioUrl;
-//            String iurl = soccerDetailsList.get(position).imgUrl;
-//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-//            alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
-//                    ).setPositiveButton(R.string.soccer_postive,(click, arg)->{
-//                Intent goToDetail = new Intent(GameList.this,Game_Detail_Activity.class);
-//                goToDetail.putExtra("gametitle",gtitle);
-//                goToDetail.putExtra("date",gdate);
-//                goToDetail.putExtra("gamevedio",gurl);
-//                goToDetail.putExtra("imageUrl",iurl);
-//                startActivity(goToDetail);
-//                Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
-//            }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
-//                Snackbar.make(btn, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
-//            }).create().show();
-//        });
 
         myList.setOnItemClickListener(((parent, view, position, id) -> {
             Bundle dataToPass = new Bundle();
+
             String gtitle = soccerDetailsList.get(position).title;
             String gdate = soccerDetailsList.get(position).date;
             String gurl = soccerDetailsList.get(position).vedioUrl;
             String iurl = soccerDetailsList.get(position).imgUrl;
+
             String source = "listPage";
             dataToPass.putString("gametitle", gtitle);
             dataToPass.putString("date", gdate);
@@ -163,7 +150,7 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(goToGeo);
                 break;
             case R.id.songLyrics_toolbar:
-                Intent goToLyrics = new Intent(this, LyricsSearchActivity.class);
+                Intent goToLyrics = new Intent(this, LyricSearchActivity.class);
                 startActivity(goToLyrics);
                 break;
             case R.id.deezer_toolbar:
@@ -304,10 +291,6 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
     private class MyListAdapter extends BaseAdapter {
 
        public int getCount() { return soccerDetailsList.size();}
-
-
-
-
        public SoccerDetails getItem(int position) { return  soccerDetailsList.get(position); }
 
         public long getItemId(int position) { return position ; }

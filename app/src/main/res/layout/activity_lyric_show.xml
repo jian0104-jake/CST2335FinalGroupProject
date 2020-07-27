@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SongLyricsSearch.LyricsSearchActivity">
+    tools:context=".SongLyricsSearch.LyricSearchActivity">
 
     <GridLayout
         android:layout_width="match_parent"
@@ -14,18 +14,18 @@
         android:rowCount="1">
 
         <Button
-            android:id="@+id/button_fav"
+            android:id="@+id/lyric_button_fav"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_columnWeight="1"
-            android:text="@string/add_fav_button" />
+            android:text="@string/lyric_add_fav_button" />
 
         <Button
-            android:id="@+id/button_search_with_google"
+            android:id="@+id/lyric_button_search_with_google"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_columnWeight="1"
-            android:text="@string/google_button" />
+            android:text="@string/lyric_google_button" />
 
     </GridLayout>
 
@@ -34,13 +34,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/lyric"
+            android:id="@+id/lyric_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </ScrollView>
 
     <ProgressBar
-        android:id="@+id/process_bar_show"
+        android:id="@+id/lyric_process_bar_show"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
