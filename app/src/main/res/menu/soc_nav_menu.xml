@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/instruction"
+        android:title="@string/Instructions_for_this_app"
+        android:icon="@drawable/info" />
+
+    <item android:id="@+id/api"
+        android:title="@string/about_API"
+        android:icon="@drawable/api_link" />
+
+    <item android:id="@+id/donate"
+        android:title="@string/donate"
+        android:icon="@drawable/coins"
+        android:orderInCategory="150"
+        app:showAsAction="always"/>
+</menu>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SoccerMatchHighlights.Favorite_Game_List">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/soc_favlist_toolbar"
+        android:layout_alignParentTop="true"/>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/favlist_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <ListView
+           android:layout_width="300dp"
+           android:layout_height="match_parent"
+           android:layout_alignParentBottom="true"
+           android:transcriptMode="alwaysScroll"
+           android:id="@+id/soc_fav_list"/>
+
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:layout_alignParentBottom="true"
+           android:id="@+id/soc_gohome_btn"
+           android:text="@string/soc_gohome"
+           />
+       <FrameLayout
+           android:id="@+id/soc_fav_fragmentLocation"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginLeft="1dp"
+           android:layout_toRightOf="@id/soc_fav_list"
+           android:background="@color/colorAccent" />
+       <ProgressBar
+           android:layout_width="300dp"
+           android:layout_height="wrap_content"
+           android:id="@+id/soc_pb3"
+           android:layout_alignParentBottom="true"
+           android:visibility="invisible"
+           android:max="100" />
+   </RelativeLayout>
+
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/soc_header_layout"
+            app:menu="@menu/soc_nav_menu"
+            android:id="@+id/soc_favlist_nav"/>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</RelativeLayout>

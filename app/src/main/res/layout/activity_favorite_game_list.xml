@@ -7,6 +7,21 @@
     android:orientation="vertical"
     tools:context=".SoccerMatchHighlights.Favorite_Game_List">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/soc_favlist_toolbar"></androidx.appcompat.widget.Toolbar>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/favlist_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +40,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/soc_pb3"
         android:visibility="invisible"
-        android:max="100"
-        />
+        android:max="100" />
+        </LinearLayout>
 
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/soc_header_layout"
+            app:menu="@menu/soc_nav_menu"
+            android:id="@+id/soc_favlist_nav"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </LinearLayout>
