@@ -14,6 +14,8 @@
         <activity android:name=".SoccerMatchHighlights.GameDetailActivity" />
         <activity android:name=".SoccerMatchHighlights.GameList" />
         <activity android:name=".geodata.GeoDataSource" />
+        <activity android:name=".DeezerSongSearch.DeezerSongSearchActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".DeezerSongSearch.DeezerSongDetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -22,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeezerSongSearch.DeezerSongSearchActivity" />
 
         <!-- Activity for Song Lyrics Search -->
         <activity android:name=".SongLyricsSearch.LyricSearchActivity" />

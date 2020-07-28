@@ -6,39 +6,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DeezerSongSearch.DeezerSongSearchActivity">
-    <RelativeLayout
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/deezer_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btnSearch"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/deezer_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@string/search"
+                />
+            <EditText
+                android:id="@+id/etArtistName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/btnSearch"
+                android:hint="@string/enter_artist_name"
+                android:inputType="textPersonName"
+                />
+            <ListView
+                android:id="@+id/lvSong"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/btnSearch"
+                />
+
+            <ProgressBar
+                android:id="@+id/process_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                />
+
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/deezer_navigation_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="@string/search"
-            />
-        <EditText
-            android:id="@+id/etArtistName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/btnSearch"
-            android:hint="@string/enter_artist_name"
-            android:inputType="textPersonName"
-            />
-        <ListView
-            android:id="@+id/lvSong"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/btnSearch"
-            />
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/deezer_navigation_header_layout"
+            app:menu="@menu/deezer_navigation_items" />
 
-        <ProgressBar
-            android:id="@+id/process_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-            />
-
-    </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </LinearLayout>

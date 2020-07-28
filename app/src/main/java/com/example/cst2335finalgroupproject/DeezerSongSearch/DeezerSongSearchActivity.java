@@ -3,10 +3,14 @@ package com.example.cst2335finalgroupproject.DeezerSongSearch;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -18,11 +22,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.entity.Song;
+import com.example.cst2335finalgroupproject.MainActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
+import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -41,7 +54,7 @@ import java.util.List;
 /**
  * Entrance activity to use Deezer song search api to search songs of artists.
  */
-public class DeezerSongSearchActivity extends AppCompatActivity {
+public class DeezerSongSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String SEARCH_TEXT = "SEARCH_TEXT";
     /**
@@ -74,6 +87,21 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_search);
         setTitle(getString(R.string.activity_title_deezer_song_search));
+
+        // tool bar
+        Toolbar toolBar = findViewById(R.id.deezer_toolbar);
+        setSupportActionBar(toolBar);
+
+        // navigation bar
+        DrawerLayout drawerLayout = findViewById(R.id.deezer_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolBar, R.string.deezer_navigation_open, R.string.deezer_navigation_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.deezer_navigation_view);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
 
         sharedPreferences = getSharedPreferences("DeezerSong", MODE_PRIVATE);
         String searchText = sharedPreferences.getString(SEARCH_TEXT, "");
@@ -141,6 +169,80 @@ public class DeezerSongSearchActivity extends AppCompatActivity {
 
         QueryArtist queryArtist = new QueryArtist();
         queryArtist.execute(String.format("https://api.deezer.com/search/artist/?q=%s", artistName));
+    }
+
+    /**
+     * Initialize menu here
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.deezer_toolbar, menu);
+        return true;
+    }
+
+    /**
+     * handle toolbar menu item click event
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.geo_toolbar:
+                Intent goToGeo = new Intent(this, GeoDataSource.class);
+                startActivity(goToGeo);
+                break;
+            case R.id.songLyrics_toolbar:
+                Intent goToLyrics = new Intent(this, LyricSearchActivity.class);
+                startActivity(goToLyrics);
+                break;
+            case R.id.soccer_toolbar:
+                Intent goToSoccer = new Intent(this, GameList.class);
+                startActivity(goToSoccer);
+                break;
+            case R.id.deezer_menu_item_about:
+                Toast.makeText(this, "This is the song search project using Deezer api, written by Xingming Li", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
+
+    /**
+     * Implement interface method, to reactive with navigation items
+     */
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.deezer_nav_item_help:
+                Toast.makeText(this, R.string.deezer_usage_short, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.deezer_nav_item_about:
+                String apiLink = "https://developers.deezer.com/";
+                Intent launchBrower = new Intent(Intent.ACTION_VIEW, Uri.parse(apiLink));
+                startActivity(launchBrower);
+                break;
+            case R.id.deezer_nav_item_donate:
+                // TODO halde donate navigation item
+                final EditText etAmount = new EditText(this);
+                etAmount.setHint("Enter amount");
+
+                new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
+                        .setView(etAmount)
+                        .setPositiveButton(R.string.btn_donate_text, (click, arg) ->{
+
+                        })
+                        .setNegativeButton(R.string.btn_cancel_text, null)
+                        .show();
+
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.deezer_drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
     }
 
     private void showAlertMessageWithTitle(String title, String message) {

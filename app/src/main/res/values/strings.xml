@@ -73,7 +73,19 @@
     <string name="search">Search</string>
     <string name="enter_artist_name">Enter artist name</string>
     <string name="dialog_msg_no_artist_found">No artist found.\\nPlease check the search text and try again.</string>
+    <string name="deezer_navigation_open">Open</string>
+    <string name="deezer_navigation_close">Close</string>
+    <string name="cst2335_final_project">CST2335 Final Project</string>
+    <string name="song_search_by_deezer_api">Song Search by Deezer api</string>
+    <string name="author_xingming_li">Author: Xingming Li</string>
+    <string name="help">Help</string>
+    <string name="about_deezer_api">About Deezer API</string>
+    <string name="donate_to_deezer">Donate to Deezer</string>
+    <string name="deezer_usage_short">Enter artist name to search songs</string>
+    <string name="btn_donate_text">Donate</string>
+    <string name="btn_cancel_text">Cancel</string>
 
+    <!-- strings used by soccer match highlights -->
     <string name="soccer_alert_title">You selected game:  </string>
     <string name="soccer_alert_msg">Do you want to go to game details?</string>
     <string name="soccer_postive">Yes</string>
@@ -110,7 +122,6 @@
     <string name="soc_removeQue">Comfirm your deletion</string>
     <string name="soc_removeMsg">Are you sure you want to remove this record?</string>
     <string name="soc_removeToast">Delete successfully</string>
-
 
 
 </resources>
