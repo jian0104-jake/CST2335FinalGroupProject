@@ -216,7 +216,8 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
 
         switch (item.getItemId()) {
             case R.id.deezer_nav_item_help:
-                Toast.makeText(this, R.string.deezer_usage_short, Toast.LENGTH_SHORT).show();
+                showAlertMessageWithTitle(getString(R.string.help), getString(R.string.deezer_usage_short));
+
                 break;
             case R.id.deezer_nav_item_about:
                 String apiLink = "https://developers.deezer.com/";
@@ -246,12 +247,10 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
     }
 
     private void showAlertMessageWithTitle(String title, String message) {
-        String alertMsg = message;
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(title);
-        alertDialogBuilder.setMessage(alertMsg);
-        alertDialogBuilder.setPositiveButton("Ok", (v, arg) -> {
-        });
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setPositiveButton("Ok", (v, arg) -> { });
 
         alertDialogBuilder.create().show();
     }

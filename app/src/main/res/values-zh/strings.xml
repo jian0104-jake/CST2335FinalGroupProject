@@ -111,6 +111,7 @@
     <string name="deezer_usage_short">输入艺术家的名字搜索歌曲</string>
     <string name="btn_donate_text">捐赠</string>
     <string name="btn_cancel_text">取消</string>
+    <string name="version_1_0">版本：1.0</string>
 
 
 </resources>
