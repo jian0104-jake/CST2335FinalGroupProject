@@ -1,6 +1,12 @@
 package com.example.cst2335finalgroupproject.geodata.entity;
 
 public class City {
+
+    /**
+     *  the database id for saved cities
+     */
+    private long id;
+
     /**
      * stores the name of the city
      */
@@ -149,5 +155,22 @@ public class City {
      */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    /**
+     * getter for id
+     * @return id
+     */
+
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * setter for id
+     * @param id database id of saved cities
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 }

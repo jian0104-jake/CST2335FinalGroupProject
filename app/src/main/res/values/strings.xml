@@ -53,10 +53,22 @@
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
+    <string name="geo_title_saved_cities">Saved cities</string>
+    <string name="geo_show_in_google_map">Show in Google Map</string>
+    <string name="geo_save_to_favorite">Save to Favorite</string>
+    <string name="geo_yes">yes</string>
+    <string name="geo_no">no</string>
+    <string name="geo_remove_alert">Do you want to remove </string>
+    <string name="geo_remove_success">Removed successfully </string>
+
+
+
+
+
+
 
 
     <string name="invalid_geo_search">The latitude and longitude information provided is invalid! </string>
-
 
 
     <!-- strings used by deezer song search -->
@@ -110,7 +122,6 @@
     <string name="soc_removeQue">Comfirm your deletion</string>
     <string name="soc_removeMsg">Are you sure you want to remove this record?</string>
     <string name="soc_removeToast">Delete successfully</string>
-
 
 
 </resources>

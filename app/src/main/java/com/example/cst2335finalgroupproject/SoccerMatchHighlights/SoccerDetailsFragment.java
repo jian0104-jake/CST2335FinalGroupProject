@@ -35,7 +35,7 @@ import android.widget.Toast;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
-import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+//import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -176,8 +176,8 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
                 startActivity(goToGeo);
                 break;
             case R.id.songLyrics_toolbar:
-                Intent goToLyrics = new Intent(this.getContext(), LyricsSearchActivity.class);
-                startActivity(goToLyrics);
+//                Intent goToLyrics = new Intent(this.getContext(), LyricsSearchActivity.class);
+//                startActivity(goToLyrics);
                 break;
             case R.id.deezer_toolbar:
                 Intent goToDeezer = new Intent(this.getContext(), DeezerSongSearchActivity.class);

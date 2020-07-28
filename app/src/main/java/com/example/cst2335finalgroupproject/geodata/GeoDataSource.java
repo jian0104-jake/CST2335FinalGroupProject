@@ -3,8 +3,11 @@ package com.example.cst2335finalgroupproject.geodata;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongDetailActivity;
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.geodata.entity.City;
 import com.google.android.material.snackbar.Snackbar;
@@ -70,6 +75,12 @@ public class GeoDataSource extends AppCompatActivity {
      */
     private SharedPreferences prefs = null;
 
+    /**
+     * database for saved cities
+     */
+    private SQLiteDatabase db;
+
+
 
     /**
      * start  geo data source activity
@@ -97,6 +108,12 @@ public class GeoDataSource extends AppCompatActivity {
         latitudeEdit.setText(latitudeSaved);
         longitudeEdit.setText(longitudeSaved);
 
+
+        //database setup
+        SavedCitiesOpenHelper dbOpener = new SavedCitiesOpenHelper(this);
+        db = dbOpener.getWritableDatabase();
+
+
         searchBtn.setOnClickListener(e->{
             cities.clear();
             progressBar.setVisibility(View.VISIBLE);
@@ -107,12 +124,8 @@ public class GeoDataSource extends AppCompatActivity {
         });
 
         favoriteGeoBtn.setOnClickListener(e-> {
-
-
-
-
-
-
+            Intent intent = new Intent(GeoDataSource.this, SavedCitiesActivity.class);
+            startActivity(intent);
         });
 
         searchCityListView.setOnItemClickListener((p,b,pos,id)->{
@@ -120,13 +133,25 @@ public class GeoDataSource extends AppCompatActivity {
             City city = cities.get(pos);
             alertDialogBuilder.setTitle((pos+1) +":  "+ city.getName() +", "+ city.getRegion() + ", "+city.getCountry() + ", " + city.getCurrency() + " in " + city.getLatitude() +", "+city.getLongitude()  )
 
-                    .setPositiveButton("Show in Map",(click,arg)->{
-                        Snackbar snackbar = Snackbar.make(searchCityListView,"Show in google map", Snackbar.LENGTH_LONG);
+                    .setPositiveButton(R.string.geo_show_in_google_map,(click,arg)->{
+                        Snackbar snackbar = Snackbar.make(searchCityListView,R.string.geo_show_in_google_map, Snackbar.LENGTH_LONG);
                         snackbar.show();
 
                     })
 
-                    .setNegativeButton("Save to Favorite",(click,arg)->{
+                    .setNegativeButton(R.string.geo_save_to_favorite,(click,arg)->{
+
+                        ContentValues newSaveCityContent = new ContentValues();
+                        newSaveCityContent.put(SavedCitiesOpenHelper.COL_NAME, city.getName());
+
+                        newSaveCityContent.put(SavedCitiesOpenHelper.COL_COUNTRY, city.getCountry());
+                        newSaveCityContent.put(SavedCitiesOpenHelper.COL_REGION, city.getRegion());
+                        newSaveCityContent.put(SavedCitiesOpenHelper.COL_CURRENCY, city.getCurrency());
+                        newSaveCityContent.put(SavedCitiesOpenHelper.COL_LATITUDE, city.getLatitude());
+                        newSaveCityContent.put(SavedCitiesOpenHelper.COL_LONGITUDE, city.getLongitude());
+
+                        long newId = db.insert(SavedCitiesOpenHelper.TABLE_NAME,null,newSaveCityContent);
+
                         Toast.makeText(this, R.string.geo_toast_message,Toast.LENGTH_LONG).show();
                     })
                     .create().show();
@@ -146,8 +171,6 @@ public class GeoDataSource extends AppCompatActivity {
         editor.putString("longitude", longitude);
         editor.commit();
     }
-
-
 
 
 
@@ -180,7 +203,7 @@ public class GeoDataSource extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
             newView = inflater.inflate(R.layout.city_row_layout, parent, false);
             tView     = newView.findViewById(R.id.cityName);
-            tView.setText((position+1) +":  "+city.getName());
+            tView.setText((position+1) +":  "+city.getName() + ", " + city.getRegion() + ", " + city.getCountry());
 
             return newView;
         }
