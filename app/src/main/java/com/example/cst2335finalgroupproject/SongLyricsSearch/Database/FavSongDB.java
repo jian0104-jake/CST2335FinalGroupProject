@@ -14,7 +14,7 @@ public class FavSongDB extends SQLiteOpenHelper {
     /**
      * The name of database
      */
-    public final static String DATABASE_NAME = "favSongLyricsDB";
+    protected final static String DATABASE_NAME = "favSongLyricsDB";
 
     /**
      * The table's name
@@ -24,10 +24,11 @@ public class FavSongDB extends SQLiteOpenHelper {
     /**
      * The version of database
      * Change Note:
+     * v3: Change the access modifier of DATABASE_NAME and VERSION_NUM to protected
      * v2: Add a column store the lyric content, used in fragment
      * v1: Original
      */
-    public final static int VERSION_NUM = 2;
+    protected final static int VERSION_NUM = 3;
 
     /**
      * The id of database, should be increment automatically
