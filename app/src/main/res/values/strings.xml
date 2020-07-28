@@ -49,7 +49,7 @@
     <string name="latitudeText">Latitude</string>
     <string name="latitudeHint">Enter the latitude value like 45.4215</string>
     <string name="longitudeText">Longitude</string>
-    <string name="longitudeHint">Enter the longitude value like 75.6972</string>
+    <string name="longitudeHint">Enter the longitude value like -75.6972</string>
     <string name="searchGeo">Search nearby cities</string>
     <string name="favoriteGeo">Saved cities</string>
     <string name="geo_toast_message">City is saved!</string>
@@ -60,12 +60,6 @@
     <string name="geo_no">no</string>
     <string name="geo_remove_alert">Do you want to remove </string>
     <string name="geo_remove_success">Removed successfully </string>
-
-
-
-
-
-
 
 
     <string name="invalid_geo_search">The latitude and longitude information provided is invalid! </string>

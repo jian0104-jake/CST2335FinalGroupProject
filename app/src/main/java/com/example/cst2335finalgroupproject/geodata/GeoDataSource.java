@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -90,11 +91,11 @@ public class GeoDataSource extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geo_data_source);
-
         Button searchBtn = findViewById(R.id.searchGeoBtn);
         Button favoriteGeoBtn  = findViewById(R.id.favoriteGeoBtn);
 
         progressBar = findViewById(R.id.geoProcessBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         latitudeEdit = findViewById(R.id.latitudeEdit);
         longitudeEdit = findViewById(R.id.longitudeEdit);
@@ -134,9 +135,7 @@ public class GeoDataSource extends AppCompatActivity {
             alertDialogBuilder.setTitle((pos+1) +":  "+ city.getName() +", "+ city.getRegion() + ", "+city.getCountry() + ", " + city.getCurrency() + " in " + city.getLatitude() +", "+city.getLongitude()  )
 
                     .setPositiveButton(R.string.geo_show_in_google_map,(click,arg)->{
-                        Snackbar snackbar = Snackbar.make(searchCityListView,R.string.geo_show_in_google_map, Snackbar.LENGTH_LONG);
-                        snackbar.show();
-
+                        GeoUtil.openGoogleNavi(Double.toString(city.getLatitude()),Double.toString(city.getLongitude()),this);
                     })
 
                     .setNegativeButton(R.string.geo_save_to_favorite,(click,arg)->{
@@ -250,6 +249,7 @@ public class GeoDataSource extends AppCompatActivity {
          */
         @Override
         protected String doInBackground(String... args) {
+            publishProgress(25);
 
             try {
 
@@ -262,6 +262,8 @@ public class GeoDataSource extends AppCompatActivity {
                 //wait for data:
                 InputStream response = urlConnection.getInputStream();
 
+                publishProgress(50);
+
                 //From part 3: slide 19
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
@@ -271,6 +273,9 @@ public class GeoDataSource extends AppCompatActivity {
                     sb.append(line + "\n");
                 }
                 String result = sb.toString(); //result is the whole string
+
+                publishProgress(75);
+
 
                 // convert string to JSON: Look at slide 27:
                 JSONObject cityInfo = new JSONObject(result);
@@ -283,6 +288,8 @@ public class GeoDataSource extends AppCompatActivity {
                 longitude = cityInfo.getDouble("longitude");
 
                 cities.add(new City(city,region,country,currency,latitude,longitude));
+                publishProgress(100);
+
 
             } catch (Exception e) {
                 return "Wrong";
@@ -290,17 +297,25 @@ public class GeoDataSource extends AppCompatActivity {
             return "done";
         }
 
-
+        /**
+         *
+         * @param args parameters from publishProgress method
+         */
             public void onProgressUpdate(Integer ... args)
             {
-
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setProgress(args[0]);
 
             }
 
-            //Type3
-            public void onPostExecute(String fromDoInBackground)
+        /**
+         *
+         * @param fromDoInBackground string passed from doInBackground
+         */
+        public void onPostExecute(String fromDoInBackground)
             {
                 myListAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.INVISIBLE);
 
             }
         }

@@ -26,9 +26,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.geo.API_KEY"-->
-<!--            android:value="@string/google_maps_key" />-->
 
         <activity android:name=".geodata.SavedCitiesActivity" />
         <activity android:name=".SoccerMatchHighlights.Favorite_Game_List" />
@@ -48,20 +45,6 @@
         <activity android:name=".SongLyricsSearch.LyricShowActivity" />
         <activity android:name=".SongLyricsSearch.LyricFavSongActivity" />
         <activity android:name=".SongLyricsSearch.LyricEmptyActivity" />
-
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB5x2nkQX0B1rRYvhev-5TOSLAkmhmIYEg" />
-
-
-
     </application>
 
-
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 </manifest>

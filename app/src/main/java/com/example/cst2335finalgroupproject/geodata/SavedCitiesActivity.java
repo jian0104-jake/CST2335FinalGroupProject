@@ -50,13 +50,6 @@ public class SavedCitiesActivity extends AppCompatActivity {
      */
     private Fragment cityFragment;
 
-    /**
-     * stores the detail city text view
-     */
-    private TextView detailCityTextView;
-
-
-
 
     /**
      *  onCreate method
@@ -73,8 +66,6 @@ public class SavedCitiesActivity extends AppCompatActivity {
 
         loadDataFromDatabase();
 
-        detailCityTextView = findViewById(R.id.detail_city);
-
 
         savedCitiesListView.setOnItemLongClickListener((p,b,pos,id)->{
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -84,7 +75,7 @@ public class SavedCitiesActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.geo_yes,(click,arg)->{
                         deleteSavedCity(id);
                         cities.remove(pos);
-                        detailCityTextView.setText("");
+                        this.getSupportFragmentManager().beginTransaction().remove(cityFragment).commit();
                         myListAdapter.notifyDataSetChanged();
                         Snackbar snackbar = Snackbar.make(savedCitiesListView,R.string.geo_remove_success, Snackbar.LENGTH_LONG);
                         snackbar.show();
@@ -97,11 +88,11 @@ public class SavedCitiesActivity extends AppCompatActivity {
 
 
         savedCitiesListView.setOnItemClickListener((list,view,pos,id)->{
-            detailCityTextView.setText(cities.get(pos).toString());
             Bundle dataToPass = new Bundle();
             dataToPass.putLong("ID", id );
-//            dataToPass.putString("message", cities.get(pos).);
-//            dataToPass.putBoolean("isSend", cities.get(pos).isSend());
+            dataToPass.putString("cityInfo",cities.get(pos).toString());
+            dataToPass.putString("lat",Double.toString(cities.get(pos).getLatitude()));
+            dataToPass.putString("lng",Double.toString(cities.get(pos).getLongitude()));
             cityFragment = new CityMapFragment(); //add a DetailFragment
             cityFragment.setArguments( dataToPass ); //pass it a bundle for information
             getSupportFragmentManager()

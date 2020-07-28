@@ -13,21 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:id="@+id/savedCitiesListView" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_city" />
+
     <FrameLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_toRightOf="@+id/listView"
         android:id="@+id/fragmentLocation"
         >
-        <com.google.android.gms.maps.MapView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/map_view" />
-
     </FrameLayout>
 
 </LinearLayout>
