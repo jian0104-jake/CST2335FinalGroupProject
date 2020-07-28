@@ -110,7 +110,6 @@
     <string name="dialog_msg_no_artist_found">没有找到艺术家。\\n请检查你的搜索条件再试。</string>
     <string name="lyric_navigation_donate_number">输入想捐赠的金额</string>
     <string name="lyric_navigation_header">CST2335 Android设计\\n期末小组项目\\n歌曲搜索</string>
-    <string name="invalid_geo_search">经纬度信息有错误！</string>
     <string name="deezer_navigation_open">打开</string>
     <string name="deezer_navigation_close">关闭</string>
     <string name="cst2335_final_project">CST2355期末项目</string>
