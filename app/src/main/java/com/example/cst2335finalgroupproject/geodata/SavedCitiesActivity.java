@@ -1,22 +1,36 @@
 package com.example.cst2335finalgroupproject.geodata;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.entity.City;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,11 +38,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class SavedCitiesActivity extends AppCompatActivity implements OnMapReadyCallback {
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
+public class SavedCitiesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
 
 
@@ -92,6 +109,24 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
         loadDataFromDatabase();
 
 
+        //toolbar
+        Toolbar toolBar = findViewById(R.id.geo_toolbar);
+        setSupportActionBar(toolBar);
+
+
+
+
+        // navigation bar
+        DrawerLayout drawerLayout = findViewById(R.id.geo_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolBar, R.string.geo_navigation_open, R.string.geo_navigation_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.geo_navigation_view);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -141,6 +176,86 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
     }
 
 
+
+
+    /**
+     * Initialize menu tool bar
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.geo_toolbar, menu);
+        return true;
+    }
+
+    /**
+     * handle toolbar menu item click event
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.deezer_toolbar:
+                Intent goToGeo = new Intent(this, DeezerSongSearchActivity.class);
+                startActivity(goToGeo);
+                break;
+            case R.id.songLyrics_toolbar:
+                Intent goToLyrics = new Intent(this, LyricSearchActivity.class);
+                startActivity(goToLyrics);
+                break;
+            case R.id.soccer_toolbar:
+                Intent goToSoccer = new Intent(this, GameList.class);
+                startActivity(goToSoccer);
+                break;
+            case R.id.geo_menu_item_about:
+                Toast.makeText(this, R.string.geo_menu_about, Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
+
+    /**
+     * Implement the interface method for navigation items
+     */
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.geo_nav_item_help:
+                new AlertDialog.Builder(this).setTitle(R.string.help).setMessage(R.string.geo_instruction)
+                        .setPositiveButton("OK", (click, arg) ->{
+                        })
+                        .create().show();
+
+                break;
+            case R.id.geo_nav_item_about:
+                String apiLink = "https://www.geodatasource.com/web-service";
+                Intent launchBrower = new Intent(Intent.ACTION_VIEW, Uri.parse(apiLink));
+                startActivity(launchBrower);
+                break;
+            case R.id.geo_nav_item_donate:
+                final EditText etAmount = new EditText(this);
+                etAmount.setHint("Enter amount");
+                etAmount.setInputType(TYPE_CLASS_NUMBER);
+                new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
+                        .setView(etAmount)
+                        .setPositiveButton(R.string.btn_donate_text, (click, arg) ->{
+
+                        })
+                        .setNegativeButton(R.string.btn_cancel_text, null)
+                        .show();
+
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.geo_drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
+    }
+
+
     /**
      * Load saved cities in the database
      */
@@ -187,6 +302,7 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
 
 
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -195,8 +311,6 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
         mMap.addMarker(new MarkerOptions().position(cityLocation).title(mapTitle));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(cityLocation));
     }
-
-
 
 
 
