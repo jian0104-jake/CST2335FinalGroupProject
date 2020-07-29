@@ -290,8 +290,8 @@ public class LyricFavSongActivity extends AppCompatActivity implements Navigatio
         switch (item.getItemId()) {
             case R.id.lyric_navigation_help_item:
                 AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
-                helpBuilder.setTitle("Do you want to search the song?");
-                helpBuilder.setMessage("How much money do you want to donate?");
+                helpBuilder.setTitle(R.string.lyric_navagation_help_title);
+                helpBuilder.setMessage(R.string.lyric_navagation_help_search);
 
                 TextView textView = new TextView(this);
                 textView.setText(R.string.lyric_navagation_help_search);
@@ -311,8 +311,8 @@ public class LyricFavSongActivity extends AppCompatActivity implements Navigatio
                 break;
             case R.id.lyric_navigation_donate_item:
                 AlertDialog.Builder donationBuilder = new AlertDialog.Builder(this);
-                donationBuilder.setTitle("Do you want to search the song?");
-                donationBuilder.setMessage("How much money do you want to donate?");
+                donationBuilder.setTitle(R.string.lyric_navigation_donate_title);
+                donationBuilder.setMessage(R.string.lyric_navigation_donate_number);
 
                 EditText editText = new EditText(this);
                 editText.setHint(R.string.lyric_navigation_donate_number);
