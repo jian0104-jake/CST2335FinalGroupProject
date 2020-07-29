@@ -182,6 +182,13 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
             GeoCityQuery forecastQuery = new GeoCityQuery();
             forecastQuery.execute(url);
             saveSharedPrefs(latitudeEdit.getText().toString(),longitudeEdit.getText().toString());
+
+            cityLocation = new LatLng(Double.parseDouble(latitudeEdit.getText().toString()), Double.parseDouble(longitudeEdit.getText().toString()));
+            mapTitle = "searched location";
+            mapFragment.getMapAsync(this);
+
+
+
         });
 
         favoriteGeoBtn.setOnClickListener(e-> {
