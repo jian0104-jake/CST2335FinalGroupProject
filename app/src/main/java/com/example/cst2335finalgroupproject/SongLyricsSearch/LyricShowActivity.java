@@ -279,7 +279,7 @@ public class LyricShowActivity extends AppCompatActivity implements NavigationVi
             case R.id.lyric_navigation_help_item:
                 AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
                 helpBuilder.setTitle(R.string.lyric_navagation_help_title);
-                helpBuilder.setMessage(R.string.lyric_navagation_help_search);
+//                helpBuilder.setMessage(R.string.lyric_navagation_help_search);
 
                 TextView textView = new TextView(this);
                 textView.setText(R.string.lyric_navagation_help_search);
