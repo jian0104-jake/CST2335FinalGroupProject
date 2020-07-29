@@ -18,11 +18,19 @@ import android.widget.Toast;
 
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.geodata.entity.City;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class SavedCitiesActivity extends AppCompatActivity {
+public class SavedCitiesActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+
 
     /**
      * Saved cities database
@@ -50,6 +58,23 @@ public class SavedCitiesActivity extends AppCompatActivity {
      */
     private Fragment cityFragment;
 
+    /**
+     * stores the google map component
+     */
+
+    private GoogleMap mMap;
+
+
+    /**
+     * stores the location value to pass into google map
+     */
+    private LatLng cityLocation ;
+
+    /**
+     * stores the title value to pass into google map
+     */
+    private String mapTitle;
+
 
     /**
      *  onCreate method
@@ -65,6 +90,12 @@ public class SavedCitiesActivity extends AppCompatActivity {
         savedCitiesListView.setAdapter(myListAdapter = new SavedCitiesListAdapter());
 
         loadDataFromDatabase();
+
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
 
 
         savedCitiesListView.setOnItemLongClickListener((p,b,pos,id)->{
@@ -100,6 +131,10 @@ public class SavedCitiesActivity extends AppCompatActivity {
                     .replace(R.id.fragmentLocation, cityFragment) //Add the fragment in FrameLayout
                     .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
+            mapFragment.getMapAsync(this);
+
+            cityLocation = new LatLng(cities.get(pos).getLatitude(), cities.get(pos).getLongitude());
+            mapTitle =cities.get(pos).getName();
         });
     }
 
@@ -146,6 +181,19 @@ public class SavedCitiesActivity extends AppCompatActivity {
     private void deleteSavedCity(long id){
         db.delete(SavedCitiesOpenHelper.TABLE_NAME, SavedCitiesOpenHelper.COL_ID + "= ?", new String[] {Long.toString(id)});
     }
+
+
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        mMap.addMarker(new MarkerOptions().position(cityLocation).title(mapTitle));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(cityLocation));
+    }
+
 
 
 

@@ -81,6 +81,13 @@
         android:visibility="invisible"
         style="?android:attr/progressBarStyleHorizontal"
         />
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mapGeo"
+                tools:context=".MapsActivity"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
         </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/geo_navigation_view"
