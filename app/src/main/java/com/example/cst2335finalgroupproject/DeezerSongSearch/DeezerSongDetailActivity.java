@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.cst2335finalgroupproject.R;
 
@@ -22,6 +23,10 @@ public class DeezerSongDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_detail);
         setTitle(getString(R.string.activity_title_song_detail));
+
+        // tool bar
+        Toolbar toolBar = findViewById(R.id.deezer_toolbar);
+        setSupportActionBar(toolBar);
 
         Bundle msgInfo = getIntent().getBundleExtra(SONG_DETAIL);
 
