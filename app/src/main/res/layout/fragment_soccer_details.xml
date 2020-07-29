@@ -58,19 +58,7 @@
             android:id="@+id/soc_saveBtn"
             android:gravity="bottom"/>
 
-<!--        <Button-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/soc_removeBtn"-->
-<!--            android:text="@string/soc_removeBtn"-->
-<!--            android:layout_gravity="bottom"/>-->
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/soc_goWacthLive"
-            android:text="@string/soc_gowatchLive"
-            android:gravity="bottom"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

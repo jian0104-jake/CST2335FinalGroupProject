@@ -1,40 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/btnGeoDataSource"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        style="@style/main_activity_button_style"
-        android:text="@string/geo_data_source"
-        />
-    <Button
+        android:layout_centerInParent="true"
+        android:id="@+id/centerImg"
+        android:src="@drawable/record"
+        android:visibility="invisible"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/centerImg"
+        android:layout_centerVertical="true"
+        android:src="@drawable/soccerball"
         android:id="@+id/btnSoccer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/main_activity_button_style"
-        android:text="@string/soccer_match_highlights"
         />
-    <Button
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/centerImg"
+        android:src="@drawable/earth01"
+        android:id="@+id/btnGeoDataSource"
+        android:layout_centerHorizontal="true"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/centerImg"
         android:id="@+id/btnSongLyrics"
-        android:layout_width="match_parent"
+        android:src="@drawable/music"
+        android:layout_centerVertical="true"/>
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/main_activity_button_style"
-        android:text="@string/song_lyrics_search"
-        />
-    <Button
+        android:layout_below="@+id/centerImg"
+        android:layout_centerHorizontal="true"
         android:id="@+id/btnDeezer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/main_activity_button_style"
-        android:text="@string/deezer_song_search"
-        />
+        android:src="@drawable/artist1"/>
+</RelativeLayout>
 
-</LinearLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    tools:context=".MainActivity">-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btnGeoDataSource"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        style="@style/main_activity_button_style"-->
+<!--        android:text="@string/geo_data_source"-->
+<!--        />-->
+<!--    <Button-->
+<!--        android:id="@+id/btnSoccer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        style="@style/main_activity_button_style"-->
+<!--        android:text="@string/soccer_match_highlights"-->
+<!--        />-->
+<!--    <Button-->
+<!--        android:id="@+id/btnSongLyrics"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        style="@style/main_activity_button_style"-->
+<!--        android:text="@string/song_lyrics_search"-->
+<!--        />-->
+<!--    <Button-->
+<!--        android:id="@+id/btnDeezer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        style="@style/main_activity_button_style"-->
+<!--        android:text="@string/deezer_song_search"-->
+<!--        />-->
+
+<!--</LinearLayout>-->

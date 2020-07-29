@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
@@ -22,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         prefs = getSharedPreferences("data",MODE_PRIVATE);
         savedMatchUrl = prefs.getString("gameUrl","");
-        Button btnGeoDataSource = findViewById(R.id.btnGeoDataSource);
+        ImageButton btnGeoDataSource = findViewById(R.id.btnGeoDataSource);
         btnGeoDataSource.setOnClickListener((view -> {
             Intent goToGeoData = new Intent(MainActivity.this, GeoDataSource.class);
             startActivity(goToGeoData);
         }));
 
-        Button btnSoccer = findViewById(R.id.btnSoccer);
+        ImageButton btnSoccer = findViewById(R.id.btnSoccer);
         btnSoccer.setOnClickListener((view -> {
 
             boolean isEmpty = savedMatchUrl.length() == 0;
@@ -38,18 +39,18 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData( Uri.parse(savedMatchUrl) );
-                startActivityForResult(i,100);
+                startActivityForResult(i,50);
             }
 
         }));
 
-        Button btnSongLyrics = findViewById(R.id.btnSongLyrics);
+        ImageButton btnSongLyrics = findViewById(R.id.btnSongLyrics);
         btnSongLyrics.setOnClickListener((view -> {
             Intent goToLyricSearch = new Intent(MainActivity.this, LyricSearchActivity.class);
             startActivity(goToLyricSearch);
         }));
 
-        Button btnDeezer = findViewById(R.id.btnDeezer);
+        ImageButton btnDeezer = findViewById(R.id.btnDeezer);
         btnDeezer.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, DeezerSongSearchActivity.class);
             startActivity(intent);
