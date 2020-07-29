@@ -5,7 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
-
+/**
+ * @Author:ZiyueWang
+ * @date:07/28/2020
+ */
 public class SoccerDB extends SQLiteOpenHelper {
     protected final static  String DATABASE_NAME = "SoccerDB";
     protected final static int VERSION_NUM = 2;
@@ -21,6 +24,11 @@ public class SoccerDB extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, VERSION_NUM);
 
     }
+
+    /**
+     * create a soccerDB with 5 columns:id, TEAM_NAME,GAME_DATE,GAME_URL AND IMG_URL
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "

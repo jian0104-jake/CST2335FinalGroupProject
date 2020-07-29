@@ -30,6 +30,7 @@
     <string name="lyric_navigation_donate">Donate to Project</string>
     <string name="lyric_navigation_open">Open</string>
     <string name="lyric_navigation_close">Close</string>
+    <string name="lyric_navagation_help_title">How to use</string>
     <string name="lyric_navagation_help_search">
         Type in the artist and title of song that you want to search, then click "Search Lyrics" button.
         \nAccess the Favorite Song list by click "Go to Fav List" button.
@@ -42,8 +43,9 @@
         click the song will display the lyric, long click will delete item from Favorite List
         \nIf you want to go back to the Search page, click the "Go back to Search" button
     </string>
-    <string name="lyric_navigation_donate_number">Donation amount:</string>
-    <string name="lyric_navigation_header">CST2335\nFinal Group Project\nSong Lyrics Search</string>
+    <string name="lyric_navigation_donate_title">Please give generou$ly</string>
+    <string name="lyric_navigation_donate_number">How much money do you want to donate?</string>
+    <string name="lyric_navigation_header">CST2335\tFinal Group Project</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>

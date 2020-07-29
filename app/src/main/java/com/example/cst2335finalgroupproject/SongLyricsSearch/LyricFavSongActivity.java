@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -90,13 +91,17 @@ public class LyricFavSongActivity extends AppCompatActivity implements Navigatio
         setSupportActionBar(toolBar);
 
         // navigation bar
-        DrawerLayout drawerLayout = findViewById(R.id.lyric_drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.lyric_fav_drawer_layout);
+        Log.i("drawerLayout", drawerLayout == null ? "yes" : "no");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawerLayout, toolBar, R.string.lyric_navigation_open, R.string.lyric_navigation_close);
+        Log.i("toggle", drawerLayout == null ? "yes" : "no");
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.lyric_navigation_view);
+        // without this line, the image will not display in navigation bar
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         Button button = findViewById(R.id.lyric_button_back_to_front);
@@ -282,10 +287,22 @@ public class LyricFavSongActivity extends AppCompatActivity implements Navigatio
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        int selection = 0;
         switch (item.getItemId()) {
             case R.id.lyric_navigation_help_item:
-                Toast.makeText(this, R.string.lyric_navagation_help_fav, Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+                helpBuilder.setTitle(R.string.lyric_navagation_help_title);
+                helpBuilder.setMessage(R.string.lyric_navagation_help_search);
+
+                TextView textView = new TextView(this);
+                textView.setText(R.string.lyric_navagation_help_search);
+
+                // set up two buttons
+                helpBuilder.setPositiveButton("OK", null);
+
+                // create and show the dialog
+                AlertDialog helpAlertDialog = helpBuilder.create();
+                helpAlertDialog.setView(textView, 0, 0, 0, 0);
+                helpAlertDialog.show();
                 break;
             case R.id.lyric_navigation_api_item:
                 String apiLink = "https://lyricsovh.docs.apiary.io/#";
@@ -293,31 +310,31 @@ public class LyricFavSongActivity extends AppCompatActivity implements Navigatio
                 startActivity(launchBrower);
                 break;
             case R.id.lyric_navigation_donate_item:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Do you want to search the song?");
-                builder.setMessage("How much money do you want to donate?");
+                AlertDialog.Builder donationBuilder = new AlertDialog.Builder(this);
+                donationBuilder.setTitle(R.string.lyric_navigation_donate_title);
+                donationBuilder.setMessage(R.string.lyric_navigation_donate_number);
 
                 EditText editText = new EditText(this);
                 editText.setHint(R.string.lyric_navigation_donate_number);
                 editText.setInputType(TYPE_CLASS_NUMBER);
 
                 // set up two buttons
-                builder.setPositiveButton("Thank You", null);
-                builder.setNegativeButton("Cancel", null);
+                donationBuilder.setPositiveButton("Thank You", null);
+                donationBuilder.setNegativeButton("Cancel", null);
 
                 // create and show the dialog
-                AlertDialog alertDialog = builder.create();
-                alertDialog.setView(editText, 0, 0, 0, 0);
+                AlertDialog donationAlertDialog = donationBuilder.create();
+                donationAlertDialog.setView(editText, 0, 0, 0, 0);
 
-                alertDialog.setOnShowListener(dialog -> {
+                donationAlertDialog.setOnShowListener(dialog -> {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
                 });
-                alertDialog.show();
+                donationAlertDialog.show();
                 break;
         }
 
-        DrawerLayout drawerLayout = findViewById(R.id.lyric_drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.lyric_fav_drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
 
         return false;

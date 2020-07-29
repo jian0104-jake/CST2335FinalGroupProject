@@ -46,22 +46,36 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @Author:ZiyueWang
+ * @date:07/28/2020
+ *
+ */
 public class GameList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ArrayList<String> elements = new ArrayList<>( Arrays.asList( "One game", "Two game" ) );
+
     private MyListAdapter myAdapter;
     private String gameTitle;
     private String gameDate;
     private String videoUrl;
     private TextView detailTV;
     private String imageUrl;
+    /**
+     * The Soccer details list.
+     */
     List<SoccerDetails> soccerDetailsList = new ArrayList<>();
     private ProgressBar pb;
+    /**
+     * The Video list.
+     */
     List<String> videoList = new ArrayList<>();
+
+    /**
+     *this method is used to  accomplish the function of all buttons, and to determine whether to use fragment
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         boolean isTablet = findViewById(R.id.soc_fragmentLocation) != null;
@@ -134,6 +148,12 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
             }
         }));
     }
+
+    /**
+     * this method is used to inflate tool bar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -141,6 +161,13 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
         inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
     }
+
+    /**
+     * this method is used to finish different function when user
+     * selected different menu on toolbar
+     * @param item
+     * @return
+     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -164,6 +191,13 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
 
         return true;
     }
+
+    /**
+     * this method is used to finish different function when user
+     * selected different menu on navigation drawer
+     * @param item
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected( MenuItem item) {
 
@@ -201,12 +235,38 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
         return false;
     }
 
+    /**
+     * class SoccerDetials
+     * this class is used to store details of soccer game
+     */
+
     private class SoccerDetails {
+        /**
+         * The Title.
+         */
         String title;
+        /**
+         * The Date.
+         */
         String date;
+        /**
+         * The Vedio url.
+         */
         String vedioUrl;
+        /**
+         * The Img url.
+         */
         String imgUrl;
-      public SoccerDetails(String title, String date, String vedioUrl,String imgUrl){
+
+        /**
+         * Instantiates a new Soccer details.
+         *
+         * @param title    the title
+         * @param date     the date
+         * @param vedioUrl the vedio url
+         * @param imgUrl   the img url
+         */
+        public SoccerDetails(String title, String date, String vedioUrl,String imgUrl){
           this.date = date;
           this.title = title;
           this.vedioUrl = vedioUrl;
@@ -215,12 +275,20 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
-    private class GameListHttpRequest extends AsyncTask< String, Integer, String> {
+    /**
+     *class GameListHttpRequest
+     * this class is used to read and access the url and get the data back
+     */
 
+    private class GameListHttpRequest extends AsyncTask< String, Integer, String> {
+        /**
+         * Read a JsonArray and get the data back
+         * @param strings
+         * @return
+         */
         @Override
         protected String doInBackground(String... strings) {
             try {
-
                 //create a URL object of what server to contact:
                 URL url = new URL(strings[0]);
 
@@ -244,8 +312,6 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
                 String result = sb.toString(); //result is the whole string
                 JSONArray gameDtails = new JSONArray(result);
                 String gurl;
-
-
                 try {
                     for (int i = 0; i < gameDtails.length(); i++) {
                         JSONObject soccerItems = gameDtails.getJSONObject(i);
@@ -275,12 +341,22 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
             return "Done";
         }
 
+        /**
+         * set the progress bar visible
+         * @param value
+         */
+
         @Override
         public void onProgressUpdate(Integer...value){
             pb.setVisibility(View.VISIBLE);
             pb.setProgress(value[0]);
 
         }
+
+        /**
+         * set progress bar invisible and notify the listview data changed after http request executed
+         * @param fromDoInBackground
+         */
         @Override
         public void onPostExecute(String fromDoInBackground)
         {
@@ -295,6 +371,14 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
        public SoccerDetails getItem(int position) { return  soccerDetailsList.get(position); }
 
         public long getItemId(int position) { return position ; }
+
+        /**
+         * set the text of each listview based on the title in soccerDetailsList
+         * @param position
+         * @param old
+         * @param parent
+         * @return
+         */
 
         @Override
         public View getView(int position, View old, ViewGroup parent)
