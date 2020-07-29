@@ -7,7 +7,20 @@
     android:orientation="vertical"
     tools:context=".geodata.GeoDataSource"
     >
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/geo_toolbar" />
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/geo_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
     <TextView
         android:id="@+id/latitudeText"
         android:layout_width="match_parent"
@@ -68,5 +81,19 @@
         android:visibility="invisible"
         style="?android:attr/progressBarStyleHorizontal"
         />
+        </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/geo_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/geo_navigation_header_layout"
+        app:menu="@menu/geo_navigation_items" />
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
 
 </LinearLayout>

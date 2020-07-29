@@ -56,7 +56,14 @@
     <string name="geo_no">否</string>
     <string name="geo_remove_alert">您要移除</string>
     <string name="geo_remove_success">已删除</string>
-
+    <string name="geo_menu_about">这是个查找城市应用，作者：姜旭</string>
+    <string name="about_geo_api">关于查找城市API </string>
+    <string name="donate_to_geo">捐助 </string>
+    <string name="find_city_by_geo_api">查找城市</string>
+    <string name="author_xu_jiang">作者：姜旭</string>
+    <string name="geo_navigation_open">打开</string>
+    <string name="geo_navigation_close">关闭</string>
+    <string name="geo_instruction">在文本框输入相应的经纬度，查找对应的城市。你可以收藏或使用谷歌地图浏览这个城市</string>
 
 
 
