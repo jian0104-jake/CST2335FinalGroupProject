@@ -1,8 +1,11 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,9 +33,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.db.SongDB;
 import com.example.cst2335finalgroupproject.DeezerSongSearch.entity.Song;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.Favorite_Game_List;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.SoccerDB;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.navigation.NavigationView;
@@ -87,6 +93,10 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
      */
     private boolean isTablet;
 
+    /**
+     * db used to get/save search result
+     */
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +140,6 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         songsAdapter = new SongsAdapter();
         lvSong.setAdapter(songsAdapter);
 
-
-
         lvSong.setOnItemClickListener((parent, view, position, id) -> {
             Song song = songs.get(position);
 
@@ -162,7 +170,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             searchArtist(edtArtistName.getText().toString().trim());
         }));
 
-
+        SongDB songDB = new SongDB(this);
+        db = songDB.getWritableDatabase();
+        loadLastSearchResult();
     }
 
     /**
@@ -196,6 +206,40 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
 
         QueryArtist queryArtist = new QueryArtist();
         queryArtist.execute(String.format("https://api.deezer.com/search/artist/?q=%s", artistName));
+    }
+
+    private void loadLastSearchResult() {
+
+        String[] columns = {Song.COL_TITLE, Song.COL_DURATION, Song.COL_ALBUM_NAME, Song.COL_ALBUM_COVER,};
+        Cursor results = db.query(false, Song.TABLE_NAME_SEARCH_RESULT, columns,
+                null, null, null, null, null, null);
+
+        int titleColIndex = results.getColumnIndex(Song.COL_TITLE);
+        int durationColIndex = results.getColumnIndex(Song.COL_DURATION);
+        int albumNameColIndex = results.getColumnIndex(Song.COL_ALBUM_NAME);
+        int albumCoverColIndex = results.getColumnIndex(Song.COL_ALBUM_COVER);
+
+        while (results.moveToNext()) {
+            Song song = new Song();
+            song.setTitle(results.getString(titleColIndex));
+            song.setDuration(results.getInt(durationColIndex));
+            song.setAlbumName(results.getString(albumNameColIndex));
+            song.setAlbumCover(results.getString(albumCoverColIndex));
+
+            songs.add(song);
+        }
+
+        songsAdapter.notifyDataSetChanged();
+    }
+
+    private void addToSearchResult(Song song) {
+        ContentValues newRowValue = new ContentValues();
+        newRowValue.put(Song.COL_TITLE, song.getTitle());
+        newRowValue.put(Song.COL_DURATION, song.getDuration());
+        newRowValue.put(Song.COL_ALBUM_NAME, song.getAlbumName());
+        newRowValue.put(Song.COL_ALBUM_COVER, song.getAlbumCover());
+
+        db.insert(Song.TABLE_NAME_SEARCH_RESULT, null, newRowValue);
     }
 
     /**
@@ -234,7 +278,6 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         return true;
     }
 
-
     /**
      * Implement interface method, to reactive with navigation items
      */
@@ -252,7 +295,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                 startActivity(launchBrower);
                 break;
             case R.id.deezer_nav_item_donate:
-                // TODO halde donate navigation item
+                // handle donate navigation item
                 final EditText etAmount = new EditText(this);
                 etAmount.setHint("Enter amount");
                 etAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -370,6 +413,9 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                 }
                 String result = sb.toString();
 
+                // clear search result in db
+                db.delete(Song.TABLE_NAME_SEARCH_RESULT, null, null);
+
                 // get song info and store it in songList
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.getInt("total") > 0) {
@@ -386,6 +432,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                         song.setAlbumCover(albumObj.getString("cover_big"));
 
                         songList.add(song);
+                        addToSearchResult(song);
                     }
                 }
             } catch(IOException | JSONException e) {
@@ -447,7 +494,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             TextView tvSongDuration = convertView.findViewById(R.id.tv_song_duration);
 
             Song song = getItem(position);
-            tvSongName.setText(String.format("%d. %s", position, song.getTitle()));
+            tvSongName.setText(String.format("%d. %s", position + 1, song.getTitle()));
             tvSongDuration.setText(song.getDurationInMMSS());
 
             return convertView;

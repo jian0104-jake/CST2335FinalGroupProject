@@ -2,6 +2,15 @@ package com.example.cst2335finalgroupproject.DeezerSongSearch.entity;
 
 public class Song {
 
+    public final static String TABLE_NAME_SEARCH_RESULT = "DEEZER_SONG_LIST";
+    public final static String TABLE_NAME_FAVORITE = "DEEZER_SONG_FAV";
+
+    public final static String COL_ID= "_id";
+    public final static String COL_TITLE= "Title";
+    public final static String COL_DURATION= "Duration";
+    public final static String COL_ALBUM_NAME= "AlbumName";
+    public final static String COL_ALBUM_COVER = "AlbumCover";
+
     /**
      * the title of the song
      */
