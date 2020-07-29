@@ -42,11 +42,18 @@
                     android:hint="@string/enter_artist_name"
                     android:inputType="textPersonName"
                     />
+                <Button
+                    android:id="@+id/btn_my_fav_song"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/my_favorite_song"/>
                 <ListView
                     android:id="@+id/lv_song"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/btn_search"
+                    android:layout_above="@id/btn_my_fav_song"
                     />
 
                 <ProgressBar

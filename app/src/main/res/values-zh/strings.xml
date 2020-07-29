@@ -112,6 +112,7 @@
     <string name="version_1_0">版本：1.0</string>
     <string name="lyric_navigation_donate_title">捐助项目</string>
     <string name="lyric_navagation_help_title">如何使用</string>
+    <string name="my_favorite_song">我喜欢的歌</string>
 
 
 </resources>

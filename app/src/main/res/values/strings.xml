@@ -97,6 +97,7 @@
     <string name="donate_to_deezer">Donate to Deezer</string>
     <string name="deezer_usage_short">Enter artist name to search songs</string>
     <string name="btn_donate_text">Donate</string>
+    <string name="my_favorite_song">My Favorite Song</string>
 
 
     <!-- strings used by soccer match highlights -->
