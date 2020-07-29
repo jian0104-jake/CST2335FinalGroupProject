@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Soccer match hights"
+        android:text="Soccer match hightLights"
         android:layout_alignParentBottom="true" />
     <TextView
         android:layout_width="match_parent"
