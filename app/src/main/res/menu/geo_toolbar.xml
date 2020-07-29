@@ -16,7 +16,7 @@
 
     <item android:id="@+id/soccer_toolbar"
         android:title="@string/soccer_match_highlights"
-        android:icon="@drawable/soccer"
+        android:icon="@drawable/soccerball"
         android:orderInCategory="150"
         app:showAsAction="always"/>
     <item
