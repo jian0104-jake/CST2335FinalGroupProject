@@ -94,6 +94,8 @@ public class LyricShowActivity extends AppCompatActivity implements NavigationVi
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.lyric_navigation_view);
+        // without this line, the image will not display in navigation bar
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         progressBar = findViewById(R.id.lyric_process_bar_show);

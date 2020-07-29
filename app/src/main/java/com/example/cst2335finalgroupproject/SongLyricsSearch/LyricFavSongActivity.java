@@ -97,6 +97,8 @@ public class LyricFavSongActivity extends AppCompatActivity implements Navigatio
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.lyric_navigation_view);
+        // without this line, the image will not display in navigation bar
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         Button button = findViewById(R.id.lyric_button_back_to_front);

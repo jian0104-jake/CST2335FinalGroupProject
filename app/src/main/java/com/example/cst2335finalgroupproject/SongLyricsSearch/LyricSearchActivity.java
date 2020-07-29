@@ -102,6 +102,8 @@ public class LyricSearchActivity extends AppCompatActivity implements Navigation
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.lyric_navigation_view);
+        // without this line, the image will not display in navigation bar
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Listview to display search history
