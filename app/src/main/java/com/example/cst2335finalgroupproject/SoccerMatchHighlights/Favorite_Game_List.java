@@ -43,23 +43,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @Author:ZiyueWang
+ * @date:07/28/2020
+ */
 public class Favorite_Game_List extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
-    private List<FavSoccerDetails>  favSoccerList = new ArrayList();
+    /**
+     * The constant favSoccerList.
+     */
+    public static List<FavSoccerDetails>  favSoccerList = new ArrayList();
     private SQLiteDatabase db;
     private TextView favTV;
-    private  MyListAdapter myAdapter;
+    /**
+     * The constant myAdapter.
+     */
+    public static   MyListAdapter myAdapter;
     private Button goToListbtn;
 
     /**
-     *
+     *this method is used to  accomplish the function of all buttons, and to determine whether to use fragment
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_game_list);
-
+        boolean isTablet = findViewById(R.id.soc_fav_fragmentLocation) != null;
+        if(!isTablet){
         Toolbar tBar = findViewById(R.id.soc_favlist_toolbar);
         setSupportActionBar(tBar);
         DrawerLayout drawer = findViewById(R.id.favlist_drawer_layout);
@@ -69,38 +80,11 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.soc_favlist_nav);
         navigationView.setItemIconTintList(null);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);}
         loadfromDB();
-        boolean isTablet = findViewById(R.id.soc_fav_fragmentLocation) != null;
+
         ListView myList = findViewById(R.id.soc_fav_list);
         myList.setAdapter( myAdapter = new MyListAdapter());
-//        myList.setOnItemClickListener((parent, view, position, id)->{
-//            Bundle dataToPass = new Bundle();
-//            String gtitle = favSoccerList.get(position).title;
-//            String gdate = favSoccerList.get(position).date;
-//            String gurl = favSoccerList.get(position).vedioUrl;
-//            String iurl = favSoccerList.get(position).imgUrl;
-//
-//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-//            alertDialog.setTitle(getResources().getString(R.string.soccer_alert_title) + gtitle).setMessage(R.string.soccer_alert_msg
-//            ).setPositiveButton(R.string.soccer_postive,(click, arg)->{
-//                Intent goToDetail = new Intent(this, GameDetailActivity.class);
-//                goToDetail.putExtra("gametitle",gtitle);
-//                goToDetail.putExtra("date",gdate);
-//                goToDetail.putExtra("gamevedio",gurl);
-//                goToDetail.putExtra("imageUrl",iurl);
-//                startActivity(goToDetail);
-//                Toast.makeText(this, R.string.soccer_toast_txt, Toast.LENGTH_SHORT).show();
-//            }).setNegativeButton(R.string.soccer_negative,(click, arg)->{
-//                Snackbar.make(myList, R.string.soccer_snackbar_msg, Snackbar.LENGTH_SHORT).show();
-//            }) .setNeutralButton(R.string.soccer_neu,(click, arg)->{
-//
-//                db.delete(SoccerDB.TABLE_NAME,SoccerDB.TEAM_COL + "=?",new String[]{favSoccerList.get(position).title});
-//                 favSoccerList.remove(position);
-//                 Snackbar.make(myList, R.string.soc_delete_msg, Snackbar.LENGTH_SHORT).show();
-//                 myAdapter.notifyDataSetChanged();
-//            }).create().show();
-//        });
         goToListbtn = findViewById(R.id.soc_gohome_btn);
         goToListbtn.setOnClickListener(b->{
             Intent goToList = new Intent(this,GameList.class);
@@ -169,9 +153,15 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
         });
 
     }
+
+    /**
+     * Inflate the menu items for use in the action bar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
@@ -214,6 +204,7 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
                 alertDialog.setTitle(R.string.soc_instruction_title).setMessage(R.string.soc_intro_msg
                 ).setPositiveButton(R.string.soc_intro_positive, (click, arg) -> {})
                         .create().show();
+                break;
             case R.id.donate:
                 final EditText et = new EditText(this);
                 et.setHint("$$$");
@@ -234,12 +225,35 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
         }
 
 
+    /**
+     * The type Fav soccer details.
+     */
     class FavSoccerDetails{
+        /**
+         * The Title.
+         */
         String title;
+        /**
+         * The Date.
+         */
         String date;
+        /**
+         * The Vedio url.
+         */
         String vedioUrl;
+        /**
+         * The Img url.
+         */
         String imgUrl;
 
+        /**
+         * Instantiates a new Fav soccer details.
+         *
+         * @param title    the title
+         * @param date     the date
+         * @param vedioUrl the vedio url
+         * @param imgUrl   the img url
+         */
         public FavSoccerDetails(String title, String date, String vedioUrl,String imgUrl){
             this.date = date;
             this.title = title;
@@ -251,7 +265,7 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
     }
 
     /**
-     *
+     * load date from soccerDB
      */
 
     private void loadfromDB(){
@@ -278,13 +292,17 @@ public class Favorite_Game_List extends AppCompatActivity implements NavigationV
 
         public int getCount() { return favSoccerList.size();}
 
-
-
-
         public FavSoccerDetails getItem(int position) { return  favSoccerList.get(position); }
 
         public long getItemId(int position) { return position ; }
 
+        /**
+         * set the text of each view based on user's favorite game title
+         * @param position
+         * @param old
+         * @param parent
+         * @return
+         */
         @Override
         public View getView(int position, View old, ViewGroup parent)
         {

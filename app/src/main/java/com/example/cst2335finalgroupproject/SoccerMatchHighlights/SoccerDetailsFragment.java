@@ -35,7 +35,7 @@ import android.widget.Toast;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
-import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricsSearchActivity;
+import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.GeoDataSource;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -46,7 +46,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
+/**
+ * @Author:ZiyueWang
+ * @date:07/28/2020
+ *
+ */
 public class SoccerDetailsFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
     private Button saveOrRemoveBtn,goToFavBtn;
@@ -56,14 +60,29 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
     private TextView gameVedioUrl;
     private ImageButton imageButton;
     private String imageUrl;
-    private Button goWacthBtn;
     private SQLiteDatabase db ;
     private Bundle dataFromActivity;
     public SharedPreferences prefs;
+    private AppCompatActivity parentActivity;
 
 
-
+    /**
+     * no-arg constructor
+     */
     public SoccerDetailsFragment() {}
+
+    /**
+     * this method is used to set the content of detail page after user select a game.
+     * If the source page is the GameList, then the saveOrRemoveBtn will be saveBtn to save a
+     * favorite game.
+     * If the source page is the FavoriteGameList, then the saveOrRemoveBtn will be removeBtn
+     * to remove a game from the favorite list.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,6 +118,7 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
         String gameUrl = gameVedioUrl.getText().toString();
         String source = dataFromActivity.getString("sourcePage");
         saveOrRemoveBtn = result.findViewById(R.id.soc_saveBtn);
+        boolean isTablet = result.findViewById(R.id.soc_fav_fragmentLocation) != null;
         if(source.equals("listPage")){
             saveOrRemoveBtn.setText("Save to favorite list");
             saveOrRemoveBtn.setOnClickListener(b->{
@@ -124,27 +144,20 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
                 alertDialog.setTitle((R.string.soc_removeQue)).setMessage(R.string.soc_removeMsg
                 ).setPositiveButton("Yes",(c,arg)->{
                     db.delete(SoccerDB.TABLE_NAME,SoccerDB.TEAM_COL + "=?",new String[]{twoTeam});
+                    parentActivity.getSupportFragmentManager().beginTransaction().remove(this).commit();
                     Toast.makeText(this.getContext(),R.string.soc_removeToast,Toast.LENGTH_SHORT).show();
-
-
                 }).setNegativeButton("No",(c,arg)->{
                     Snackbar.make(saveOrRemoveBtn,"you selected no", Snackbar.LENGTH_SHORT).show();
                 }).create().show();
             });
 
         }
-
-
         goToFavBtn = result.findViewById(R.id.soc_goFav);
         goToFavBtn.setOnClickListener(b->{
             Intent goToFav = new Intent(this.getContext(),Favorite_Game_List.class);
             startActivity(goToFav);
         });
-//        goWacthBtn = result.findViewById(R.id.soc_goWacthLive);
-//        goWacthBtn.setOnClickListener(click->{
-//            Intent i = new Intent(Intent.ACTION_VIEW);
-//            i.setData( Uri.parse(gameUrl) );startActivity(i);
-//        });
+
            prefs = this.getActivity().getSharedPreferences("data",Context.MODE_PRIVATE);
 
         imageButton.setOnClickListener(click->{
@@ -157,17 +170,30 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
         });
 
         setHasOptionsMenu(true);
-
+        pb2 = result.findViewById(R.id.pb2);
         return result;
     }
+
+
+    /**
+     * Inflate the menu items for use in the action bar
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu items for use in the action bar
         menu.clear();
         inflater.inflate(R.menu.toolbar_menu, menu);
 
     }
 
+
+       /**
+        * this method is used to finish different function when user
+        * selected different menu on toolbar
+        * @param item
+        * @return
+        */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
@@ -176,7 +202,7 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
                 startActivity(goToGeo);
                 break;
             case R.id.songLyrics_toolbar:
-                Intent goToLyrics = new Intent(this.getContext(), LyricsSearchActivity.class);
+                Intent goToLyrics = new Intent(this.getContext(), LyricSearchActivity.class);
                 startActivity(goToLyrics);
                 break;
             case R.id.deezer_toolbar:
@@ -193,9 +219,14 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        AppCompatActivity parentActivity = (AppCompatActivity) context;
+         parentActivity = (AppCompatActivity) context;
     }
-
+    /**
+     * this method is used to finish different function when user
+     * selected different menu on navigation drawer
+     * @param item
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId())
@@ -210,6 +241,7 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
                 alertDialog.setTitle(R.string.soc_instruction_title).setMessage(R.string.soc_intro_msg
                 ).setPositiveButton(R.string.soc_intro_positive, (click, arg) -> {})
                         .create().show();
+                break;
             case R.id.donate:
                 final EditText et = new EditText(this.getContext());
                 et.setHint("$$$");
@@ -223,27 +255,29 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
                         .show();
 
         }
-        //DrawerLayout drawerLayout = result.findViewById(R.id.list_drawer_layout);
-       // drawerLayout.closeDrawer(GravityCompat.START);
+
         return false;
     }
 
+    /**
+     * request game iamge URL and get the image back
+     */
     private class GameImageHttpRequest extends AsyncTask< String, Integer, String> {
         private Bitmap image = null;
         @Override
         protected String doInBackground(String... strings) {
             try {
-                // URL imgUrl = new URL(imageUrl);
+
                 URL imgUrl = new URL(strings[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) imgUrl.openConnection();
                 urlConnection.connect();
-               // publishProgress(25);
+                publishProgress(25);
                 int responseCode = urlConnection.getResponseCode();
                 if (responseCode == 200) {
                     image = BitmapFactory.decodeStream(urlConnection.getInputStream());
-                    //publishProgress(50);
+                    publishProgress(50);
                 }
-                //publishProgress(100);
+                publishProgress(100);
                 return "Done";
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -257,15 +291,15 @@ public class SoccerDetailsFragment extends Fragment implements NavigationView.On
 
         @Override
         public void onProgressUpdate(Integer...value){
-           // pb2.setVisibility(View.VISIBLE);
-           // pb2.setProgress(value[0]);
+            pb2.setVisibility(View.VISIBLE);
+            pb2.setProgress(value[0]);
 
         }
         @Override
         public void onPostExecute(String fromDoInBackground)
-        {   //myList
+        {
             imageButton.setImageBitmap(image);
-           // pb2.setVisibility(View.INVISIBLE);
+            pb2.setVisibility(View.INVISIBLE);
 
         }
     }
