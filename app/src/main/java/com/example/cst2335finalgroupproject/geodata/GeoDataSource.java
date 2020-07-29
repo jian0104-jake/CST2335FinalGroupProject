@@ -35,6 +35,12 @@ import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
 import com.example.cst2335finalgroupproject.geodata.entity.City;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -50,7 +56,7 @@ import java.util.ArrayList;
 /**
  * the main activity for geo data source
  */
-public class GeoDataSource extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GeoDataSource extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
     /**
      *  the list adapter for the content for the list view
      */
@@ -91,10 +97,27 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
      */
     private SQLiteDatabase db;
 
+    /**
+     * stores the google map component
+     */
+
+    private GoogleMap mMap;
 
 
+    /**
+     * stores the location value to pass into google map
+     */
+    private LatLng cityLocation ;
 
+    /**
+     * stores the title value to pass into google map
+     */
+    private String mapTitle;
 
+    /**
+     * stores the SupportMapFragment
+     */
+    SupportMapFragment mapFragment;
 
     /**
      * start  geo data source activity
@@ -127,6 +150,8 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
         setSupportActionBar(toolBar);
 
 
+
+
         // navigation bar
         DrawerLayout drawerLayout = findViewById(R.id.geo_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
@@ -138,6 +163,9 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapGeo);
 
 
         //database setup
@@ -159,7 +187,8 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
             startActivity(intent);
         });
 
-        searchCityListView.setOnItemClickListener((p,b,pos,id)->{
+        searchCityListView.setOnItemLongClickListener((p,b,pos,id)->{
+
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             City city = cities.get(pos);
             alertDialogBuilder.setTitle((pos+1) +":  "+ city.getName() +", "+ city.getRegion() + ", "+city.getCountry() + ", " + city.getCurrency() + " in " + city.getLatitude() +", "+city.getLongitude()  )
@@ -184,7 +213,20 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
                         Toast.makeText(this, R.string.geo_toast_message,Toast.LENGTH_LONG).show();
                     })
                     .create().show();
+
+            return true;
         });
+
+
+        searchCityListView.setOnItemClickListener((p,b,pos,id)-> {
+
+            if (!cities.isEmpty()) {
+                City city = cities.get(0);
+                cityLocation = new LatLng(city.getLatitude(), city.getLongitude());
+                mapTitle = city.getName();
+                mapFragment.getMapAsync(this);
+            }
+            });
     }
 
 
@@ -199,6 +241,16 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
         editor.putString("latitude", latitude);
         editor.putString("longitude", longitude);
         editor.commit();
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        mMap.addMarker(new MarkerOptions().position(cityLocation).title(mapTitle));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(cityLocation));
     }
 
 
@@ -442,7 +494,6 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
             {
                 myListAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
-
             }
         }
 

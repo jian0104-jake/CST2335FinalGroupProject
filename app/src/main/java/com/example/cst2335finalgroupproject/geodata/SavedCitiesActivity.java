@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 public class SavedCitiesActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
 
 
     /**
@@ -59,6 +58,23 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
      */
     private Fragment cityFragment;
 
+    /**
+     * stores the google map component
+     */
+
+    private GoogleMap mMap;
+
+
+    /**
+     * stores the location value to pass into google map
+     */
+    private LatLng cityLocation ;
+
+    /**
+     * stores the title value to pass into google map
+     */
+    private String mapTitle;
+
 
     /**
      *  onCreate method
@@ -80,7 +96,6 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
 
         savedCitiesListView.setOnItemLongClickListener((p,b,pos,id)->{
@@ -116,6 +131,10 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
                     .replace(R.id.fragmentLocation, cityFragment) //Add the fragment in FrameLayout
                     .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
+            mapFragment.getMapAsync(this);
+
+            cityLocation = new LatLng(cities.get(pos).getLatitude(), cities.get(pos).getLongitude());
+            mapTitle =cities.get(pos).getName();
         });
     }
 
@@ -171,9 +190,8 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.addMarker(new MarkerOptions().position(cityLocation).title(mapTitle));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(cityLocation));
     }
 
 
