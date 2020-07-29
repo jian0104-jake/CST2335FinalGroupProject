@@ -60,9 +60,17 @@
     <string name="geo_no">no</string>
     <string name="geo_remove_alert">Do you want to remove </string>
     <string name="geo_remove_success">Removed successfully </string>
-
-
+    <string name="geo_menu_about">This is the find city project using Geo api, written by Xu Jiang</string>
     <string name="invalid_geo_search">The latitude and longitude information provided is invalid! </string>
+    <string name="about_geo_api">About Geo Find City API </string>
+    <string name="donate_to_geo">Donate</string>
+    <string name="find_city_by_geo_api">Find City by Geo</string>
+    <string name="author_xu_jiang">Author: Xu Jiang</string>
+    <string name="geo_navigation_open">Open</string>
+    <string name="geo_navigation_close">Close</string>
+    <string name="geo_instruction">Input the latitude and longitude value into the box and search for the nearby city. After that, you can save the city or find the city in google map</string>
+
+
 
 
     <!-- strings used by deezer song search -->

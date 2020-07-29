@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/deezer_toolbar"
+        android:title="@string/deezer_toolbar_str"
+        android:icon="@drawable/deezer"
+        android:orderInCategory="45"
+        app:showAsAction="always"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+    <item android:id="@+id/songLyrics_toolbar"
+        android:title="@string/songLyrics_toolbar_str"
+        android:icon="@drawable/rockstar"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/soccer_toolbar"
+        android:title="@string/soccer_match_highlights"
+        android:icon="@drawable/soccer"
+        android:orderInCategory="150"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/geo_menu_item_about"
+        android:icon="@drawable/freeicon"
+        android:orderInCategory="10"
+        android:title="@string/lyric_toolbar_overflow"
+        app:showAsAction="never" />
+</menu>

@@ -156,6 +156,8 @@ public class SavedCitiesActivity extends AppCompatActivity {
      */
     private class SavedCitiesListAdapter extends BaseAdapter {
 
+
+
         @Override
         public int getCount() {
             return cities.size();
