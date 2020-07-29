@@ -1,7 +1,6 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,7 +21,7 @@ public class DeezerSongDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_detail);
-        setTitle(getString(R.string.activity_title_song_detail));
+        setTitle(getString(R.string.deezer_activity_title_song_detail));
 
         // tool bar
         Toolbar toolBar = findViewById(R.id.deezer_toolbar);

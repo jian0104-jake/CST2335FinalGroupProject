@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">CST2335FinalGroupProject</string>
     <string name="show">Show my favourite game list</string>
-    <string name="soc_saveAsFav">save as favorite</string>
+    <string name="cst2335_final_project">CST2335 Final Project</string>
 
+    <string name="soc_saveAsFav">save as favorite</string>
 
     <string name="geo_data_source">Geo Data Source</string>
     <string name="soccer_match_highlights">Soccer Match Highlights</string>
@@ -74,30 +75,36 @@
 
 
     <!-- strings used by deezer song search -->
-    <string name="album_cover">Album Cover</string>
-    <string name="activity_title_song_detail">Song Detail</string>
-    <string name="song_name_template">Song Name: %s</string>
-    <string name="duration_template">Duration: %s</string>
-    <string name="album_name_template">Album Name: %s</string>
-    <string name="activity_title_deezer_song_search">Search a song(Deezer)</string>
-    <string name="dialog_title_alert">Alert</string>
-    <string name="dialog_msg_enter_artist_name">Please enter the artist name.</string>
-    <string name="search_song_of_artist_template">Search songs of artist %s</string>
-    <string name="retrieved_songs_template">Retrieved %d songs</string>
-    <string name="search">Search</string>
-    <string name="enter_artist_name">Enter artist name</string>
-    <string name="dialog_msg_no_artist_found">No artist found.\\nPlease check the search text and try again.</string>
+    <string name="deezer_album_cover">Album Cover</string>
+    <string name="deezer_activity_title_song_detail">Song Detail</string>
+    <string name="deezer_song_name_template">Song Name: %s</string>
+    <string name="deezer_duration_template">Duration: %s</string>
+    <string name="deezer_album_name_template">Album Name: %s</string>
+    <string name="deezer_activity_title_deezer_song_search">Search a song(Deezer)</string>
+    <string name="deezer_dialog_title_alert">Alert</string>
+    <string name="deezer_dialog_msg_enter_artist_name">Please enter the artist name.</string>
+    <string name="deezer_search_song_of_artist_template">Search songs of artist %s</string>
+    <string name="deezer_retrieved_songs_template">Retrieved %d songs</string>
+    <string name="deezer_search">Search</string>
+    <string name="deezer_enter_artist_name">Enter artist name</string>
+    <string name="deezer_dialog_msg_no_artist_found">No artist found.\nPlease check the search text and try again.</string>
     <string name="deezer_navigation_open">Open</string>
     <string name="deezer_navigation_close">Close</string>
-    <string name="cst2335_final_project">CST2335 Final Project</string>
-    <string name="song_search_by_deezer_api">Song Search by Deezer api</string>
-    <string name="author_xingming_li">Author: Xingming Li</string>
-    <string name="version_1_0">Version: 1.0</string>
-    <string name="about_deezer_api">About Deezer API</string>
-    <string name="donate_to_deezer">Donate to Deezer</string>
+    <string name="deezer_song_search_by_deezer_api">Song Search by Deezer api</string>
+    <string name="deezer_author_xingming_li">Author: Xingming Li</string>
+    <string name="deezer_version_1_0">Version: 1.0</string>
+    <string name="deezer_about_deezer_api">About Deezer API</string>
+    <string name="deezer_donate_to_deezer">Donate to Deezer</string>
     <string name="deezer_usage_short">Enter artist name to search songs</string>
-    <string name="btn_donate_text">Donate</string>
-    <string name="my_favorite_song">My Favorite Song</string>
+    <string name="deezer_btn_donate_text">Donate</string>
+    <string name="deezer_my_favorite_song">My Favorite Song</string>
+    <string name="deezer_add_to_favorite">Add to favorite</string>
+    <string name="deezer_remove_from_favorite">Remove from favorite</string>
+    <string name="deezer_remove_success">Removed successfully. Go to favorite list?</string>
+    <string name="deezer_failed_to_remove">Failed to remove.</string>
+    <string name="deezer_save_success">Saved successfully. Go to favorite list?</string>
+    <string name="deezer_failed_to_save">Failed to save.</string>
+    <string name="deezer_go">Go</string>
 
 
     <!-- strings used by soccer match highlights -->

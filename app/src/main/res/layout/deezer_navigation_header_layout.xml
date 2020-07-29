@@ -20,17 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/song_search_by_deezer_api" />
+        android:text="@string/deezer_song_search_by_deezer_api" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/author_xingming_li" />
+        android:text="@string/deezer_author_xingming_li" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/version_1_0" />
+        android:text="@string/deezer_version_1_0" />
 
     <View
         android:layout_width="match_parent"

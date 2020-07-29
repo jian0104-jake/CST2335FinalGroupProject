@@ -29,7 +29,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongDetailActivity;
 import com.example.cst2335finalgroupproject.DeezerSongSearch.DeezerSongSearchActivity;
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
@@ -42,7 +41,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
@@ -324,7 +322,7 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
                 etAmount.setInputType(TYPE_CLASS_NUMBER);
                 new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
                         .setView(etAmount)
-                        .setPositiveButton(R.string.btn_donate_text, (click, arg) ->{
+                        .setPositiveButton(R.string.deezer_btn_donate_text, (click, arg) ->{
 
                         })
                         .setNegativeButton(R.string.btn_cancel_text, null)

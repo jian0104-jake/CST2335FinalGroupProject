@@ -14,12 +14,12 @@
         android:icon="@drawable/api_link"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"
-        android:title="@string/about_deezer_api" />
+        android:title="@string/deezer_about_deezer_api" />
 
     <item
         android:id="@+id/deezer_nav_item_donate"
         android:icon="@drawable/coins"
         android:orderInCategory="3"
         app:showAsAction="ifRoom"
-        android:title="@string/donate_to_deezer" />
+        android:title="@string/deezer_donate_to_deezer" />
 </menu>

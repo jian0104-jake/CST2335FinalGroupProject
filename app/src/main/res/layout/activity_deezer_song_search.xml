@@ -27,22 +27,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="@string/search"
+                android:text="@string/deezer_search"
                 />
             <EditText
                 android:id="@+id/et_artist_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/btn_search"
-                android:hint="@string/enter_artist_name"
+                android:hint="@string/deezer_enter_artist_name"
                 android:inputType="textPersonName"
+                android:imeActionLabel="@string/deezer_search"
                 />
             <Button
                 android:id="@+id/btn_my_fav_song"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="@string/my_favorite_song"/>
+                android:text="@string/deezer_my_favorite_song"/>
             <ListView
                 android:id="@+id/lv_song"
                 android:layout_width="match_parent"

@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/version_1_0" />
+        android:text="@string/deezer_version_1_0" />
 
     <View
         android:layout_width="match_parent"

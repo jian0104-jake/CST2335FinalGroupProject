@@ -100,7 +100,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deezer_song_search);
-        setTitle(getString(R.string.activity_title_deezer_song_search));
+        setTitle(getString(R.string.deezer_activity_title_deezer_song_search));
 
         // tool bar
         Toolbar toolBar = findViewById(R.id.deezer_toolbar);
@@ -124,8 +124,13 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
          * init components
          */
         EditText edtArtistName = findViewById(R.id.et_artist_name);
+        edtArtistName.setOnEditorActionListener((v, actionId, event) -> {
+            searchArtist(edtArtistName.getText().toString().trim());
+            return true;
+        });
         edtArtistName.setText(searchText);
         Button btnSearch = findViewById(R.id.btn_search);
+        Button btnFavSong = findViewById(R.id.btn_my_fav_song);
         progressBar = findViewById(R.id.process_bar);
         lvSong = findViewById(R.id.lv_song);
 
@@ -142,13 +147,15 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             Song song = songs.get(position);
 
             Bundle bundle = new Bundle();
+            bundle.putBoolean(SongDetailFragment.KEY_IS_FAVORITE, false);
             bundle.putString(SongDetailFragment.KEY_SONG_NAME, song.getTitle());
-            bundle.putString(SongDetailFragment.KEY_SONG_DURATION, song.getDurationInMMSS());
+            bundle.putInt(SongDetailFragment.KEY_SONG_DURATION, song.getDuration());
+            bundle.putString(SongDetailFragment.KEY_SONG_DURATION_STR, song.getDurationInMMSS());
             bundle.putString(SongDetailFragment.KEY_ALBUM_NAME, song.getAlbumName());
             bundle.putString(SongDetailFragment.KEY_ALBUM_COVER, song.getAlbumCover());
 
             if (isTablet) {
-                // TODO init fragment
+                // init fragment
                 // show fragment -- referenced professor Islam's work
                 SongDetailFragment songDetailFragment = new SongDetailFragment();
                 songDetailFragment.setArguments( bundle );
@@ -164,9 +171,14 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             }
         });
 
-        btnSearch.setOnClickListener((v -> {
+        btnSearch.setOnClickListener(v -> {
             searchArtist(edtArtistName.getText().toString().trim());
-        }));
+        });
+
+        btnFavSong.setOnClickListener(v-> {
+            Intent intent = new Intent(DeezerSongSearchActivity.this, DeezerFavSongActivity.class);
+            startActivity(intent);
+        });
 
         SongDB songDB = new SongDB(this);
         db = songDB.getWritableDatabase();
@@ -180,7 +192,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
     private void searchArtist(String artistName) {
         if (artistName.isEmpty()) {
             // show alert to tell user input something
-            showAlertMessageWithTitle(getString(R.string.dialog_title_alert), getString(R.string.dialog_msg_enter_artist_name));
+            showAlertMessageWithTitle(getString(R.string.deezer_dialog_title_alert), getString(R.string.deezer_dialog_msg_enter_artist_name));
 
             return;
         }
@@ -195,7 +207,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         editor.apply();
 
         Snackbar snackbar = Snackbar.make(lvSong,
-                String.format(getString(R.string.search_song_of_artist_template), artistName),
+                String.format(getString(R.string.deezer_search_song_of_artist_template), artistName),
                 Snackbar.LENGTH_LONG);
         snackbar.show();
 
@@ -300,7 +312,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
 
                 new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
                         .setView(etAmount)
-                        .setPositiveButton(R.string.btn_donate_text, (click, arg) ->{
+                        .setPositiveButton(R.string.deezer_btn_donate_text, (click, arg) ->{
 
                         })
                         .setNegativeButton(R.string.btn_cancel_text, null)
@@ -372,8 +384,11 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         protected void onPostExecute(String trackListUrl) {
             super.onPostExecute(trackListUrl);
             if (trackListUrl == null || trackListUrl.isEmpty()) {
-                showAlertMessageWithTitle(getString(R.string.dialog_title_alert),
-                        getString(R.string.dialog_msg_no_artist_found));
+                showAlertMessageWithTitle(getString(R.string.deezer_dialog_title_alert),
+                        getString(R.string.deezer_dialog_msg_no_artist_found));
+
+                songs.clear();
+                songsAdapter.notifyDataSetChanged();
 
                 progressBar.setVisibility(View.GONE);
                 return;
@@ -457,7 +472,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             progressBar.setVisibility(View.GONE);
 
             Toast.makeText(DeezerSongSearchActivity.this,
-                    String.format(getString(R.string.retrieved_songs_template), songList.size()),
+                    String.format(getString(R.string.deezer_retrieved_songs_template), songList.size()),
                     Toast.LENGTH_LONG).show();
         }
     }

@@ -1,6 +1,9 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,11 +16,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.cst2335finalgroupproject.DeezerSongSearch.db.SongDB;
+import com.example.cst2335finalgroupproject.DeezerSongSearch.entity.Song;
 import com.example.cst2335finalgroupproject.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,19 +42,35 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SongDetailFragment extends Fragment {
 
+
+    public static final String KEY_IS_FAVORITE = "IS_FAV";
+    public static final String KEY_SONG_ID = "SONG_ID";
     public static final String KEY_SONG_NAME = "SONG_NAME";
     public static final String KEY_SONG_DURATION = "SONG_DURATION";
+    public static final String KEY_SONG_DURATION_STR = "SONG_DURATION_STR";
     public static final String KEY_ALBUM_NAME = "ALBUM_NAME";
     public static final String KEY_ALBUM_COVER = "ALBUM_COVER";
 
+    /**
+     * whether the song is my favorite
+     */
+    private boolean isFavorite;
+    /**
+     * song id
+     */
+    private long id;
     /**
      * song name
      */
     private String songName;
     /**
-     * song duration
+     * song duration in second
      */
-    private String songDuration;
+    private int songDuration;
+    /**
+     * song duration display string
+     */
+    private String songDurationStr;
     /**
      * album name
      */
@@ -80,12 +103,14 @@ public class SongDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            isFavorite = getArguments().getBoolean(KEY_IS_FAVORITE);
+            id = getArguments().getLong(KEY_SONG_ID, -1L);
             songName = getArguments().getString(KEY_SONG_NAME);
-            songDuration = getArguments().getString(KEY_SONG_DURATION);
+            songDuration = getArguments().getInt(KEY_SONG_DURATION);
+            songDurationStr = getArguments().getString(KEY_SONG_DURATION_STR);
             albumName = getArguments().getString(KEY_ALBUM_NAME);
             albumCover = getArguments().getString(KEY_ALBUM_COVER);
         }
-
     }
 
     @Override
@@ -106,13 +131,41 @@ public class SongDetailFragment extends Fragment {
         imgAlbumCover = view.findViewById(R.id.img_album_cover);
 
         TextView tvSongName = view.findViewById(R.id.tv_song_name);
-        tvSongName.setText(String.format(getString(R.string.song_name_template), songName));
+        tvSongName.setText(String.format(getString(R.string.deezer_song_name_template), songName));
 
         TextView tvSongDuration = view.findViewById(R.id.tv_song_duration);
-        tvSongDuration.setText(String.format(getString(R.string.duration_template), songDuration));
+        tvSongDuration.setText(String.format(getString(R.string.deezer_duration_template), songDurationStr));
 
         TextView tvAlbumName = view.findViewById(R.id.tv_album_name);
-        tvAlbumName.setText(String.format(getString(R.string.album_name_template), albumName));
+        tvAlbumName.setText(String.format(getString(R.string.deezer_album_name_template), albumName));
+
+        Button btnAddRemove = view.findViewById(R.id.btn_add_remove);
+        btnAddRemove.setText(isFavorite ? R.string.deezer_remove_from_favorite : R.string.deezer_add_to_favorite);
+        btnAddRemove.setOnClickListener(v -> {
+            SongDB songDB = new SongDB(parentActivity);
+            SQLiteDatabase db = songDB.getWritableDatabase();
+
+            if (isFavorite) {
+                int count = db.delete(Song.TABLE_NAME_FAVORITE, Song.COL_ID + " = ?", new String[]{String.valueOf(id)});
+                if (count > 0) {
+                    Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
+                            R.string.deezer_remove_success,
+                            Snackbar.LENGTH_LONG);
+                    snackbar.setAction(R.string.deezer_go, (btn) -> {
+                        Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
+                        parentActivity.startActivity(intent);
+                    });
+                    snackbar.show();
+                } else {
+                    Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
+                            R.string.deezer_failed_to_remove,
+                            Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            } else {
+                saveToFavorite(db);
+            }
+        });
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -120,6 +173,31 @@ public class SongDetailFragment extends Fragment {
         getImage.execute(albumCover);
 
         return view;
+    }
+
+    private void saveToFavorite(SQLiteDatabase db) {
+        ContentValues newRowValue = new ContentValues();
+        newRowValue.put(Song.COL_TITLE, songName);
+        newRowValue.put(Song.COL_DURATION, songDuration);
+        newRowValue.put(Song.COL_ALBUM_NAME, albumName);
+        newRowValue.put(Song.COL_ALBUM_COVER, albumCover);
+
+        long newId = db.insert(Song.TABLE_NAME_FAVORITE, null, newRowValue);
+        Snackbar snackbar;
+        if (newId >= 0) {
+            snackbar = Snackbar.make(this.imgAlbumCover,
+                    R.string.deezer_save_success,
+                    Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.deezer_go, v -> {
+                Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
+                parentActivity.startActivity(intent);
+            });
+        } else {
+            snackbar = Snackbar.make(this.imgAlbumCover,
+                    R.string.deezer_failed_to_save,
+                    Snackbar.LENGTH_LONG);
+        }
+        snackbar.show();
     }
 
 

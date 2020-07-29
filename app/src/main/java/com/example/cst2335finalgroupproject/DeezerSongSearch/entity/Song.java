@@ -11,6 +11,12 @@ public class Song {
     public final static String COL_ALBUM_NAME= "AlbumName";
     public final static String COL_ALBUM_COVER = "AlbumCover";
 
+
+    /**
+     * the id in db
+     */
+    private long id;
+
     /**
      * the title of the song
      */
@@ -30,6 +36,14 @@ public class Song {
      * the album cover image url;
      */
     private String albumCover;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getAlbumName() {
         return albumName;

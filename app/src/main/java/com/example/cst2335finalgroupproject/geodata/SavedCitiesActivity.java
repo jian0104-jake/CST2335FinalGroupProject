@@ -1,6 +1,5 @@
 package com.example.cst2335finalgroupproject.geodata;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -240,7 +238,7 @@ public class SavedCitiesActivity extends AppCompatActivity implements Navigation
                 etAmount.setInputType(TYPE_CLASS_NUMBER);
                 new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
                         .setView(etAmount)
-                        .setPositiveButton(R.string.btn_donate_text, (click, arg) ->{
+                        .setPositiveButton(R.string.deezer_btn_donate_text, (click, arg) ->{
 
                         })
                         .setNegativeButton(R.string.btn_cancel_text, null)
