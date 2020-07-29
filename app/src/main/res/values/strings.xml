@@ -45,7 +45,7 @@
     </string>
     <string name="lyric_navigation_donate_title">Please give generou$ly</string>
     <string name="lyric_navigation_donate_number">How much money do you want to donate?</string>
-    <string name="lyric_navigation_header">CST2335\tFinal Group Project</string>
+    <string name="lyric_navigation_header">CST2335\tFinal Group Project\nSong Lyrics Search\nAuthor: Eric Wu\nVersion: 1.0</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>

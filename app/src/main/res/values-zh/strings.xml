@@ -39,7 +39,7 @@
         \n点击“返回搜索页面”，返回搜索页并开始新的搜索。
     </string>
     <string name="lyric_navigation_donate_number">输入想捐赠的金额</string>
-    <string name="lyric_navigation_header">CST2335期末小组项目</string>
+    <string name="lyric_navigation_header">CST2335期末小组项目\\n歌词搜索器\\n作者：Eric Wu\\n版本：1.0</string>
 
     <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
     <string name="geo_toolbar">geotoolbar</string>

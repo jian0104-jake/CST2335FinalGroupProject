@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SongLyricsSearch.LyricSearchActivity"
-    android:id="@+id/lyric_search_history_layout">
+    android:id="@+id/lyric_search_history_layout"
+    android:padding="5dp" >
 
     <TextView
         android:id="@+id/lyric_search_history_text"

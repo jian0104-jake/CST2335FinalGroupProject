@@ -343,6 +343,7 @@ public class LyricSearchActivity extends AppCompatActivity implements Navigation
 
                 TextView textView = new TextView(this);
                 textView.setText(R.string.lyric_navagation_help_search);
+                textView.setPadding(15,0,5,0);
 
                 // set up two buttons
                 helpBuilder.setPositiveButton("OK", null);
