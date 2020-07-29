@@ -71,8 +71,6 @@
     <string name="geo_instruction">Input the latitude and longitude value into the box and search for the nearby city. After that, you can save the city or find the city in google map</string>
 
 
-
-
     <!-- strings used by deezer song search -->
     <string name="album_cover">Album Cover</string>
     <string name="activity_title_song_detail">Song Detail</string>

@@ -23,25 +23,25 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btnSearch"
+                android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="@string/search"
                 />
             <EditText
-                android:id="@+id/etArtistName"
+                android:id="@+id/et_artist_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/btnSearch"
+                android:layout_toStartOf="@+id/btn_search"
                 android:hint="@string/enter_artist_name"
                 android:inputType="textPersonName"
                 />
             <ListView
-                android:id="@+id/lvSong"
+                android:id="@+id/lv_song"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/btnSearch"
+                android:layout_below="@+id/btn_search"
                 />
 
             <ProgressBar

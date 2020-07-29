@@ -11,7 +11,7 @@
         >
 
         <TextView
-            android:id="@+id/tvSongDuration"
+            android:id="@+id/tv_song_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -22,11 +22,11 @@
             />
 
         <TextView
-            android:id="@+id/tvSongName"
+            android:id="@+id/tv_song_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/tvSongDuration"
+            android:layout_toStartOf="@+id/tv_song_duration"
             android:paddingEnd="8dp"
             android:paddingStart="16dp"
             android:layout_centerVertical="true"

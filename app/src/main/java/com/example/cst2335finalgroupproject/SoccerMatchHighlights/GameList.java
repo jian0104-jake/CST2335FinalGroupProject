@@ -180,6 +180,7 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
                 alertDialog.setTitle(R.string.soc_instruction_title).setMessage(R.string.soc_intro_msg
                 ).setPositiveButton(R.string.soc_intro_positive, (click, arg) -> {})
                    .create().show();
+                break;
             case R.id.donate:
                 final EditText et = new EditText(this);
                 et.setHint("$$$");
@@ -191,7 +192,7 @@ public class GameList extends AppCompatActivity implements NavigationView.OnNavi
                         })
                         .setNegativeButton("cancel", null)
                         .show();
-
+                break;
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.list_drawer_layout);

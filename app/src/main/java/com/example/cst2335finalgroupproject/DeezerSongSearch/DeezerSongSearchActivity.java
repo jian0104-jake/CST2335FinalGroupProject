@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +31,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.entity.Song;
-import com.example.cst2335finalgroupproject.MainActivity;
 import com.example.cst2335finalgroupproject.R;
 import com.example.cst2335finalgroupproject.SoccerMatchHighlights.GameList;
 import com.example.cst2335finalgroupproject.SongLyricsSearch.LyricSearchActivity;
@@ -82,6 +82,12 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
      */
     private SharedPreferences sharedPreferences;
 
+    /**
+     * to store the device info - whether it is Tablet
+     */
+    private boolean isTablet;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +115,13 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         /**
          * init components
          */
-        EditText edtArtistName = findViewById(R.id.etArtistName);
+        EditText edtArtistName = findViewById(R.id.et_artist_name);
         edtArtistName.setText(searchText);
-        Button btnSearch = findViewById(R.id.btnSearch);
+        Button btnSearch = findViewById(R.id.btn_search);
         progressBar = findViewById(R.id.process_bar);
-        lvSong = findViewById(R.id.lvSong);
+        lvSong = findViewById(R.id.lv_song);
+
+        isTablet = findViewById(R.id.fragment_song_detail) != null;
 
         /**
          * init data holder and adapter
@@ -122,20 +130,39 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         songsAdapter = new SongsAdapter();
         lvSong.setAdapter(songsAdapter);
 
+
+
         lvSong.setOnItemClickListener((parent, view, position, id) -> {
             Song song = songs.get(position);
 
-            Intent intent = new Intent(DeezerSongSearchActivity.this, DeezerSongDetailActivity.class);
-            intent.putExtra(DeezerSongDetailActivity.KEY_SONG_NAME, song.getTitle());
-            intent.putExtra(DeezerSongDetailActivity.KEY_SONG_DURATION, song.getDurationInMMSS());
-            intent.putExtra(DeezerSongDetailActivity.KEY_ALBUM_NAME, song.getAlbumName());
-            intent.putExtra(DeezerSongDetailActivity.KEY_ALBUM_COVER, song.getAlbumCover());
-            startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putString(SongDetailFragment.KEY_SONG_NAME, song.getTitle());
+            bundle.putString(SongDetailFragment.KEY_SONG_DURATION, song.getDurationInMMSS());
+            bundle.putString(SongDetailFragment.KEY_ALBUM_NAME, song.getAlbumName());
+            bundle.putString(SongDetailFragment.KEY_ALBUM_COVER, song.getAlbumCover());
+
+            if (isTablet) {
+                // TODO init fragment
+                // show fragment -- referenced professor Islam's work
+                SongDetailFragment songDetailFragment = new SongDetailFragment();
+                songDetailFragment.setArguments( bundle );
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_song_detail, songDetailFragment) //Add the fragment in FrameLayout
+                        .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+
+            } else {
+                Intent intent = new Intent(DeezerSongSearchActivity.this, DeezerSongDetailActivity.class);
+                intent.putExtra(DeezerSongDetailActivity.SONG_DETAIL, bundle);
+                startActivity(intent);
+            }
         });
 
         btnSearch.setOnClickListener((v -> {
             searchArtist(edtArtistName.getText().toString().trim());
         }));
+
+
     }
 
     /**
@@ -228,6 +255,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                 // TODO halde donate navigation item
                 final EditText etAmount = new EditText(this);
                 etAmount.setHint("Enter amount");
+                etAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
                 new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
                         .setView(etAmount)
@@ -415,8 +443,8 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                 LayoutInflater layoutInflater = getLayoutInflater();
                 convertView = layoutInflater.inflate(R.layout.item_song, null);
             }
-            TextView tvSongName = convertView.findViewById(R.id.tvSongName);
-            TextView tvSongDuration = convertView.findViewById(R.id.tvSongDuration);
+            TextView tvSongName = convertView.findViewById(R.id.tv_song_name);
+            TextView tvSongDuration = convertView.findViewById(R.id.tv_song_duration);
 
             Song song = getItem(position);
             tvSongName.setText(String.format("%d. %s", position, song.getTitle()));
