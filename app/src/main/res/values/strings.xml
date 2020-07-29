@@ -43,7 +43,7 @@
         \nIf you want to go back to the Search page, click the "Go back to Search" button
     </string>
     <string name="lyric_navigation_donate_number">Donation amount:</string>
-    <string name="lyric_navigation_header">CST2335\nFinal Group Project\nSong Lyrics Search</string>
+    <string name="lyric_navigation_header">CST2335\tFinal Group Project</string>
 
     <!-- String used in GeoData-->
     <string name="latitudeText">Latitude</string>

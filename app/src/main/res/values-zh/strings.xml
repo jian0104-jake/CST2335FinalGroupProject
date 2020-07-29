@@ -17,8 +17,6 @@
     <string name="lyric_google_button">在谷歌搜索本歌</string>
     <string name="lyric_back_to_front_button">返回搜索页面</string>
     <string name="lyric_fav_hide_button">隐藏</string>
-    <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
-    <string name="geo_toolbar">geotoolbar</string>
     <string name="lyric_toolbar_goto_cityfinder">城市查询器</string>
     <string name="lyric_toolbar_goto_soccer">足球集锦</string>
     <string name="lyric_toolbar_goto_deezer">搜索歌曲</string>
@@ -40,33 +38,18 @@
         点击列表中的歌曲，可以显示歌词；长按列表中的歌曲，可以从列表中删除。
         \n点击“返回搜索页面”，返回搜索页并开始新的搜索。
     </string>
+    <string name="lyric_navigation_donate_number">输入想捐赠的金额</string>
+    <string name="lyric_navigation_header">CST2335期末小组项目</string>
 
+    <string name="songLyrics_toolbar_str">songLyrics_toolbar</string>
+    <string name="geo_toolbar">geotoolbar</string>
     <string name="latitudeText">纬度</string>
     <string name="latitudeHint">请输入纬度值，如45.4215</string>
     <string name="longitudeText">经度</string>
-    <string name="longitudeHint">请输入经度值，如-75.6972</string>
+    <string name="longitudeHint">请输入经度值，如75.6972</string>
     <string name="searchGeo">查找附近城市</string>
     <string name="favoriteGeo">已收藏城市</string>
     <string name="geo_toast_message">城市已收藏</string>
-    <string name="geo_title_saved_cities">收藏的城市</string>
-    <string name="geo_show_in_google_map">在谷歌地图中显示</string>
-    <string name="geo_save_to_favorite">添加到收藏夹</string>
-    <string name="invalid_geo_search">经纬度无效 </string>
-    <string name="geo_yes">是</string>
-    <string name="geo_no">否</string>
-    <string name="geo_remove_alert">您要移除</string>
-    <string name="geo_remove_success">已删除</string>
-    <string name="geo_menu_about">这是个查找城市应用，作者：姜旭</string>
-    <string name="about_geo_api">关于查找城市API </string>
-    <string name="donate_to_geo">捐助 </string>
-    <string name="find_city_by_geo_api">查找城市</string>
-    <string name="author_xu_jiang">作者：姜旭</string>
-    <string name="geo_navigation_open">打开</string>
-    <string name="geo_navigation_close">关闭</string>
-    <string name="geo_instruction">在文本框输入相应的经纬度，查找对应的城市。你可以收藏或使用谷歌地图浏览这个城市</string>
-
-
-
     <string name="show">显示我最喜欢的比赛</string>
     <string name="soc_saveAsFav">添加至收藏列表</string>
     <string name="soccer_alert_title">你选择了比赛</string>
@@ -115,8 +98,6 @@
     <string name="search">搜索</string>
     <string name="enter_artist_name">输入艺术家名字</string>
     <string name="dialog_msg_no_artist_found">没有找到艺术家。\\n请检查你的搜索条件再试。</string>
-    <string name="lyric_navigation_donate_number">输入想捐赠的金额</string>
-    <string name="lyric_navigation_header">CST2335 Android设计\\n期末小组项目\\n歌曲搜索</string>
     <string name="deezer_navigation_open">打开</string>
     <string name="deezer_navigation_close">关闭</string>
     <string name="cst2335_final_project">CST2355期末项目</string>
@@ -129,6 +110,7 @@
     <string name="btn_donate_text">捐赠</string>
     <string name="btn_cancel_text">取消</string>
     <string name="version_1_0">版本：1.0</string>
+
 
 
 </resources>

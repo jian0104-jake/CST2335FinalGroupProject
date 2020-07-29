@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,29 +7,53 @@
     android:orientation="vertical"
     tools:context=".SongLyricsSearch.LyricFavSongActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/lyric_fav_song_list"
-        android:id="@+id/lyric_fav_song_content_frame_layout" />
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/lyric_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lyric_toolbar"/>
+        android:layout_height="wrap_content" />
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:id="@+id/lyric_button_back_to_front"
-        android:text="@string/lyric_back_to_front_button"/>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/lyric_fav_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
 
-    <ListView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lyric_button_back_to_front"
-        android:id="@+id/lyric_fav_song_list">
-    </ListView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-</RelativeLayout>
+            <FrameLayout
+                android:id="@+id/lyric_fav_song_content_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/lyric_fav_song_list" />
+
+            <Button
+                android:id="@+id/lyric_button_back_to_front"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/lyric_back_to_front_button" />
+
+            <ListView
+                android:id="@+id/lyric_fav_song_list"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lyric_button_back_to_front"></ListView>
+
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/lyric_navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/lyric_navigation_header_layout"
+            app:menu="@menu/lyric_navigation_items" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>
