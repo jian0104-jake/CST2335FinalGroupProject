@@ -53,6 +53,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
 /**
  * the main activity for geo data source
  */
@@ -312,7 +314,7 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
             case R.id.geo_nav_item_donate:
                 final EditText etAmount = new EditText(this);
                 etAmount.setHint("Enter amount");
-
+                etAmount.setInputType(TYPE_CLASS_NUMBER);
                 new AlertDialog.Builder(this).setTitle(R.string.donate_alert_msg).setMessage(R.string.donate_msg)
                         .setView(etAmount)
                         .setPositiveButton(R.string.btn_donate_text, (click, arg) ->{
