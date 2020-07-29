@@ -106,7 +106,9 @@ public class SavedCitiesActivity extends AppCompatActivity implements OnMapReady
                     .setPositiveButton(R.string.geo_yes,(click,arg)->{
                         deleteSavedCity(id);
                         cities.remove(pos);
-                        this.getSupportFragmentManager().beginTransaction().remove(cityFragment).commit();
+                        if(cityFragment !=null){
+                            this.getSupportFragmentManager().beginTransaction().remove(cityFragment).commit();
+                        }
                         myListAdapter.notifyDataSetChanged();
                         Snackbar snackbar = Snackbar.make(savedCitiesListView,R.string.geo_remove_success, Snackbar.LENGTH_LONG);
                         snackbar.show();
