@@ -117,9 +117,13 @@
     <string name="deezer_remove_from_favorite">从喜欢中删除</string>
     <string name="deezer_remove_success">删除成功。</string>
     <string name="deezer_failed_to_remove">删除失败。</string>
-    <string name="deezer_save_success">保存成功。去收藏列表？</string>
+    <string name="deezer_save_success">保存成功。</string>
     <string name="deezer_failed_to_save">保存失败</string>
     <string name="deezer_go">去收藏列表</string>
+    <string name="deezer_confirm">确认</string>
+    <string name="deezer_yes">是</string>
+    <string name="deezer_no">否</string>
+    <string name="deezer_remove_song_confirm">要从收藏列表删除此歌吗？</string>
 
 
 </resources>

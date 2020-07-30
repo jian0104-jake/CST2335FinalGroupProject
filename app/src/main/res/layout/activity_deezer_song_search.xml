@@ -48,6 +48,7 @@
                 android:id="@+id/lv_song"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
                 android:layout_below="@+id/btn_search"
                 android:layout_above="@id/btn_my_fav_song"
                 />

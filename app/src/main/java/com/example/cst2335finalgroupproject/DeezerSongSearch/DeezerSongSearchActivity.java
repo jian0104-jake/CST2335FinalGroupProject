@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -147,6 +148,8 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
 
         lvSong.setOnItemClickListener((parent, view, position, id) -> {
             Song song = songs.get(position);
+
+            view.setSelected(true);
 
             Bundle bundle = new Bundle();
             bundle.putBoolean(SongDetailFragment.KEY_IS_TABLET, isTablet);

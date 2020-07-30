@@ -105,6 +105,10 @@
     <string name="deezer_save_success">Saved successfully.</string>
     <string name="deezer_failed_to_save">Failed to save.</string>
     <string name="deezer_go">Go to favorite list</string>
+    <string name="deezer_confirm">Confirm</string>
+    <string name="deezer_yes">Yes</string>
+    <string name="deezer_no">No</string>
+    <string name="deezer_remove_song_confirm">Would you like to remove this song from your favorite list?</string>
 
 
     <!-- strings used by soccer match highlights -->

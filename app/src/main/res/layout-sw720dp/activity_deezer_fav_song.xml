@@ -18,7 +18,8 @@
         <ListView
             android:id="@+id/lv_fav_song"
             android:layout_width="240dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"/>
 
         <FrameLayout
             android:id="@+id/fragment_song_detail"

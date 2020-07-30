@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -20,10 +21,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cst2335finalgroupproject.DeezerSongSearch.db.SongDB;
 import com.example.cst2335finalgroupproject.DeezerSongSearch.entity.Song;
 import com.example.cst2335finalgroupproject.R;
+import com.example.cst2335finalgroupproject.SoccerMatchHighlights.SoccerDB;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -161,30 +164,12 @@ public class SongDetailFragment extends Fragment {
             SQLiteDatabase db = songDB.getWritableDatabase();
 
             if (isFavorite) {
-                int count = db.delete(Song.TABLE_NAME_FAVORITE, Song.COL_ID + " = ?", new String[]{String.valueOf(id)});
-                if (count > 0) {
-                    Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
-                            R.string.deezer_remove_success,
-                            Snackbar.LENGTH_LONG);
-                    if (!isTablet) {
-                        snackbar.setAction(R.string.deezer_go, (btn) -> {
-                            Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
-                            parentActivity.startActivity(intent);
-                        });
-                    }
-                    snackbar.show();
-                    btnAddRemove.setEnabled(false);
-
-                    // update parent activity if it is tablet
-                    if (this.callback != null) {
-                        callback.removeSong(id);
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
-                            R.string.deezer_failed_to_remove,
-                            Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                }
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(parentActivity);
+                alertDialog.setTitle(R.string.deezer_confirm).setMessage(R.string.deezer_remove_song_confirm
+                ).setPositiveButton(R.string.deezer_yes,(click, arg)->{
+                    removeFavoriteSong(db, btnAddRemove);
+                }).setNegativeButton(R.string.deezer_no,(click, arg)->{
+                }).create().show();
             } else {
                 saveToFavorite(db, btnAddRemove);
             }
@@ -196,6 +181,32 @@ public class SongDetailFragment extends Fragment {
         getImage.execute(albumCover);
 
         return view;
+    }
+
+    private void removeFavoriteSong(SQLiteDatabase db, Button button) {
+        int count = db.delete(Song.TABLE_NAME_FAVORITE, Song.COL_ID + " = ?", new String[]{String.valueOf(id)});
+        if (count > 0) {
+            Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
+                    R.string.deezer_remove_success,
+                    Snackbar.LENGTH_LONG);
+            if (!isTablet) {
+                snackbar.setAction(R.string.deezer_go, (btn) -> {
+                    parentActivity.finish();
+                });
+            }
+            snackbar.show();
+            button.setEnabled(false);
+
+            // update parent activity if it is tablet
+            if (this.callback != null) {
+                callback.removeSong(id);
+            }
+        } else {
+            Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
+                    R.string.deezer_failed_to_remove,
+                    Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
     }
 
     private void saveToFavorite(SQLiteDatabase db, Button button) {

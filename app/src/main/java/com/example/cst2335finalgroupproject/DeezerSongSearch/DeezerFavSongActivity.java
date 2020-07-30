@@ -63,6 +63,8 @@ public class DeezerFavSongActivity extends AppCompatActivity implements SongDeta
         lvFavSong.setAdapter(songsAdapter);
 
         lvFavSong.setOnItemClickListener((parent, view, position, id) -> {
+            view.setSelected(true);
+
             Song song = songs.get(position);
             // view detail
             Bundle bundle = new Bundle();
@@ -105,6 +107,7 @@ public class DeezerFavSongActivity extends AppCompatActivity implements SongDeta
     }
 
     private void loadFavoriteSong() {
+        songs.clear();
         String[] columns = {Song.COL_ID, Song.COL_TITLE, Song.COL_DURATION, Song.COL_ALBUM_NAME, Song.COL_ALBUM_COVER,};
         Cursor results = db.query(false, Song.TABLE_NAME_FAVORITE, columns,
                 null, null, null, null, null, null);
