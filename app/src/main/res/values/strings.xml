@@ -100,11 +100,11 @@
     <string name="deezer_my_favorite_song">My Favorite Song</string>
     <string name="deezer_add_to_favorite">Add to favorite</string>
     <string name="deezer_remove_from_favorite">Remove from favorite</string>
-    <string name="deezer_remove_success">Removed successfully. Go to favorite list?</string>
+    <string name="deezer_remove_success">"Removed successfully. "</string>
     <string name="deezer_failed_to_remove">Failed to remove.</string>
-    <string name="deezer_save_success">Saved successfully. Go to favorite list?</string>
+    <string name="deezer_save_success">Saved successfully.</string>
     <string name="deezer_failed_to_save">Failed to save.</string>
-    <string name="deezer_go">Go</string>
+    <string name="deezer_go">Go to favorite list</string>
 
 
     <!-- strings used by soccer match highlights -->

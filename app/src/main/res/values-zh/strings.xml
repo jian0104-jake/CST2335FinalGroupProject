@@ -115,11 +115,11 @@
     <string name="deezer_my_favorite_song">我喜欢的歌</string>
     <string name="deezer_add_to_favorite">添加为喜欢</string>
     <string name="deezer_remove_from_favorite">从喜欢中删除</string>
-    <string name="deezer_remove_success">删除成功。去收藏列表？</string>
+    <string name="deezer_remove_success">删除成功。</string>
     <string name="deezer_failed_to_remove">删除失败。</string>
     <string name="deezer_save_success">保存成功。去收藏列表？</string>
     <string name="deezer_failed_to_save">保存失败</string>
-    <string name="deezer_go">去</string>
+    <string name="deezer_go">去收藏列表</string>
 
 
 </resources>

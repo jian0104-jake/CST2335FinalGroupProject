@@ -149,6 +149,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             Song song = songs.get(position);
 
             Bundle bundle = new Bundle();
+            bundle.putBoolean(SongDetailFragment.KEY_IS_TABLET, isTablet);
             bundle.putBoolean(SongDetailFragment.KEY_IS_FAVORITE, false);
             bundle.putString(SongDetailFragment.KEY_SONG_NAME, song.getTitle());
             bundle.putInt(SongDetailFragment.KEY_SONG_DURATION, song.getDuration());

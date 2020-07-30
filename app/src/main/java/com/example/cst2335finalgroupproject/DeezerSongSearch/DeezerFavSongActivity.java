@@ -64,8 +64,9 @@ public class DeezerFavSongActivity extends AppCompatActivity implements SongDeta
 
         lvFavSong.setOnItemClickListener((parent, view, position, id) -> {
             Song song = songs.get(position);
-            // TODO view detail
+            // view detail
             Bundle bundle = new Bundle();
+            bundle.putBoolean(SongDetailFragment.KEY_IS_TABLET, isTablet);
             bundle.putBoolean(SongDetailFragment.KEY_IS_FAVORITE, true);
             bundle.putLong(SongDetailFragment.KEY_SONG_ID, song.getId());
             bundle.putString(SongDetailFragment.KEY_SONG_NAME, song.getTitle());

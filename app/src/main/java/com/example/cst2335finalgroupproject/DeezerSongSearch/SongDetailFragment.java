@@ -42,6 +42,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SongDetailFragment extends Fragment {
 
+    public static final String KEY_IS_TABLET = "IS_TABLET";
     public static final String KEY_IS_FAVORITE = "IS_FAV";
     public static final String KEY_SONG_ID = "SONG_ID";
     public static final String KEY_SONG_NAME = "SONG_NAME";
@@ -50,6 +51,10 @@ public class SongDetailFragment extends Fragment {
     public static final String KEY_ALBUM_NAME = "ALBUM_NAME";
     public static final String KEY_ALBUM_COVER = "ALBUM_COVER";
 
+    /**
+     * whether the song is my favorite
+     */
+    private boolean isTablet;
     /**
      * whether the song is my favorite
      */
@@ -112,6 +117,7 @@ public class SongDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            isTablet = getArguments().getBoolean(KEY_IS_TABLET);
             isFavorite = getArguments().getBoolean(KEY_IS_FAVORITE);
             id = getArguments().getLong(KEY_SONG_ID, -1L);
             songName = getArguments().getString(KEY_SONG_NAME);
@@ -160,10 +166,12 @@ public class SongDetailFragment extends Fragment {
                     Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
                             R.string.deezer_remove_success,
                             Snackbar.LENGTH_LONG);
-                    snackbar.setAction(R.string.deezer_go, (btn) -> {
-                        Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
-                        parentActivity.startActivity(intent);
-                    });
+                    if (!isTablet) {
+                        snackbar.setAction(R.string.deezer_go, (btn) -> {
+                            Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
+                            parentActivity.startActivity(intent);
+                        });
+                    }
                     snackbar.show();
                     btnAddRemove.setEnabled(false);
 
@@ -203,10 +211,12 @@ public class SongDetailFragment extends Fragment {
             snackbar = Snackbar.make(this.imgAlbumCover,
                     R.string.deezer_save_success,
                     Snackbar.LENGTH_LONG);
-            snackbar.setAction(R.string.deezer_go, v -> {
-                Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
-                parentActivity.startActivity(intent);
-            });
+            if (!isTablet) {
+                snackbar.setAction(R.string.deezer_go, v -> {
+                    Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
+                    parentActivity.startActivity(intent);
+                });
+            }
 
             button.setEnabled(false);
         } else {
