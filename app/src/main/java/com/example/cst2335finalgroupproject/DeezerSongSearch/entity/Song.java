@@ -1,5 +1,7 @@
 package com.example.cst2335finalgroupproject.DeezerSongSearch.entity;
 
+import java.util.Locale;
+
 public class Song {
 
     public final static String TABLE_NAME_SEARCH_RESULT = "DEEZER_SONG_LIST";
@@ -80,7 +82,7 @@ public class Song {
     public String getDurationInMMSS() {
         int minute = duration / 60;
         int second = duration % 60;
-        return String.format("%d:%02d", minute, second);
+        return String.format(Locale.getDefault(), "%d:%02d", minute, second);
     }
 
 }

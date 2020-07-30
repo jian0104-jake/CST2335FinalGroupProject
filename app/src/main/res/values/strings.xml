@@ -121,7 +121,7 @@
     <string name="soc_delete_msg">Delete successfully</string>
     <string name="soc_gowatchLive">watch video</string>
     <string name="soc_click_to_watch">Click image to watch the game</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="menuTxt">About this project</string>
     <string name="geo_toolbar">geotoolbar</string>

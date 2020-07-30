@@ -52,8 +52,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Entrance activity to use Deezer song search api to search songs of artists.
@@ -171,9 +173,7 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
             }
         });
 
-        btnSearch.setOnClickListener(v -> {
-            searchArtist(edtArtistName.getText().toString().trim());
-        });
+        btnSearch.setOnClickListener(v -> searchArtist(edtArtistName.getText().toString().trim()));
 
         btnFavSong.setOnClickListener(v-> {
             Intent intent = new Intent(DeezerSongSearchActivity.this, DeezerFavSongActivity.class);
@@ -352,13 +352,13 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                 urlConnection = (HttpURLConnection) url.openConnection();
                 response = urlConnection.getInputStream();
                 // parse artist
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
                 StringBuilder sb = new StringBuilder();
 
                 String line = null;
                 while ((line = reader.readLine()) != null)
                 {
-                    sb.append(line + "\n");
+                    sb.append(line).append("\n");
                 }
                 String result = sb.toString();
 
@@ -416,13 +416,13 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
                 urlConnection = (HttpURLConnection) url.openConnection();
                 response = urlConnection.getInputStream();
                 // parse artist
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
                 StringBuilder sb = new StringBuilder();
 
                 String line = null;
                 while ((line = reader.readLine()) != null)
                 {
-                    sb.append(line + "\n");
+                    sb.append(line).append("\n");
                 }
                 String result = sb.toString();
 
@@ -501,13 +501,13 @@ public class DeezerSongSearchActivity extends AppCompatActivity implements Navig
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 LayoutInflater layoutInflater = getLayoutInflater();
-                convertView = layoutInflater.inflate(R.layout.item_song, null);
+                convertView = layoutInflater.inflate(R.layout.item_song, parent, false);
             }
             TextView tvSongName = convertView.findViewById(R.id.tv_song_name);
             TextView tvSongDuration = convertView.findViewById(R.id.tv_song_duration);
 
             Song song = getItem(position);
-            tvSongName.setText(String.format("%d. %s", position + 1, song.getTitle()));
+            tvSongName.setText(String.format(Locale.getDefault(), "%d. %s", position + 1, song.getTitle()));
             tvSongDuration.setText(song.getDurationInMMSS());
 
             return convertView;

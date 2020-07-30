@@ -2,6 +2,7 @@ package com.example.cst2335finalgroupproject.DeezerSongSearch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,12 +21,9 @@ import com.example.cst2335finalgroupproject.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class DeezerFavSongActivity extends AppCompatActivity {
-    /**
-     * the ListView to show the favorite songs
-     */
-    private ListView lvFavSong;
+public class DeezerFavSongActivity extends AppCompatActivity implements SongDetailFragment.OnRemoveFavoriteSongListener {
 
     /**
      * the data holder of favorite songs
@@ -55,7 +53,10 @@ public class DeezerFavSongActivity extends AppCompatActivity {
 
         boolean isTablet = findViewById(R.id.fragment_song_detail) != null;
 
-        lvFavSong = findViewById(R.id.lv_fav_song);
+        /**
+         * the ListView to show the favorite songs
+         */
+        ListView lvFavSong = findViewById(R.id.lv_fav_song);
 
         songs = new ArrayList<>();
         songsAdapter = new SongsAdapter();
@@ -92,6 +93,13 @@ public class DeezerFavSongActivity extends AppCompatActivity {
 
         SongDB songDB = new SongDB(this);
         db = songDB.getWritableDatabase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // always reload favorite songs when enter or back from other activity
         loadFavoriteSong();
     }
 
@@ -120,6 +128,33 @@ public class DeezerFavSongActivity extends AppCompatActivity {
         songsAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * reference to: https://developer.android.com/training/basics/fragments/communicating.html
+     * @param fragment
+     */
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof SongDetailFragment) {
+            ((SongDetailFragment)fragment).setCallback(this);
+        }
+    }
+
+    @Override
+    public void removeSong(long songId) {
+        // TODO remove song from songs and update list view
+        Song song = null;
+        for (Song item : songs) {
+            if (item.getId() == songId) {
+                song = item;
+                break;
+            }
+        }
+
+        if (song != null) {
+            songs.remove(song);
+            songsAdapter.notifyDataSetChanged();
+        }
+    }
 
     /**
      * song adapter used by list view for songs display
@@ -145,13 +180,13 @@ public class DeezerFavSongActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 LayoutInflater layoutInflater = getLayoutInflater();
-                convertView = layoutInflater.inflate(R.layout.item_song, null);
+                convertView = layoutInflater.inflate(R.layout.item_song, parent, false);
             }
             TextView tvSongName = convertView.findViewById(R.id.tv_song_name);
             TextView tvSongDuration = convertView.findViewById(R.id.tv_song_duration);
 
             Song song = getItem(position);
-            tvSongName.setText(String.format("%d. %s", position + 1, song.getTitle()));
+            tvSongName.setText(String.format(Locale.getDefault(), "%d. %s", position + 1, song.getTitle()));
             tvSongDuration.setText(song.getDurationInMMSS());
 
             return convertView;

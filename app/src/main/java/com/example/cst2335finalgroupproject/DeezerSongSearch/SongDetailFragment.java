@@ -42,7 +42,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SongDetailFragment extends Fragment {
 
-
     public static final String KEY_IS_FAVORITE = "IS_FAV";
     public static final String KEY_SONG_ID = "SONG_ID";
     public static final String KEY_SONG_NAME = "SONG_NAME";
@@ -94,6 +93,16 @@ public class SongDetailFragment extends Fragment {
      * hold a reference to parent activity
      */
     private AppCompatActivity parentActivity;
+
+    /**
+     * used to communicate with other activity
+     * reference to： https://developer.android.com/training/basics/fragments/communicating.html
+     */
+    private OnRemoveFavoriteSongListener callback;
+
+    public void setCallback(OnRemoveFavoriteSongListener callback) {
+        this.callback = callback;
+    }
 
     public SongDetailFragment() {
         // Required empty public constructor
@@ -156,6 +165,12 @@ public class SongDetailFragment extends Fragment {
                         parentActivity.startActivity(intent);
                     });
                     snackbar.show();
+                    btnAddRemove.setEnabled(false);
+
+                    // update parent activity if it is tablet
+                    if (this.callback != null) {
+                        callback.removeSong(id);
+                    }
                 } else {
                     Snackbar snackbar = Snackbar.make(this.imgAlbumCover,
                             R.string.deezer_failed_to_remove,
@@ -163,7 +178,7 @@ public class SongDetailFragment extends Fragment {
                     snackbar.show();
                 }
             } else {
-                saveToFavorite(db);
+                saveToFavorite(db, btnAddRemove);
             }
         });
 
@@ -175,7 +190,7 @@ public class SongDetailFragment extends Fragment {
         return view;
     }
 
-    private void saveToFavorite(SQLiteDatabase db) {
+    private void saveToFavorite(SQLiteDatabase db, Button button) {
         ContentValues newRowValue = new ContentValues();
         newRowValue.put(Song.COL_TITLE, songName);
         newRowValue.put(Song.COL_DURATION, songDuration);
@@ -192,6 +207,8 @@ public class SongDetailFragment extends Fragment {
                 Intent intent = new Intent(parentActivity, DeezerFavSongActivity.class);
                 parentActivity.startActivity(intent);
             });
+
+            button.setEnabled(false);
         } else {
             snackbar = Snackbar.make(this.imgAlbumCover,
                     R.string.deezer_failed_to_save,
@@ -200,6 +217,9 @@ public class SongDetailFragment extends Fragment {
         snackbar.show();
     }
 
+    public interface OnRemoveFavoriteSongListener {
+        void removeSong(long songId);
+    }
 
     /**
      * get MD5 of a string
