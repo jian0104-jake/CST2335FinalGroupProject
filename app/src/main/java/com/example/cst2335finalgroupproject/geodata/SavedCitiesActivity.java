@@ -293,13 +293,20 @@ public class SavedCitiesActivity extends AppCompatActivity implements Navigation
         myListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * delete one item in the database
+     * @param id the id that needs to be deleted in the database
+     */
+
     private void deleteSavedCity(long id){
         db.delete(SavedCitiesOpenHelper.TABLE_NAME, SavedCitiesOpenHelper.COL_ID + "= ?", new String[] {Long.toString(id)});
     }
 
 
-
-
+    /**
+     * on map ready, this function is called
+     * @param googleMap google map
+     */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -319,22 +326,43 @@ public class SavedCitiesActivity extends AppCompatActivity implements Navigation
     private class SavedCitiesListAdapter extends BaseAdapter {
 
 
-
+        /**
+         * getter for size of cities
+         * @return the total size of cities
+         */
         @Override
         public int getCount() {
             return cities.size();
         }
+
+        /**
+         *  getter for City instance
+         * @param position index in cities
+         * @return the City instance in cities with the index passed
+         */
 
         @Override
         public City getItem(int position) {
             return cities.get(position);
         }
 
+        /**
+         *  getter for database id
+         * @param position the index in cities
+         * @return the database id
+         */
         @Override
         public long getItemId(int position) {
             return getItem(position).getId();
         }
 
+        /**
+         * getter for view
+         * @param position index
+         * @param convertView view
+         * @param parent parent view
+         * @return the view
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             City city = cities.get(position);

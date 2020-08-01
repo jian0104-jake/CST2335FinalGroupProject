@@ -250,7 +250,10 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
         editor.commit();
     }
 
-
+    /**
+     * on map ready, this function is called
+     * @param googleMap google map
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -376,7 +379,13 @@ public class GeoDataSource extends AppCompatActivity implements NavigationView.O
             return position;
         }
 
-
+        /**
+         * getter for view
+         * @param position the index
+         * @param convertView view
+         * @param parent parent view group
+         * @return view
+         */
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {

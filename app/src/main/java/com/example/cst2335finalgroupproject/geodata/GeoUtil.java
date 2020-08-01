@@ -7,6 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GeoUtil {
 
+    /**
+     * position the google may with passed latitude and longitude values
+     * @param lat latitude value
+     * @param lng longitude value
+     * @param activity the context activity
+     */
+
     public static void openGoogleNavi(String lat, String lng, AppCompatActivity activity) {
 
         Uri gmmIntentUri = Uri.parse("geo:"+lat+","+lng);
